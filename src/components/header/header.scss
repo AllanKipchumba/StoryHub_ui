@@ -1,0 +1,14 @@
+.header {
+    margin: 100px 40px 10px 40px;
+    .image {
+        // margin-left: 30px;
+        border-radius: 50%;
+    }
+    .socials {
+        .icon {
+            cursor: pointer;
+            height: 40px;
+            width: 23px;
+        }
+    }
+}

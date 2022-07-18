@@ -1,0 +1,100 @@
+* {
+    margin: o;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    background-color: #fff;
+    color: #000;
+    //
+    .mobile-menu-icon {
+        position: absolute;
+        margin-right: 2000px !important;
+    }
+    .logo {
+        text-decoration: none;
+        font-size: 30px;
+    }
+    .nav-links {
+        display: flex;
+        justify-content: flex-end;
+        list-style: none;
+        width: 75%;
+        //
+        li {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-right: 1px solid #00b1bf;
+            border-width: 2px;
+            border-radius: 30px;
+            //
+            &:hover {
+                background-color: #00b1bf;
+            }
+            .link {
+                text-decoration: none;
+                color: #fff;
+            }
+        }
+    }
+}
+
+
+/* mobile viewport */
+
+@media screen and (max-width: 780px) {
+    .mobile-menu-icon {
+        display: block;
+        position: absolute;
+        font-size: 30px;
+        color: #000;
+        border: none;
+        top: 15px;
+        left: 15px;
+        z-index: 1000;
+    }
+    .logo {
+        display: flex;
+        position: absolute;
+    }
+    .nav-links {
+        visibility: hidden;
+    }
+    .nav-links-mobile {
+        position: absolute;
+        display: block;
+        list-style: none;
+        background-color: #fff;
+        padding: 40px 0;
+        left: 0;
+        top: 44px;
+        height: 100vh;
+        transition: all 0.5s ease;
+        width: 50%;
+        //
+        li {
+            padding: 20px 0;
+            border-bottom: 1px solid #00828c;
+            text-transform: capitalize;
+            //
+            &:last-child {
+                border-bottom: none;
+            }
+            &:hover {
+                background-color: #00828c;
+                border-radius: 20px;
+            }
+            .link {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+}
