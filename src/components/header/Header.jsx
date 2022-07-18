@@ -5,7 +5,7 @@ import { FaTwitter, FaGithub } from "react-icons/fa";
 import { AiOutlineInstagram } from "react-icons/ai";
 import image from "./assests/profile-image.svg";
 
-const Header = () => {
+export const Header = () => {
   return (
     <>
       <div className="header max-w-[1240px] mx-auto grid md:grid-cols-3 gap-2">
@@ -35,5 +35,3 @@ const Header = () => {
     </>
   );
 };
-
-export default Header;
