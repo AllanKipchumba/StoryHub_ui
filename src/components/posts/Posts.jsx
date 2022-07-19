@@ -6,7 +6,7 @@ export const Posts = () => {
   return (
     <>
       <div className="posts">
-        <h1>
+        <h1 className="px-16">
           <span>latest</span> stories
         </h1>
 
