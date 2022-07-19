@@ -1,12 +1,11 @@
-.login {
+.signup {
     padding: 70px 25px 80px 25px;
     margin: 40px 30px 0;
     margin-right: 30px;
     @apply shadow-xl;
-    //@at-root
+    //
     img {
         margin: auto;
-        //
     }
     form {
         display: flex;
@@ -47,17 +46,6 @@
             //
             &:hover {
                 background-color: #d10068;
-            }
-        }
-        p {
-            @apply py-3 capitalize;
-            span {
-                color: #ff0581;
-                cursor: pointer;
-                //@at-root
-                &:hover {
-                    color: #d10068;
-                }
             }
         }
     }

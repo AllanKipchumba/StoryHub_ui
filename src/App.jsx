@@ -5,6 +5,7 @@ import { Content } from "./components/scrollButton/Styles";
 import { Home } from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/login/Login";
+import { Signup } from "./pages/signUp/Signup";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
 
       <Content />

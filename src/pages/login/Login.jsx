@@ -24,7 +24,8 @@ export const Login = () => {
         <div className="col-span-2 py-8">
           <form onSubmit={submitForm}>
             <h1>
-              welcome to story<span className="text-[#ff0581]">hub</span>
+              welcome to story
+              <span className="text-[#ff0581]">Hub</span>
             </h1>
 
             <label>Email</label>
