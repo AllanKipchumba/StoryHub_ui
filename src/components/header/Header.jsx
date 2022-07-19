@@ -9,7 +9,9 @@ export const Header = () => {
   return (
     <>
       <div className="header max-w-[1240px] mx-auto grid md:grid-cols-3 gap-2">
-        <img src={image} alt="/" className="image w-[200px] mx-auto my-4 " />
+        <div className="imageWrapper">
+          <img src={image} alt="/" className="image w-[200px] mx-auto my-4 " />
+        </div>
 
         <div className="flex flex-col justify-center md:col-span-2">
           <p className="capitalize md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 font-bold py-2">
