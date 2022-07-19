@@ -12,10 +12,6 @@ export const Posts = () => {
 
         <div className="py-5">
           <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
         </div>
       </div>
     </>
