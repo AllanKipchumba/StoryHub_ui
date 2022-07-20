@@ -1,0 +1,40 @@
+.write {
+    padding: 65px 25px 80px 25px;
+    margin-left: 0;
+    //@at-root
+    .intro {
+        h1 {
+            letter-spacing: 2.72px;
+        }
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        //@at-root
+        .input {
+            @apply shadow-lg;
+            padding: 10px;
+            border: 2px solid rgba(211, 211, 211, 0.5);
+            border-radius: 20px;
+            width: 100%;
+            color: gray;
+            //
+            &:focus {
+                outline: none;
+            }
+        }
+        button {
+            @apply py-3 capitalize mt-4;
+            display: flex;
+            width: 20%;
+            background-color: #ff0581;
+            border-radius: 20px;
+            justify-content: center;
+            color: #fff;
+            //
+            &:hover {
+                background-color: #d10068;
+            }
+        }
+    }
+}
