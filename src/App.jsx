@@ -7,6 +7,8 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/login/Login";
 import { Signup } from "./pages/signUp/Signup";
 import { Write } from "./pages/write/Write";
+import { About } from "./pages/about/About";
+import { Footer } from "./components/footer/Footer";
 
 const App = () => {
   return (
@@ -17,8 +19,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/about" element={<About />} />
       </Routes>
-
+      <Footer />
       <Content />
       <ScrollButon />
     </>
