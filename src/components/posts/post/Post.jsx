@@ -1,6 +1,8 @@
 import React from "react";
 import "./post.scss";
 import postImage from "./assets/blog-post.svg";
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
 
 export const Post = () => {
   return (
@@ -15,9 +17,15 @@ export const Post = () => {
         </div>
 
         <div className="flex flex-col justify-center md:col-span-2">
-          <h1 className="capitalize md:text-4xl sm:text-3xl text-2xl md:mx-0 py-2">
-            a peek into scandavia's origin
-          </h1>
+          <div className="flex">
+            <h1 className="capitalize md:text-4xl sm:text-3xl text-2xl md:mx-0 py-2">
+              a peek into scandavia's origin
+            </h1>
+            <div className="editBtns">
+              <FiEdit className="icon" />
+              <MdDeleteOutline className="icon" />
+            </div>
+          </div>
           <p className="text-[#292929]">
             Steve Holt! No, I did not kill Kitty. However, I am going to oblige
             and answer the nice officer’s questions because I am an honest man

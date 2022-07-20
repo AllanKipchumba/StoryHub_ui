@@ -7,4 +7,17 @@
         font-family: Poppins, sans-serif;
         font-weight: bold;
     }
+    .editBtns {
+        @apply m-auto;
+        .icon {
+            margin-top: 10px;
+            margin-left: 30px;
+            cursor: pointer;
+            float: right;
+            color: #ff0581;
+            &:hover {
+                color: #d10068;
+            }
+        }
+    }
 }
