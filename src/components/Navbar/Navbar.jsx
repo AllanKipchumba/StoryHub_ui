@@ -23,19 +23,31 @@ export const Navbar = () => {
         </button>
 
         <h3 className="logo">
-          Story<span>Hub</span>
+          Story<span className="text-[#ff0581]">Hub</span>
         </h3>
 
         <ul className={mobileView ? "nav-links-mobile" : "nav-links"}>
-          <li onClick={handleClick} className="link">
-            home
-          </li>
+          <li onClick={handleClick} className="link"></li>
           <li onClick={handleClick} className="link">
             About
           </li>
           <li onClick={handleClick} className="link">
-            Contact
+            write
           </li>
+          {user ? (
+            <li onClick={handleClick} className="link">
+              logout
+            </li>
+          ) : (
+            <>
+              <li onClick={handleClick} className="link">
+                sign up
+              </li>
+              <li onClick={handleClick} className="link">
+                login
+              </li>
+            </>
+          )}
         </ul>
       </nav>{" "}
     </>
