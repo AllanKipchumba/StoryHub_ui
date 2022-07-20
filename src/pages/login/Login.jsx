@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./login.scss";
 import login from "./assests/login.svg";
 import { HiOutlineMail } from "react-icons/hi";
@@ -18,14 +18,14 @@ export const Login = () => {
 
   return (
     <>
-      <div className="login max-w-[1240px] flex-col p-4 mx-auto grid grid-cols-3 gap-10">
-        <img src={login} alt="/" />
+      <div className="login max-w-[1240px] flex-col p-4 mx-auto grid md:grid-cols-4 gap-10">
+        <img src={login} alt="/" className="col-span-2" />
 
         <div className="col-span-2 py-8">
           <form onSubmit={submitForm}>
             <h1>
-              welcome to story
-              <span className="text-[#ff0581]">Hub</span>
+              Login to your story
+              <span className="text-[#ff0581]">Hub</span> account
             </h1>
 
             <label>Email</label>

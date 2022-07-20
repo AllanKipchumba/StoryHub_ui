@@ -1,10 +1,17 @@
 .signup {
-    padding: 70px 25px 80px 25px;
-    margin: 40px 30px 0;
-    margin-right: 30px;
     @apply shadow-xl;
+    padding: 70px 25px 80px 25px;
+    margin-right: 30px;
+    margin: auto;
     //
+    .intro {
+        h1 {
+            text-transform: capitalize;
+            letter-spacing: 2.72px;
+        }
+    }
     img {
+        @apply py-4;
         margin: auto;
     }
     form {
@@ -18,28 +25,29 @@
             @apply py-8 capitalize font-bold;
         }
         .inputWrapper {
-            width: 50%;
+            width: 100%;
             margin: 10px 0;
             border: 1px solid rgba(211, 211, 211, 0.5);
             border-radius: 20px;
+            display: flex;
+            padding: 10px;
             .icon {
                 color: #ff0581;
-                margin-top: 20px;
-                margin-left: 10px;
                 font-size: 20px;
             }
             .input {
-                width: 50%;
+                width: 100%;
+                margin-left: 10px;
                 &:focus {
                     outline: none;
                 }
             }
         }
         button {
-            @apply py-3 capitalize;
+            @apply py-3 capitalize mt-4;
             display: flex;
+            width: 50%;
             background-color: #ff0581;
-            width: 100px;
             border-radius: 20px;
             justify-content: center;
             color: #fff;
