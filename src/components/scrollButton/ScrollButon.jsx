@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./scrollbutton.scss";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { Button } from "./Styles";
 
