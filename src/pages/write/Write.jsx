@@ -30,6 +30,7 @@ export const Write = () => {
           <label>Category</label>
           <select placeholder="Choose Category" className="input">
             <option value="social">Social</option>
+            <option value="news">News</option>
             <option value="politics">Politics</option>
             <option value="technology">Technology</option>
             <option value="sports">Sports</option>

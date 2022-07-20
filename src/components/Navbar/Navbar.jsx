@@ -29,11 +29,16 @@ export const Navbar = () => {
         <ul className={mobileView ? "nav-links-mobile" : "nav-links"}>
           <li onClick={handleClick} className="link"></li>
           <li onClick={handleClick} className="link">
-            About
+            Category
           </li>
           <li onClick={handleClick} className="link">
-            write
+            About
           </li>
+          {user && (
+            <li onClick={handleClick} className="link">
+              Publish
+            </li>
+          )}
           {user ? (
             <li onClick={handleClick} className="link">
               logout
