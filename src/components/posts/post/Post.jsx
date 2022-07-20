@@ -18,7 +18,7 @@ export const Post = () => {
           <h1 className="capitalize md:text-4xl sm:text-3xl text-2xl md:mx-0 py-2">
             a peek into scandavia's origin
           </h1>
-          <p>
+          <p className="text-[#292929]">
             Steve Holt! No, I did not kill Kitty. However, I am going to oblige
             and answer the nice officer’s questions because I am an honest man
             with no secrets to hide. I don’t criticize you! And if you’re

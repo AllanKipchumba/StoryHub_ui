@@ -14,11 +14,11 @@ export const Header = () => {
         </div>
 
         <div className="flex flex-col justify-center md:col-span-2">
-          <p className="capitalize md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 font-bold py-2">
-            Hey! I'm <span>Allan</span>
+          <p className="capitalize height-[15px]  md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 py-2">
+            Hey! I'm <span className="font-bold">foo</span>
           </p>
 
-          <p>
+          <p className="text-[#292929]">
             The Darwinian theory of natural selection holds that it is not the
             strongest of the species that survives, or even the most
             intelligent, but the most adaptable. It’s the same in business: the
