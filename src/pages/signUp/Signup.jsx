@@ -1,21 +1,34 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./signup.scss";
 import image from "./assets/signup.svg";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
+import axios from "axios";
 
 export const Signup = () => {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     usernameRef.current.focus();
   }, []);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await axios.post("/auth/register", {
+        username: usernameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      });
+      console.log(res.data.user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -54,6 +67,7 @@ export const Signup = () => {
                 placeholder="Create Username"
                 ref={usernameRef}
                 className="input"
+                required
               />
             </div>
 
@@ -61,10 +75,11 @@ export const Signup = () => {
             <div className="inputWrapper">
               <HiOutlineMail className="icon" />
               <input
-                type="email"
+                type="emailRef"
                 placeholder="Enter your Email"
                 ref={emailRef}
                 className="input"
+                required
               />
             </div>
 
@@ -76,10 +91,17 @@ export const Signup = () => {
                 placeholder="Create Password"
                 ref={passwordRef}
                 className="input "
+                required
               />
             </div>
 
             <button type="submit">Create Account</button>
+
+            {error && (
+              <span className="mt-[15px] text-[#ff0581]">
+                Something went wrong!
+              </span>
+            )}
           </form>
         </div>
       </div>

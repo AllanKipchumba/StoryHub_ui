@@ -14,6 +14,7 @@ const App = () => {
   return (
     <>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/write" element={<Write />} />
         <Route path="/about" element={<About />} />
       </Routes>
+
       <Footer />
       <Content />
       <ScrollButon />
