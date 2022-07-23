@@ -3,10 +3,12 @@ import "./login.scss";
 import login from "./assests/login.svg";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -14,6 +16,7 @@ export const Login = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
+    setLoading(true);
   };
 
   return (
@@ -51,6 +54,13 @@ export const Login = () => {
             </div>
 
             <button type="submit">sign in</button>
+            <BeatLoader
+              loading={loading}
+              color="#ff0581"
+              margin={4}
+              size={15}
+              className="ml-[100px]"
+            />
 
             <p>
               new blogger? <span>create account</span>
