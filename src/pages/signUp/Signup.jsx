@@ -4,6 +4,7 @@ import image from "./assets/signup.svg";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
+import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 
 export const Signup = () => {
@@ -11,6 +12,7 @@ export const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     usernameRef.current.focus();
@@ -18,6 +20,7 @@ export const Signup = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.post("/auth/register", {
@@ -96,6 +99,14 @@ export const Signup = () => {
             </div>
 
             <button type="submit">Create Account</button>
+
+            <BeatLoader
+              loading={loading}
+              color="#ff0581"
+              margin={4}
+              size={15}
+              className=" mt-4 ml-[80px]"
+            />
 
             {error && (
               <span className="mt-[15px] text-[#ff0581]">
