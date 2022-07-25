@@ -4,19 +4,44 @@ import login from "./assests/login.svg";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  loginStart,
+  loginFail,
+  loginSuccess,
+} from "../../Redux/slices/loginSlice";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const Login = () => {
+  // access state from redux store
+  const loginState = useSelector((store) => store["logIn"]);
+  const { user, fetching, error } = loginState;
+  console.log(loginState);
+
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     emailRef.current.focus();
   }, []);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(loginStart());
+
+    try {
+      const res = await axios.post("/auth/login", {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      });
+      // update user state
+      dispatch(loginSuccess(res.data));
+    } catch (error) {
+      dispatch(loginFail());
+      console.log(error);
+    }
   };
 
   return (
@@ -55,7 +80,7 @@ export const Login = () => {
 
             <button type="submit">sign in</button>
             <BeatLoader
-              loading={loading}
+              loading={fetching}
               color="#ff0581"
               margin={4}
               size={15}
@@ -63,7 +88,10 @@ export const Login = () => {
             />
 
             <p>
-              new blogger? <span>create account</span>
+              new blogger?{" "}
+              <Link to="/signup">
+                <span>create account</span>
+              </Link>
             </p>
           </form>
         </div>

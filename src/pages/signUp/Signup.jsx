@@ -6,6 +6,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const Signup = () => {
   const usernameRef = useRef();
@@ -22,17 +23,17 @@ export const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const res = await axios.post("/auth/register", {
-        username: usernameRef.current.value,
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-      });
-      // console.log(res.data.user);
-      res.data && window.location.replace("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const res = await axios.post("/auth/register", {
+    //     username: usernameRef.current.value,
+    //     email: emailRef.current.value,
+    //     password: passwordRef.current.value,
+    //   });
+    //   // console.log(res.data.user);
+    //   res.data && window.location.replace("/login");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -58,9 +59,11 @@ export const Signup = () => {
             </h1>
             <p className="mb-4">
               Already a member?{" "}
-              <span className="text-[#ff0581] hover:text-[#d10068] hover:cursor-pointer">
-                Log In
-              </span>
+              <Link to="/login">
+                <span className="text-[#ff0581] hover:text-[#d10068] hover:cursor-pointer">
+                  Log In
+                </span>
+              </Link>
             </p>
 
             <label>Username</label>

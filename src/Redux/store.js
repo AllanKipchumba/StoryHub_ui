@@ -1,16 +1,28 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { rootReducer } from "./rootReducer";
-// redux-persist
+import { combineReducers } from "@reduxjs/toolkit";
+// import { rootReducer } from "./rootReducer";
+import loginReducer from "./slices/loginSlice";
+// redux-persist config
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
-const persistConfig = {
+const rootPersistConfig = {
     key: "root",
     storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const loginPersistConfig = {
+    key: "login",
+    storage,
+    blacklist: ["fetching", "error"],
+};
+
+const rootReducer = combineReducers({
+    logIn: persistReducer(loginPersistConfig, loginReducer),
+});
+
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
