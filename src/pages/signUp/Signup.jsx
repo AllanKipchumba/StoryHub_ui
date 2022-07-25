@@ -28,7 +28,8 @@ export const Signup = () => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
-      console.log(res.data.user);
+      // console.log(res.data.user);
+      res.data && window.location.replace("/login");
     } catch (error) {
       console.log(error);
     }
