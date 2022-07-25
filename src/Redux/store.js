@@ -7,11 +7,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
-const rootPersistConfig = {
-    key: "root",
-    storage,
-};
-
+//persist all but fetching and error states from login reducer
 const loginPersistConfig = {
     key: "login",
     storage,
@@ -22,10 +18,8 @@ const rootReducer = combineReducers({
     logIn: persistReducer(loginPersistConfig, loginReducer),
 });
 
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
-
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     devTools: process.env.NODE_ENV !== "production",
     middleware: [thunk],
 });
