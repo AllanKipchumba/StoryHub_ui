@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./write.scss";
 import write from "./assets/write.svg";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export const Write = () => {
-  const submitForm = (e) => {
+  const { user } = useSelector((store) => store["logIn"]);
+  const token = user.token;
+  const headers = { Authorization: `Bearer ${token}` };
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  const submitForm = async (e) => {
     e.preventDefault();
+
+    const newPost = {
+      title,
+      categories,
+      description,
+    };
+
+    try {
+      const res = await axios.post("/posts", newPost, { headers });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -25,16 +47,25 @@ export const Write = () => {
 
         <form onSubmit={submitForm} className="col-span-3">
           <label>Title</label>
-          <input type="text" Placeholder="Post Title" className="input" />
+          <input
+            type="text"
+            Placeholder="Post Title"
+            className="input"
+            onChange={(e) => setTitle(e.target.value)}
+          />
 
           <label>Category</label>
-          <select placeholder="Choose Category" className="input">
-            <option value="social">Social</option>
+          <select
+            placeholder="Choose Category"
+            className="input"
+            onChange={(e) => setCategories(e.target.value)}
+          >
+            <option value="education">Education</option>
             <option value="news">News</option>
-            <option value="politics">Politics</option>
-            <option value="technology">Technology</option>
+            <option value="health">Health</option>
+            <option value="engineering">Engineering</option>
             <option value="sports">Sports</option>
-            <option value="philosophy">Philosophy</option>
+            <option value="other">Other</option>
           </select>
 
           <label>Content</label>
@@ -43,6 +74,7 @@ export const Write = () => {
             rows="15"
             cols="60"
             className="input"
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
 
           <button type="submit">Publish</button>
