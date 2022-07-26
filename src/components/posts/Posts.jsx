@@ -2,7 +2,7 @@ import React from "react";
 import "./posts.scss";
 import { Post } from "./post/Post";
 
-export const Posts = () => {
+export const Posts = ({ posts }) => {
   return (
     <>
       <div className="posts">
@@ -11,7 +11,9 @@ export const Posts = () => {
         </h1>
 
         <div className="py-5">
-          <Post />
+          {posts.map((post) => (
+            <Post post={post} key={post._id} />
+          ))}
         </div>
       </div>
     </>

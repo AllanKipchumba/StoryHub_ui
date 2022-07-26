@@ -9,6 +9,7 @@ import { Signup } from "./pages/signUp/Signup";
 import { Write } from "./pages/write/Write";
 import { About } from "./pages/about/About";
 import { Footer } from "./components/footer/Footer";
+import { ReadPost } from "./pages/IndividualPost/ReadPost";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/post/:id" element={<ReadPost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/write" element={<Write />} />
