@@ -15,9 +15,7 @@ import axios from "axios";
 
 export const Login = () => {
   // access state from redux store
-  const loginState = useSelector((store) => store["logIn"]);
-  const { user, fetching, error } = loginState;
-  // console.log(loginState);
+  const { user, fetching, error } = useSelector((store) => store["logIn"]);
 
   const dispatch = useDispatch();
   const emailRef = useRef();
