@@ -29,11 +29,12 @@ export const SinglePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const res = await axios.get("/posts/" + path);
+      console.log(res);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
     };
     fetchPost();
-  }, [path]);
+  }, [post]);
 
   // delete post
   const deletePost = async () => {
@@ -42,6 +43,7 @@ export const SinglePost = () => {
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
         await axios.delete("/posts/" + path, { headers });
+        window.replace("/");
       } else {
         return false;
       }
@@ -59,9 +61,13 @@ export const SinglePost = () => {
       description,
     };
     try {
-      const res = await axios.patch("/posts/" + path, updates, { headers });
-      // console.log(res);
-      setUpdateMode(false);
+      if (window.confirm("Update Post")) {
+        const res = await axios.patch("/posts/" + path, updates, { headers });
+        console.log(res);
+        setUpdateMode(false);
+      } else {
+        return false;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -73,17 +79,19 @@ export const SinglePost = () => {
         <div>
           <div className="flex gap-4">
             {updateMode ? (
-              <input
-                type="text"
-                placeholder={post.title}
-                value={title}
-                className="singlePostTitleInput"
-                autoFocus
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <>
+                <input
+                  type="text"
+                  placeholder={`Edit title: ${post.title}`}
+                  value={title}
+                  className="input"
+                  autoFocus
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </>
             ) : (
               <>
-                <h1 className="font-bold">{post.title}</h1>
+                <h1 className="font-semibold mb-3 uppercase">{post.title}</h1>
                 {author === user?.user.username && (
                   <div className="flex gap-3">
                     <FiEdit
@@ -127,7 +135,7 @@ export const SinglePost = () => {
             )}
           </div>
 
-          <div className="flex gap-4 text-[#ff0581]">
+          <div className="flex gap-2 text-[#ff0581]">
             <Link to={`/?author=${author}`}>
               <p
                 // tooltip props
@@ -138,8 +146,9 @@ export const SinglePost = () => {
                   hideTooltip(false);
                   setTimeout(() => hideTooltip(true), 50);
                 }}
+                className="capitalize"
               >
-                Author: {author}
+                By {author},
               </p>
             </Link>
 
@@ -149,14 +158,14 @@ export const SinglePost = () => {
               </ReactTooltip>
             )}
 
-            <p>{new Date(post.createdAt).toDateString()}</p>
+            <p>Posted {new Date(post.createdAt).toDateString()}</p>
           </div>
         </div>
 
         {updateMode ? (
           <>
             <textarea
-              className="singlePostDescInput"
+              className="input"
               placeholder="Edit post body"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -165,9 +174,7 @@ export const SinglePost = () => {
             />
             {/* edit button */}
             <div className="mt-10">
-              <button className="editButton" onClick={updatePost}>
-                Update
-              </button>
+              <button onClick={updatePost}>Update</button>
             </div>
           </>
         ) : (

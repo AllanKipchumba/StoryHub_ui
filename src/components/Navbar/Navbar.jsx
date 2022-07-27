@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import "./navbar.scss";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { GrFormClose } from "react-icons/gr";
+import { Link } from "react-router-dom";
+import { logout } from "../../Redux/slices/loginSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Navbar = () => {
+  const { user } = useSelector((store) => store["logIn"]);
+  const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState(false);
-  const [user, setuser] = useState(false);
+  // const [user, setuser] = useState(false);
 
   const handleClick = () => setMobileView(false);
   return (
@@ -23,33 +28,41 @@ export const Navbar = () => {
         </button>
 
         <h3 className="logo">
-          Story<span className="text-[#ff0581]">Hub</span>
+          <Link to="/">
+            Story<span className="text-[#ff0581]">Hub</span>
+          </Link>
         </h3>
 
         <ul className={mobileView ? "nav-links-mobile" : "nav-links"}>
-          <li onClick={handleClick} className="link"></li>
           <li onClick={handleClick} className="link">
             Category
           </li>
           <li onClick={handleClick} className="link">
-            About
+            <Link to="/about">About</Link>
           </li>
           {user && (
             <li onClick={handleClick} className="link">
-              Publish
+              <Link to="/write">Publish</Link>
             </li>
           )}
           {user ? (
-            <li onClick={handleClick} className="link">
+            <li
+              onClick={() => {
+                handleClick();
+                dispatch(logout());
+                window.replace("/");
+              }}
+              className="link"
+            >
               logout
             </li>
           ) : (
             <>
               <li onClick={handleClick} className="link">
-                sign up
+                <Link to="/signup">sign up</Link>
               </li>
               <li onClick={handleClick} className="link">
-                login
+                <Link to="/login">login</Link>
               </li>
             </>
           )}

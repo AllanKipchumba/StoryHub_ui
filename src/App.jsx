@@ -10,24 +10,24 @@ import { Write } from "./pages/write/Write";
 import { About } from "./pages/about/About";
 import { Footer } from "./components/footer/Footer";
 import { ReadPost } from "./pages/IndividualPost/ReadPost";
-
+import { useSelector } from "react-redux";
 const App = () => {
+  const { user } = useSelector((store) => store["logIn"]);
   return (
     <>
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:id" element={<ReadPost />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/write" element={<Write />} />
+        <Route path="/post/:id" element={user ? <ReadPost /> : <Home />} />
+        <Route path="/login" element={!user ? <Login /> : <Home />} />
+        <Route path="/signup" element={!user ? <Signup /> : <Home />} />
+        <Route path="/write" element={user ? <Write /> : <Home />} />
         <Route path="/about" element={<About />} />
       </Routes>
 
-      <Footer />
       <Content />
       <ScrollButon />
+      <Footer />
     </>
   );
 };

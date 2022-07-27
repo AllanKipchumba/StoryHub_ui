@@ -2,6 +2,37 @@
     @apply shadow-2xl;
     position: relative;
     top: 100px;
-    padding: 15px 25px 20px 25px;
+    padding: 25px 25px 20px 25px;
     margin: 0 30px;
+    //
+    .icon {
+        color: #ff0581;
+        font-size: 16px;
+    }
+    .input {
+        @apply shadow-lg;
+        padding: 10px;
+        border: 2px solid rgba(211, 211, 211, 0.5);
+        border-radius: 20px;
+        width: 100%;
+        color: gray;
+        margin: 20px 0;
+        //
+        &:focus {
+            outline: none;
+        }
+    }
+    button {
+        @apply py-3 capitalize mt-4;
+        display: flex;
+        width: 20%;
+        background-color: #ff0581;
+        border-radius: 20px;
+        justify-content: center;
+        color: #fff;
+        //
+        &:hover {
+            background-color: #d10068;
+        }
+    }
 }

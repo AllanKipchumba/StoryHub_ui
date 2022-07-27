@@ -5,16 +5,21 @@ import { Link } from "react-router-dom";
 export const Post = ({ post }) => {
   return (
     <>
-      <div className="post max-w-[1240px] mx-auto flex">
+      <div className="post mt-4 max-w-[1240px]">
         <div>
           <div>
-            <h1 className="capitalize text-2xl py-2">
+            <h1 className="capitalize font-medium">
               <Link to={`/post/${post._id}`}>{post.title}</Link>
             </h1>
-            {/* access post's timestamp */}
-            <p className="mb-3">{new Date(post.createdAt).toDateString()}</p>
+
+            <p className="mb-3 mt-3 italic">
+              {new Date(post.createdAt).toDateString()}
+            </p>
           </div>
-          <p className="text-[#292929]">{post.description}</p>
+
+          <button>
+            <Link to={`/post/${post._id}`}>Read More</Link>
+          </button>
         </div>
       </div>
     </>

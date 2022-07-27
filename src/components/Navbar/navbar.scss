@@ -1,11 +1,11 @@
 .navbar {
-    @apply shadow-md;
+    @apply shadow-lg;
+    position: fixed;
+    z-index: 500;
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 60px;
-    z-index: 999 !important;
-    position: fixed;
     width: 100%;
     //
     .mobile-menu-icon {
@@ -54,7 +54,7 @@
         border: none;
         top: 15px;
         left: 15px;
-        z-index: 1000;
+        z-index: 500;
     }
     .logo {
         display: flex;

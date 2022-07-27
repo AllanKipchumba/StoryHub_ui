@@ -18,8 +18,8 @@ export const Write = () => {
 
     const newPost = {
       title,
-      categories,
       description,
+      categories,
     };
     try {
       const res = await axios.post("/posts", newPost, { headers });

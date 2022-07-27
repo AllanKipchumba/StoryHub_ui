@@ -4,8 +4,10 @@ import { BsFacebook } from "react-icons/bs";
 import { FaTwitter, FaGithub } from "react-icons/fa";
 import { AiOutlineInstagram } from "react-icons/ai";
 import image from "./assests/profile-image.svg";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
+  const { user } = useSelector((store) => store["logIn"]);
   return (
     <>
       <div className="header max-w-[1240px] mx-auto grid md:grid-cols-3 gap-2">
@@ -14,8 +16,9 @@ export const Header = () => {
         </div>
 
         <div className="flex flex-col justify-center md:col-span-2">
-          <p className="capitalize height-[15px]  md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 py-2">
-            Hey! I'm <span className="font-bold">foo</span>
+          <p className="capitalize mb-3 height-[15px]  md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 py-2">
+            {user && <span className="">{user.user.username},</span>} Welcome to
+            story<span className="text-[#ff0581]">Hub</span>{" "}
           </p>
 
           <p className="text-[#292929]">
@@ -27,10 +30,18 @@ export const Header = () => {
             consumer driven marketplace.
           </p>
           <div className="socials flex mt-8 gap-8">
-            <BsFacebook className="icon" />
-            <AiOutlineInstagram className="icon" />
-            <FaTwitter className="icon" />
-            <FaGithub className="icon" />
+            {!user ? (
+              <p className="capitalize text-[#ff0581]">
+                login to read and publish posts
+              </p>
+            ) : (
+              <>
+                <BsFacebook className="icon" />
+                <AiOutlineInstagram className="icon" />
+                <FaTwitter className="icon" />
+                <FaGithub className="icon" />
+              </>
+            )}
           </div>
         </div>
       </div>
