@@ -4,6 +4,7 @@ const initialState = {
     user: null,
     fetching: false,
     error: false,
+    loading: false,
 };
 
 const loginSlice = createSlice({
@@ -19,16 +20,21 @@ const loginSlice = createSlice({
         },
         loginFail: (state, action) => {
             state.error = true;
+            state.fetching = false;
         },
         logout: (state, action) => {
             state.user = null;
             state.fetching = false;
             state.error = false;
         },
+        loadingStart: (state, action) => {
+            state.loading = true;
+            state.fetching = false;
+        },
     },
 });
 // export actions
-export const { loginStart, loginFail, loginSuccess, logout } =
+export const { loginStart, loginFail, loginSuccess, logout, loadingStart } =
 loginSlice.actions;
 // axport reducer
 export default loginSlice.reducer;

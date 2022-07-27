@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
-// import { rootReducer } from "./rootReducer";
 import loginReducer from "./slices/loginSlice";
 // redux-persist config
 import storage from "redux-persist/lib/storage";
@@ -11,7 +10,7 @@ import thunk from "redux-thunk";
 const loginPersistConfig = {
     key: "login",
     storage,
-    blacklist: ["fetching", "error"],
+    whitelist: ["user"],
 };
 
 const rootReducer = combineReducers({

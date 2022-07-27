@@ -9,36 +9,61 @@ import {
   loginStart,
   loginFail,
   loginSuccess,
+  loadingStart,
 } from "../../Redux/slices/loginSlice";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Login = () => {
-  const { fetching } = useSelector((store) => store["logIn"]);
-
+  const { fetching, error, loading } = useSelector((store) => store["logIn"]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [formErrors, setFormErrors] = useState({});
+
+  const formValues = {
+    email,
+    password,
+  };
 
   useEffect(() => {
-    emailRef.current.focus();
-  }, []);
+    if (Object.keys(formErrors).length === 0 && fetching) {
+      dispatch(loadingStart);
+    }
+  }, [formErrors]);
 
   const submitForm = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
+    setFormErrors(validate(formValues));
 
     try {
-      const res = await axios.post("/auth/login", {
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-      });
+      const res = await axios.post("/auth/login", formValues);
       // update user state
-      dispatch(loginSuccess(res.data));
+      dispatch(loginSuccess(res.data)) && window.location.replace("/");
     } catch (error) {
       dispatch(loginFail());
       console.log(error);
     }
+  };
+
+  // FORM VALIDATION
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 6) {
+      errors.password = "Password must be more than 6 characters";
+    } else if (values.password.length > 10) {
+      errors.password = "Password cannot exceed more than 10 characters";
+    }
+    return errors;
   };
 
   return (
@@ -53,6 +78,12 @@ export const Login = () => {
               <span className="text-[#ff0581]">Hub</span> account
             </h1>
 
+            {error && (
+              <p className="text-[red]">
+                Failed to login! check your credentials!
+              </p>
+            )}
+
             <label>Email</label>
             <div className="inputWrapper flex flex-row gap-2">
               <HiOutlineMail className="icon" />
@@ -60,9 +91,11 @@ export const Login = () => {
                 type="email"
                 placeholder="Input Email"
                 className="py-4 input"
-                ref={emailRef}
+                // ref={emailRef}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            <p className="error">{formErrors.email}</p>
 
             <label>Password</label>
             <div className="inputWrapper flex flex-row gap-2">
@@ -71,18 +104,23 @@ export const Login = () => {
                 type="password"
                 placeholder="Input password"
                 className="py-4 input"
-                ref={passwordRef}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <p className="error">{formErrors.password}</p>
 
-            <button type="submit">sign in</button>
-            <BeatLoader
-              loading={fetching}
-              color="#ff0581"
-              margin={4}
-              size={15}
-              className="ml-[100px]"
-            />
+            <button type="submit">
+              {loading ? (
+                <BeatLoader
+                  loading={fetching}
+                  color="#fff"
+                  margin={4}
+                  size={17}
+                />
+              ) : (
+                `Sign in`
+              )}
+            </button>
 
             <p>
               new blogger?{" "}

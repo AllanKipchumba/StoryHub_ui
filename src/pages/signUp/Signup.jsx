@@ -23,11 +23,8 @@ export const Signup = () => {
   };
 
   useEffect(() => {
-    // console.log(formErrors);
-    console.log(Object.keys(formErrors).length);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       setLoading(true);
-      // console.log(formValues);
     }
   }, [formErrors]);
 
@@ -114,7 +111,7 @@ export const Signup = () => {
             <div className="inputWrapper">
               <HiOutlineMail className="icon" />
               <input
-                type="emailRef"
+                type="email"
                 placeholder="Enter your Email"
                 onChange={(e) => setEmail(e.target.value)}
                 className="input"
