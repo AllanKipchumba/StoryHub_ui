@@ -1,8 +1,13 @@
+.loader {
+    position: relative;
+    top: 300px;
+}
+
 .singlepost {
     @apply shadow-2xl;
     position: relative;
     top: 100px;
-    padding: 25px 25px 20px 25px;
+    padding: 60px 25px 20px 25px;
     margin: 0 30px;
     //
     .icon {

@@ -26,10 +26,9 @@ export const Posts = ({ posts }) => {
           <h1 className="md:px-16 font-bold tracking-[2.72px] text-[16px] capitalize">
             <span>latest</span> stories
           </h1>
-          <div className="input">
-            <label className="mr-6">Choose stories</label>
+          <div className="input" id="category">
             <select onChange={handleChange}>
-              <option value="select">select</option>
+              <option>select category</option>
               <option value="education">Education</option>
               <option value="news">News</option>
               <option value="health">Health</option>

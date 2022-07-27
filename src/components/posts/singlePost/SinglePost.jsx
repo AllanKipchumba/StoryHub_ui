@@ -3,16 +3,24 @@ import "./singlepost.scss";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+};
 
 export const SinglePost = () => {
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user, loading } = useSelector((store) => store["logIn"]);
   const token = user.token;
+  const dispatch = useDispatch();
   const headers = { Authorization: `Bearer ${token}` };
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -27,14 +35,16 @@ export const SinglePost = () => {
 
   //   get individual posts by id
   useEffect(() => {
+    dispatch(loadingStart());
     const fetchPost = async () => {
       const res = await axios.get("/posts/" + path);
-      console.log(res);
+      // console.log(res);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
+      dispatch(loadingStop());
     };
     fetchPost();
-  }, [post]);
+  }, []);
 
   // delete post
   const deletePost = async () => {
@@ -75,112 +85,127 @@ export const SinglePost = () => {
 
   return (
     <>
-      <div className="singlepost">
-        <div>
-          <div className="flex gap-4">
-            {updateMode ? (
-              <>
-                <input
-                  type="text"
-                  placeholder={`Edit title: ${post.title}`}
-                  value={title}
-                  className="input"
-                  autoFocus
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </>
-            ) : (
-              <>
-                <h1 className="font-semibold mb-3 uppercase">{post.title}</h1>
-                {author === user?.user.username && (
-                  <div className="flex gap-3">
-                    <FiEdit
-                      className="icon"
-                      onClick={() => setUpdateMode(true)}
-                      data-tip
-                      data-for="editPost"
-                      onMouseEnter={() => hideTooltip(true)}
-                      onMouseLeave={() => {
-                        hideTooltip(false);
-                        setTimeout(() => hideTooltip(true), 50);
-                      }}
-                    />
-                    <MdDeleteOutline
-                      className="icon"
-                      onClick={deletePost}
-                      // tooltip props
-                      data-tip
-                      data-for="deletePost"
-                      onMouseEnter={() => hideTooltip(true)}
-                      onMouseLeave={() => {
-                        hideTooltip(false);
-                        setTimeout(() => hideTooltip(true), 50);
-                      }}
-                    />
+      {loading ? (
+        <ClipLoader
+          className="loader"
+          loading={loading}
+          color="#ff0581"
+          margin={4}
+          size={50}
+          cssOverride={override}
+        />
+      ) : (
+        <div className="singlepost">
+          <div>
+            <div className="flex gap-4">
+              {updateMode ? (
+                <>
+                  <input
+                    type="text"
+                    placeholder={`Edit title: ${post.title}`}
+                    value={title}
+                    className="input"
+                    autoFocus
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </>
+              ) : (
+                <>
+                  <h1 className="font-semibold mb-3 uppercase">{post.title}</h1>
+                  {author === user?.user.username && (
+                    <div className="flex gap-3">
+                      <FiEdit
+                        className="icon"
+                        onClick={() => setUpdateMode(true)}
+                        data-tip
+                        data-for="editPost"
+                        onMouseEnter={() => hideTooltip(true)}
+                        onMouseLeave={() => {
+                          hideTooltip(false);
+                          setTimeout(() => hideTooltip(true), 50);
+                        }}
+                      />
+                      <MdDeleteOutline
+                        className="icon"
+                        onClick={deletePost}
+                        // tooltip props
+                        data-tip
+                        data-for="deletePost"
+                        onMouseEnter={() => hideTooltip(true)}
+                        onMouseLeave={() => {
+                          hideTooltip(false);
+                          setTimeout(() => hideTooltip(true), 50);
+                        }}
+                      />
 
-                    {tooltip && (
-                      <ReactTooltip id="deletePost" place="top" effect="solid">
-                        Delete post
-                      </ReactTooltip>
-                    )}
+                      {tooltip && (
+                        <ReactTooltip
+                          id="deletePost"
+                          place="top"
+                          effect="solid"
+                        >
+                          Delete post
+                        </ReactTooltip>
+                      )}
 
-                    {tooltip && (
-                      <ReactTooltip id="editPost" place="top" effect="solid">
-                        Edit post
-                      </ReactTooltip>
-                    )}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-
-          <div className="flex gap-2 text-[#ff0581]">
-            <Link to={`/?author=${author}`}>
-              <p
-                // tooltip props
-                data-tip
-                data-for="showAuthorPosts"
-                onMouseEnter={() => hideTooltip(true)}
-                onMouseLeave={() => {
-                  hideTooltip(false);
-                  setTimeout(() => hideTooltip(true), 50);
-                }}
-                className="capitalize"
-              >
-                By {author},
-              </p>
-            </Link>
-
-            {tooltip && (
-              <ReactTooltip id="showAuthorPosts" place="top" effect="solid">
-                Show all posts by {author}
-              </ReactTooltip>
-            )}
-
-            <p>Posted {new Date(post.createdAt).toDateString()}</p>
-          </div>
-        </div>
-
-        {updateMode ? (
-          <>
-            <textarea
-              className="input"
-              placeholder="Edit post body"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows="7"
-              cols="50"
-            />
-            {/* edit button */}
-            <div className="mt-10">
-              <button onClick={updatePost}>Update</button>
+                      {tooltip && (
+                        <ReactTooltip id="editPost" place="top" effect="solid">
+                          Edit post
+                        </ReactTooltip>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-          </>
-        ) : (
-          <div className="mt-3">{post.description}</div>
-        )}
-      </div>
+
+            <div className="flex gap-2 text-[#ff0581]">
+              <Link to={`/?author=${author}`}>
+                <p
+                  // tooltip props
+                  data-tip
+                  data-for="showAuthorPosts"
+                  onMouseEnter={() => hideTooltip(true)}
+                  onMouseLeave={() => {
+                    hideTooltip(false);
+                    setTimeout(() => hideTooltip(true), 50);
+                  }}
+                  className="capitalize"
+                >
+                  By {author},
+                </p>
+              </Link>
+
+              {tooltip && (
+                <ReactTooltip id="showAuthorPosts" place="top" effect="solid">
+                  Show all posts by {author}
+                </ReactTooltip>
+              )}
+
+              <p>Posted {new Date(post.createdAt).toDateString()}</p>
+            </div>
+          </div>
+
+          {updateMode ? (
+            <>
+              <textarea
+                className="input"
+                placeholder="Edit post body"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows="7"
+                cols="50"
+              />
+              {/* edit button */}
+              <div className="mt-10">
+                <button onClick={updatePost}>Update</button>
+              </div>
+            </>
+          ) : (
+            <div className="mt-3">{post.description}</div>
+          )}
+        </div>
+      )}
     </>
   );
 };

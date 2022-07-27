@@ -1,8 +1,10 @@
 import React from "react";
 import "./post.scss";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Post = ({ post }) => {
+  const { fetching } = useSelector((store) => store["logIn"]);
   return (
     <>
       <div className="post mt-4 max-w-[1240px]">

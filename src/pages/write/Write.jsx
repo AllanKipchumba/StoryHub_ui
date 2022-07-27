@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import "./write.scss";
 import write from "./assets/write.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import BeatLoader from "react-spinners/BeatLoader";
+import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 
 export const Write = () => {
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user, loading } = useSelector((store) => store["logIn"]);
   const author = user.user.username;
   const token = user.token;
   const headers = { Authorization: `Bearer ${token}` };
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
 
   const submitForm = async (e) => {
     e.preventDefault();
+    dispatch(loadingStart());
 
     const newPost = {
       title,
@@ -25,6 +29,7 @@ export const Write = () => {
       const res = await axios.post("/posts", newPost, { headers });
       // change route to read new post
       window.location.replace("/post/" + res.data._id);
+      dispatch(loadingStop());
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +58,7 @@ export const Write = () => {
             Placeholder="Post Title"
             className="input"
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
 
           <label>Category</label>
@@ -75,9 +81,16 @@ export const Write = () => {
             cols="60"
             className="input"
             onChange={(e) => setDescription(e.target.value)}
+            required
           ></textarea>
 
-          <button type="submit">Publish</button>
+          <button type="submit">
+            {loading ? (
+              <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
+            ) : (
+              `Publish`
+            )}
+          </button>
         </form>
       </div>
     </>

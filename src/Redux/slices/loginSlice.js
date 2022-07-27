@@ -31,10 +31,19 @@ const loginSlice = createSlice({
             state.loading = true;
             // state.fetching = false;
         },
+        loadingStop: (state, action) => {
+            state.loading = false;
+        },
     },
 });
 // export actions
-export const { loginStart, loginFail, loginSuccess, logout, loadingStart } =
-loginSlice.actions;
+export const {
+    loginStart,
+    loginFail,
+    loginSuccess,
+    logout,
+    loadingStart,
+    loadingStop,
+} = loginSlice.actions;
 // axport reducer
 export default loginSlice.reducer;

@@ -12,7 +12,7 @@ export const About = () => {
   return (
     <>
       <div className="about ">
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-4 gap-6 shadow-lg p-5 mb-10">
           <div className="col-span-2">
             <h1 className="capitalize tracking-[2.72px] mb-3 text-center">
               about story<span className="text-[#ff0581]">hub</span>
@@ -27,7 +27,7 @@ export const About = () => {
           <img src={about} alt="/" className="col-span-2 mb-8" />
         </div>
 
-        <div>
+        <div className="shadow-lg p-5">
           <h1 className="capitalize tracking-[2.72px] mb-3 text-center">
             About the<span className="text-[#ff0581]">Developer</span>
           </h1>
@@ -48,7 +48,7 @@ export const About = () => {
                 problems front on by devising workable solutions to them.
               </p>
               <h2 className="mt-3 mb-3 tracking-[2.72px]">Find me on</h2>
-              <div className="flex">
+              <div className="flex ">
                 <AiFillGithub className="icon" />
                 <AiOutlineTwitter className="icon" />
                 <AiOutlineInstagram className="icon" />
