@@ -7,7 +7,6 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { objectTraps } from "immer/dist/internal";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
@@ -24,7 +23,8 @@ export const Signup = () => {
   };
 
   useEffect(() => {
-    console.log(formErrors);
+    // console.log(formErrors);
+    console.log(Object.keys(formErrors).length);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       setLoading(true);
       // console.log(formValues);
@@ -36,14 +36,13 @@ export const Signup = () => {
     setFormErrors(validate(formValues));
     setIsSubmit(true);
 
-    if (!Object.keys(formErrors).length) {
-      try {
-        const res = await axios.post("/auth/register", formValues);
-        console.log(res.data.user);
-        // res.data && window.location.replace("/login");
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const res = await axios.post("/auth/register", formValues);
+      console.log(res.data.user);
+      setLoading(false);
+      res.data && window.location.replace("/login");
+    } catch (error) {
+      console.log(error);
     }
   };
 

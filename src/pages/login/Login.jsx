@@ -14,8 +14,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Login = () => {
-  // access state from redux store
-  const { user, fetching, error } = useSelector((store) => store["logIn"]);
+  const { fetching } = useSelector((store) => store["logIn"]);
 
   const dispatch = useDispatch();
   const emailRef = useRef();
