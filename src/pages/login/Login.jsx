@@ -28,7 +28,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && fetching) {
-      dispatch(loadingStart);
+      dispatch(loadingStart());
     }
   }, [formErrors]);
 
@@ -40,6 +40,7 @@ export const Login = () => {
     try {
       const res = await axios.post("/auth/login", formValues);
       // update user state
+      console.log(res.data);
       dispatch(loginSuccess(res.data)) && window.location.replace("/");
     } catch (error) {
       dispatch(loginFail());

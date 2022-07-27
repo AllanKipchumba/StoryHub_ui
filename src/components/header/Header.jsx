@@ -35,12 +35,7 @@ export const Header = () => {
                 login to read and publish posts
               </p>
             ) : (
-              <>
-                <BsFacebook className="icon" />
-                <AiOutlineInstagram className="icon" />
-                <FaTwitter className="icon" />
-                <FaGithub className="icon" />
-              </>
+              <p>Be the first to read the latest stories</p>
             )}
           </div>
         </div>

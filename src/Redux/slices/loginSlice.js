@@ -29,7 +29,7 @@ const loginSlice = createSlice({
         },
         loadingStart: (state, action) => {
             state.loading = true;
-            state.fetching = false;
+            // state.fetching = false;
         },
     },
 });

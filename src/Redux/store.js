@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 const loginPersistConfig = {
     key: "login",
     storage,
-    blacklist: ["fetching", "error", "loading"],
+    whitelist: ["user"],
 };
 
 const rootReducer = combineReducers({
