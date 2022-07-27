@@ -6,6 +6,7 @@ import axios from "axios";
 
 export const Write = () => {
   const { user } = useSelector((store) => store["logIn"]);
+  const author = user.user.username;
   const token = user.token;
   const headers = { Authorization: `Bearer ${token}` };
   const [title, setTitle] = useState("");
@@ -20,10 +21,10 @@ export const Write = () => {
       categories,
       description,
     };
-
     try {
       const res = await axios.post("/posts", newPost, { headers });
-      console.log(res);
+      // change route to read new post
+      window.location.replace("/post/" + res.data._id);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +35,7 @@ export const Write = () => {
         <div className="intro sm:ml-[50px] col-span-2 flex sm:flex-row md:flex-col ">
           <div>
             <h1 className="font-bold">
-              Welcome <span className="capitalize text-[#ff0581]">foo</span>
+              Welcome <span className="uppercase text-[#ff0581]">{author}</span>
             </h1>
             <p className="mt-2 mb-4">Create and publish your posts here</p>
           </div>
@@ -56,7 +57,6 @@ export const Write = () => {
 
           <label>Category</label>
           <select
-            placeholder="Choose Category"
             className="input"
             onChange={(e) => setCategories(e.target.value)}
           >
