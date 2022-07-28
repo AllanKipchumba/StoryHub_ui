@@ -10,6 +10,7 @@ import {
   loginFail,
   loginSuccess,
   loadingStart,
+  loadingStop,
 } from "../../Redux/slices/loginSlice";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -35,14 +36,17 @@ export const Login = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
+    dispatch(loadingStart());
     setFormErrors(validate(formValues));
 
     try {
       const res = await axios.post("/auth/login", formValues);
       // update user state
       dispatch(loginSuccess(res.data)) && window.location.replace("/");
+      dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());
+      dispatch(loadingStop());
       console.log(error);
     }
   };

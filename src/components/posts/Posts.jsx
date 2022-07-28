@@ -36,12 +36,17 @@ export const Posts = () => {
 
   useEffect(() => {
     dispatch(loadingStart());
-    const fetchPosts = async () => {
-      const res = await axios.get("/posts" + search);
-      setPosts(res.data);
+    try {
+      const fetchPosts = async () => {
+        const res = await axios.get("/posts" + search);
+        setPosts(res.data);
+        dispatch(loadingStop());
+      };
+      fetchPosts();
+    } catch (error) {
+      console.log(error);
       dispatch(loadingStop());
-    };
-    fetchPosts();
+    }
   }, [search]);
 
   return (
