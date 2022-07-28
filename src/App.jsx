@@ -24,11 +24,11 @@ const App = () => {
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    window.addEventListener("load", () => {
+    window.addEventListener("load", (e) => {
       setFetching(false);
     });
     return () =>
-      window.removeEventListener("load", () => {
+      window.removeEventListener("load", (e) => {
         setFetching(false);
       });
   }, []);
