@@ -91,7 +91,7 @@ export const Login = () => {
               <input
                 type="email"
                 placeholder="Input Email"
-                className="py-4 input"
+                className="input py-4"
                 // ref={emailRef}
                 onChange={(e) => setEmail(e.target.value)}
               />

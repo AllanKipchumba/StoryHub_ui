@@ -24,13 +24,9 @@ const App = () => {
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    window.addEventListener("load", (e) => {
+    setTimeout(() => {
       setFetching(false);
-    });
-    return () =>
-      window.removeEventListener("load", (e) => {
-        setFetching(false);
-      });
+    }, 700);
   }, []);
 
   return fetching ? (

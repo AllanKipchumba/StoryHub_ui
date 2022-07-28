@@ -3,7 +3,8 @@ import "./posts.scss";
 import { Post } from "./post/Post";
 import { useSelector, useDispatch } from "react-redux";
 import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
-import ClipLoader from "react-spinners/ClipLoader";
+import MoonLoader from "react-spinners/MoonLoader";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const override = {
@@ -15,6 +16,7 @@ export const Posts = () => {
   const [category, setCategory] = useState("");
   const { loading } = useSelector((store) => store["logIn"]);
   const dispatch = useDispatch();
+  const { search } = useLocation();
   const [getPosts, setPosts] = useState([]);
 
   const handleChange = (e) => {
@@ -35,22 +37,22 @@ export const Posts = () => {
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPosts = async () => {
-      const res = await axios.get("/posts");
-      setPosts([res.data]);
+      const res = await axios.get("/posts" + search);
+      setPosts(res.data);
       dispatch(loadingStop());
     };
     fetchPosts();
-  }, []);
+  }, [search]);
 
   return (
     <>
       <div className="posts">
         {loading ? (
-          <ClipLoader
+          <MoonLoader
             loading={loading}
             color="#ff0581"
             margin={4}
-            size={80}
+            size={40}
             cssOverride={override}
           />
         ) : (
@@ -73,9 +75,9 @@ export const Posts = () => {
             </div>
 
             <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {getPosts.map((post) => {
-                <Post key={post._id} post={post} />;
-              })}
+              {getPosts.map((post) => (
+                <Post key={post._id} post={post} />
+              ))}
             </div>
           </>
         )}
