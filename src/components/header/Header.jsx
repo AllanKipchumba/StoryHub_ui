@@ -1,8 +1,5 @@
 import React from "react";
 import "./header.scss";
-// import { BsFacebook } from "react-icons/bs";
-// import { FaTwitter, FaGithub } from "react-icons/fa";
-// import { AiOutlineInstagram } from "react-icons/ai";
 import image from "./assests/profile-image.svg";
 import { useSelector } from "react-redux";
 

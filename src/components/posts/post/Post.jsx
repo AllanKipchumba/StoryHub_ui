@@ -1,10 +1,8 @@
 import React from "react";
 import "./post.scss";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
 export const Post = ({ post }) => {
-  const { fetching } = useSelector((store) => store["logIn"]);
   return (
     <>
       <div className="post mt-4 max-w-[1240px]">
@@ -14,7 +12,7 @@ export const Post = ({ post }) => {
               <Link to={`/post/${post._id}`}>{post.title}</Link>
             </h1>
 
-            <p className="mb-3 mt-3 italic">
+            <p className="mb-3 mt-3 italic font-light">
               {new Date(post.createdAt).toDateString()}
             </p>
           </div>

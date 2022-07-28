@@ -14,7 +14,7 @@ export const Posts = ({ posts }) => {
       try {
         window.location.replace(`/?cat=${category}`);
       } catch (error) {
-        window.location.replace("/");
+        console.log(error);
       }
     }
   }, [category]);

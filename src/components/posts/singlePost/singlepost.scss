@@ -13,6 +13,9 @@
     .icon {
         color: #ff0581;
         font-size: 16px;
+        &:outline {
+            border: none;
+        }
     }
     .input {
         @apply shadow-lg;

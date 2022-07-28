@@ -11,12 +11,11 @@ export const Navbar = () => {
   const { user } = useSelector((store) => store["logIn"]);
   const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState(false);
-  // const [user, setuser] = useState(false);
 
   const handleClick = () => setMobileView(false);
   return (
     <>
-      <nav className="navbar">
+      <nav className="navbar fixed z-100">
         <button
           className="mobile-menu-icon"
           onClick={() => setMobileView(!mobileView)}
@@ -36,7 +35,7 @@ export const Navbar = () => {
 
         <ul className={mobileView ? "nav-links-mobile" : "nav-links"}>
           <li onClick={handleClick} className="link">
-            <HashLink to="#category">Category</HashLink>
+            <HashLink to="/#category">Category</HashLink>
           </li>
           <li onClick={handleClick} className="link">
             <Link to="/about">About</Link>
@@ -51,7 +50,7 @@ export const Navbar = () => {
               onClick={() => {
                 handleClick();
                 dispatch(logout());
-                window.replace("/");
+                window.location.replace("/");
               }}
               className="link"
             >

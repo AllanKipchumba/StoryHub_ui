@@ -53,7 +53,7 @@ export const SinglePost = () => {
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
         await axios.delete("/posts/" + path, { headers });
-        window.replace("/");
+        window.location.replace("/");
       } else {
         return false;
       }

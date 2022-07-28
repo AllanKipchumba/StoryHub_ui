@@ -11,6 +11,7 @@ import { About } from "./pages/about/About";
 import { Footer } from "./components/footer/Footer";
 import { ReadPost } from "./pages/IndividualPost/ReadPost";
 import { useSelector } from "react-redux";
+
 const App = () => {
   const { user } = useSelector((store) => store["logIn"]);
   return (
