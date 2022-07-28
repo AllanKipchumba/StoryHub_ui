@@ -24,40 +24,41 @@ const App = () => {
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    window.addEventListener("load", () => {
       setFetching(false);
-    }, 3000);
+    });
+    return () =>
+      window.removeEventListener("load", () => {
+        setFetching(false);
+      });
   }, []);
-  if (!fetching) {
-    return (
-      <>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/post/:id" element={user ? <ReadPost /> : <Home />} />
-          <Route path="/login" element={!user ? <Login /> : <Home />} />
-          <Route path="/signup" element={!user ? <Signup /> : <Home />} />
-          <Route path="/write" element={user ? <Write /> : <Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
 
-        <Content />
-        <ScrollButon />
-        <Footer />
-      </>
-    );
-  } else {
-    return (
-      <MoonLoader
-        className="loader"
-        loading={fetching}
-        color="#ff0581"
-        margin={4}
-        size={50}
-        cssOverride={override}
-      />
-    );
-  }
+  return fetching ? (
+    <MoonLoader
+      className="loader"
+      loading={fetching}
+      color="#ff0581"
+      margin={4}
+      size={50}
+      cssOverride={override}
+    />
+  ) : (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/post/:id" element={user ? <ReadPost /> : <Home />} />
+        <Route path="/login" element={!user ? <Login /> : <Home />} />
+        <Route path="/signup" element={!user ? <Signup /> : <Home />} />
+        <Route path="/write" element={user ? <Write /> : <Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+
+      <Content />
+      <ScrollButon />
+      <Footer />
+    </>
+  );
 };
 
 export default App;
