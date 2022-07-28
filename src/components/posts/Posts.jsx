@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./posts.scss";
 import { Post } from "./post/Post";
 
-export const Posts = (props) => {
+export const Posts = ({ posts }) => {
   const [category, setCategory] = useState("");
 
   const handleChange = (e) => {
@@ -40,7 +40,7 @@ export const Posts = (props) => {
         </div>
 
         <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {props.posts.map((post) => (
+          {posts.map((post) => (
             <Post post={post} key={post._id} />
           ))}
         </div>
