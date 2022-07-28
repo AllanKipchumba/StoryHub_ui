@@ -69,7 +69,7 @@ export const Login = () => {
 
   return (
     <>
-      <div className="login max-w-[1240px] flex-col p-4 mx-auto grid md:grid-cols-3 gap-10">
+      <div className="login max-w-[1240px] flex-col mx-auto grid md:grid-cols-3 gap-10">
         <img src={login} alt="/" className="col-span-1 w-[50%]" />
 
         <div className="col-span-2 py-8 ">

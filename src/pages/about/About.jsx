@@ -49,9 +49,15 @@ export const About = () => {
               </p>
               <h2 className="mt-3 mb-3 tracking-[2.72px]">Find me on</h2>
               <div className="flex ">
-                <AiFillGithub className="icon" />
-                <AiOutlineTwitter className="icon" />
-                <AiOutlineInstagram className="icon" />
+                <a href="https://github.com/AllanKipchumba">
+                  <AiFillGithub className="icon" />
+                </a>
+                <a href="https://twitter.com/a_l_a_n_____">
+                  <AiOutlineTwitter className="icon" />
+                </a>
+                <a href="https://www.instagram.com/allan_kipchumba/">
+                  <AiOutlineInstagram className="icon" />
+                </a>
               </div>
             </div>
           </div>
