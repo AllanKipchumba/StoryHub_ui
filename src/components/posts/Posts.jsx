@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "./posts.scss";
 import { Post } from "./post/Post";
+import { useSelector, useDispatch } from "react-redux";
+import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
+import ClipLoader from "react-spinners/ClipLoader";
+import axios from "axios";
 
-export const Posts = ({ posts }) => {
+const override = {
+  display: "block",
+  margin: "0 auto",
+};
+
+export const Posts = () => {
   const [category, setCategory] = useState("");
+  const { loading } = useSelector((store) => store["logIn"]);
+  const dispatch = useDispatch();
+  const [getPosts, setPosts] = useState([]);
 
   const handleChange = (e) => {
     setCategory(e.target.value);
   };
+
   useEffect(() => {
     if (!category) {
     } else {
@@ -19,31 +32,53 @@ export const Posts = ({ posts }) => {
     }
   }, [category]);
 
+  useEffect(() => {
+    dispatch(loadingStart());
+    const fetchPosts = async () => {
+      const res = await axios.get("/posts");
+      setPosts([res.data]);
+      dispatch(loadingStop());
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <>
       <div className="posts">
-        <div className="mx-auto grid grid-cols-2 md:grid-cols-3">
-          <h1 className="md:px-16 font-bold tracking-[2.72px] text-[16px] capitalize">
-            <span>latest</span> stories
-          </h1>
-          <div className="input" id="category">
-            <select onChange={handleChange}>
-              <option>select category</option>
-              <option value="education">Education</option>
-              <option value="news">News</option>
-              <option value="health">Health</option>
-              <option value="engineering">Engineering</option>
-              <option value="sports">Sports</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
+        {loading ? (
+          <ClipLoader
+            loading={loading}
+            color="#ff0581"
+            margin={4}
+            size={80}
+            cssOverride={override}
+          />
+        ) : (
+          <>
+            <div className="mx-auto grid grid-cols-2 md:grid-cols-3">
+              <h1 className="md:px-16 font-bold tracking-[2.72px] text-[16px] capitalize">
+                <span>latest</span> stories
+              </h1>
+              <div className="input" id="category">
+                <select onChange={handleChange}>
+                  <option>select category</option>
+                  <option value="education">Education</option>
+                  <option value="news">News</option>
+                  <option value="health">Health</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="sports">Sports</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
 
-        <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {posts.map((post) => {
-            <Post post={post} key={post._id} />;
-          })}
-        </div>
+            <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {getPosts.map((post) => {
+                <Post key={post._id} post={post} />;
+              })}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
