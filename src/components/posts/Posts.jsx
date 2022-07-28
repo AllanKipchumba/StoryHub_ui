@@ -40,9 +40,9 @@ export const Posts = ({ posts }) => {
         </div>
 
         <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {posts.map((post) => (
-            <Post post={post} key={post._id} />
-          ))}
+          {posts.map((post) => {
+            <Post post={post} key={post._id} />;
+          })}
         </div>
       </div>
     </>
