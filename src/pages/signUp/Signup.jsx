@@ -38,9 +38,10 @@ export const Signup = () => {
         "https://allan-storyhub-api.herokuapp.com/api/auth/register",
         formValues
       );
-      console.log(res.data.user);
+      // console.log(res.data.user);
       setLoading(false);
-      res.data && window.location.replace("/login");
+      res.data;
+      window.location.replace("/login");
     } catch (error) {
       console.log(error);
     }
