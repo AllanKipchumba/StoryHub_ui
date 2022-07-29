@@ -27,6 +27,10 @@ export const Login = () => {
     password,
   };
 
+  useEffect(() => {
+    dispatch(loadingStop());
+  }, []);
+
   const submitForm = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
