@@ -27,12 +27,6 @@ export const Login = () => {
     password,
   };
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && fetching) {
-      dispatch(loadingStart());
-    }
-  }, [formErrors]);
-
   const submitForm = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
