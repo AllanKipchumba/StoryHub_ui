@@ -129,7 +129,7 @@ export const Login = () => {
             </button>
 
             <p>
-              new blogger?{" "}
+              new to storyHub?{" "}
               <Link to="/signup">
                 <span>create account</span>
               </Link>
