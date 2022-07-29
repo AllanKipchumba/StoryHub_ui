@@ -40,7 +40,8 @@ export const Login = () => {
     try {
       const res = await axios.post("/auth/login", formValues);
       // update user state
-      dispatch(loginSuccess(res.data)) && window.location.replace("/");
+      dispatch(loginSuccess(res.data));
+      // window.location.replace("/");
       dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());
