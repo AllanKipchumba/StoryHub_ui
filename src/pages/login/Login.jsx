@@ -44,7 +44,7 @@ export const Login = () => {
       );
       // update user state
       dispatch(loginSuccess(res.data));
-      // window.location.replace("/");
+      window.location.replace("/");
       dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());
