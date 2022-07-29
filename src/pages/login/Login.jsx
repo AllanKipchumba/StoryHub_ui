@@ -38,7 +38,10 @@ export const Login = () => {
     setFormErrors(validate(formValues));
 
     try {
-      const res = await axios.post("/auth/login", formValues);
+      const res = await axios.post(
+        "https://allan-storyhub-api.herokuapp.com/api/auth/login",
+        formValues
+      );
       // update user state
       dispatch(loginSuccess(res.data));
       // window.location.replace("/");

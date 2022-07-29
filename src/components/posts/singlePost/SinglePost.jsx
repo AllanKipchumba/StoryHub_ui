@@ -37,7 +37,9 @@ export const SinglePost = () => {
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
-      const res = await axios.get("/posts/" + path);
+      const res = await axios.get(
+        "https://allan-storyhub-api.herokuapp.com/api/posts/" + path
+      );
       // console.log(res);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
@@ -52,7 +54,10 @@ export const SinglePost = () => {
       // alert user to delete
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
-        await axios.delete("/posts/" + path, { headers });
+        await axios.delete(
+          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          { headers }
+        );
         window.location.replace("/");
       } else {
         return false;
@@ -72,7 +77,11 @@ export const SinglePost = () => {
     };
     try {
       if (window.confirm("Update Post")) {
-        const res = await axios.patch("/posts/" + path, updates, { headers });
+        const res = await axios.patch(
+          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          updates,
+          { headers }
+        );
         console.log(res);
         setUpdateMode(false);
       } else {

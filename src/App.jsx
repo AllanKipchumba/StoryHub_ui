@@ -58,3 +58,5 @@ const App = () => {
 };
 
 export default App;
+
+// "proxy": "https://allan-storyhub-api.herokuapp.com/api/"

@@ -26,7 +26,11 @@ export const Write = () => {
       categories,
     };
     try {
-      const res = await axios.post("/posts", newPost, { headers });
+      const res = await axios.post(
+        "https://allan-storyhub-api.herokuapp.com/api/posts/",
+        newPost,
+        { headers }
+      );
       // change route to read new post
       window.location.replace("/post/" + res.data._id);
       dispatch(loadingStop());
