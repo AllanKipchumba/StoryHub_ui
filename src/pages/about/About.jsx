@@ -52,7 +52,7 @@ export const About = () => {
                 <a href="https://github.com/AllanKipchumba">
                   <AiFillGithub className="icon" />
                 </a>
-                <a href="https://twitter.com/a_l_a_n_____">
+                <a href="https://twitter.com/devAllan_">
                   <AiOutlineTwitter className="icon" />
                 </a>
                 <a href="https://www.instagram.com/allan_kipchumba/">
