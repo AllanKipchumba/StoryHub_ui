@@ -1,70 +1,15 @@
-# Getting Started with Create React App
+# StoryHub Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project overview
 
-## Available Scripts
+StoryHub is a simple website where people can publish and access previously published content. To access the information, you must first log into the system. Users who do not have an account can sign up and log in with their email address and password. Once authenticated, the user can read posts made by other users and publish their own. The user can narrow down the posts they want to read by category. They could also filter the posts so that they can see all of the posts by a particular author in a single display.
 
-In the project directory, you can run:
+This project gave me the opportunity to hone both my front end and backend skills. React, Redux, React persistence, Tailwind, and Sass are the frontend technologies used in the project. The front end is currently in active development on Vercel and Netlify. The project's backend technologies include Node, Express, Mongoose, JWT tokens, and MongoDB Atlas for cloud data storage. The backend is fully active on Heroku servers. I relied heavily on Postman for API testing throughout the project.
 
-### `npm start`
+## How to use the website
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Before you can read or publish any post, you must first be authenticated. If you try to read a post without being authenticated, you will be directed to a sign in form where you must enter your email address and password.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+If you are new to the website and do not yet have an account, a link to a sign up form is available. Once authenticated, you are redirected to the home page, where you have read access to other users' posts. Users can also publish their own posts, which will grant them read and write access.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you want to log out of the system, there is a logout button available.
