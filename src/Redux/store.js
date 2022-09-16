@@ -6,7 +6,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
-//persist all but fetching and error states from login reducer
+//persist user state
 const loginPersistConfig = {
     key: "login",
     storage,

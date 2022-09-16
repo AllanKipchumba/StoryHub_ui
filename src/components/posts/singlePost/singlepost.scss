@@ -17,29 +17,43 @@
         }
     }
     .input {
-        @apply shadow-lg;
+        @apply shadow-md;
         padding: 10px;
         border: 2px solid rgba(211, 211, 211, 0.5);
         border-radius: 20px;
         width: 100%;
         color: gray;
-        margin: 20px 0;
+        margin: 10px 0;
         //
         &:focus {
             outline: none;
         }
     }
-    button {
+    .edit-btn {
         @apply py-3 capitalize mt-4;
-        display: flex;
         width: 20%;
         background-color: #ff0581;
         border-radius: 20px;
-        justify-content: center;
         color: #fff;
         //
         &:hover {
             background-color: #d10068;
+        }
+    }
+    .icons-LC {
+        font-size: 23px;
+        cursor: pointer;
+    }
+    .comment-btn {
+        @apply py-2;
+        width: 20%;
+        border: 2px solid #ff0581;
+        border-radius: 20px;
+        color: #ff0581;
+        //
+        &:hover {
+            border: 2px solid #d10068;
+            color: #d10068;
         }
     }
 }

@@ -29,7 +29,6 @@ const loginSlice = createSlice({
         },
         loadingStart: (state, action) => {
             state.loading = true;
-            // state.fetching = false;
         },
         loadingStop: (state, action) => {
             state.loading = false;

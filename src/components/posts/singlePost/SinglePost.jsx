@@ -11,16 +11,21 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
 
+//custom css dor cliploader animation
 const override = {
   display: "block",
   margin: "0 auto",
 };
 
 export const SinglePost = () => {
+  //access user from state
   const { user, loading } = useSelector((store) => store["logIn"]);
   const token = user.token;
   const dispatch = useDispatch();
+  //headers to send axios request with token
   const headers = { Authorization: `Bearer ${token}` };
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -28,6 +33,10 @@ export const SinglePost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState();
   const [tooltip, hideTooltip] = useState(true);
+  const [isActive, setIsActive] = useState(false);
+  //capture data from comment form
+  const [comment, setComment] = useState("");
+  const [commentForm, setCommentForm] = useState(false);
 
   //access post id
   const location = useLocation();
@@ -36,6 +45,7 @@ export const SinglePost = () => {
   //   get individual posts by id
   useEffect(() => {
     dispatch(loadingStart());
+
     const fetchPost = async () => {
       const res = await axios.get(
         "https://allan-storyhub-api.herokuapp.com/api/posts/" + path
@@ -75,6 +85,7 @@ export const SinglePost = () => {
       title,
       description,
     };
+    //notify user that they are bout to delete post
     try {
       if (window.confirm("Update Post")) {
         const res = await axios.patch(
@@ -92,6 +103,17 @@ export const SinglePost = () => {
     }
   };
 
+  //change bgColor of like icon onClick
+  const changeBgColor = () => {
+    // toggle
+    setIsActive((current) => !current);
+  };
+
+  //comment post
+  const commentPost = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       {loading ? (
@@ -104,7 +126,7 @@ export const SinglePost = () => {
           cssOverride={override}
         />
       ) : (
-        <div className="singlepost">
+        <div className="singlepost !mx-auto md:max-w-[70%]">
           <div>
             <div className="flex gap-4">
               {updateMode ? (
@@ -121,6 +143,7 @@ export const SinglePost = () => {
               ) : (
                 <>
                   <h1 className="font-semibold mb-3 uppercase">{post.title}</h1>
+                  {/* display edit and delete icons if the logged in user is the post owner */}
                   {author === user?.user.username && (
                     <div className="flex gap-3">
                       <FiEdit
@@ -146,7 +169,7 @@ export const SinglePost = () => {
                           setTimeout(() => hideTooltip(true), 50);
                         }}
                       />
-
+                      {/* tooltip to display text on mouse over delete and edit icons */}
                       {tooltip && (
                         <ReactTooltip
                           id="deletePost"
@@ -179,9 +202,8 @@ export const SinglePost = () => {
                     hideTooltip(false);
                     setTimeout(() => hideTooltip(true), 50);
                   }}
-                  className="capitalize"
                 >
-                  By {author},
+                  Posted by {author},
                 </p>
               </Link>
 
@@ -191,7 +213,7 @@ export const SinglePost = () => {
                 </ReactTooltip>
               )}
 
-              <p>Posted {new Date(post.createdAt).toDateString()}</p>
+              <p> {new Date(post.createdAt).toDateString()}</p>
             </div>
           </div>
 
@@ -207,11 +229,60 @@ export const SinglePost = () => {
               />
               {/* edit button */}
               <div className="mt-10">
-                <button onClick={updatePost}>Update</button>
+                <button onClick={updatePost} className="edit-btn">
+                  Update
+                </button>
               </div>
             </>
           ) : (
-            <div className="mt-3">{post.description}</div>
+            <div className="mt-3">
+              <div>{post.description}</div>
+
+              {/* display like and comment icons */}
+              <div>
+                <div className="mt-6 flex gap-5">
+                  <div className="flex gap-1">
+                    <AiOutlineLike
+                      className="icon icons-LC"
+                      onClick={changeBgColor}
+                      //change icon color on click
+                      style={{ color: isActive && "#D10068" }}
+                    />
+                    <p>10</p>
+                  </div>
+                  <div>
+                    <FaRegComment
+                      className="icon icons-LC"
+                      onClick={() => setCommentForm(!commentForm)}
+                    />
+                  </div>
+                </div>
+
+                {/*comment post  */}
+                {commentForm && (
+                  <div className="mt-4 w-[80%] ml-8">
+                    <form onSubmit={commentPost}>
+                      <label className="text-[grey]">Write comment</label>
+                      <textarea
+                        placeholder="comment"
+                        rows="3"
+                        cols="8"
+                        className="input"
+                        onChange={(e) => setComment(e.target.value)}
+                        required
+                      />
+                      <button
+                        className="comment-btn"
+                        type="submit"
+                        onClick={() => setCommentForm(!commentForm)}
+                      >
+                        Comment
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            </div>
           )}
         </div>
       )}
