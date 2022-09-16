@@ -34,10 +34,7 @@ export const Signup = () => {
     setIsSubmit(true);
 
     try {
-      await axios.post(
-        "https://allan-storyhub-api.herokuapp.com/api/auth/register",
-        formValues
-      );
+      await axios.post("http://localhost:5000/api/auth/register", formValues);
       // console.log(res.data.user);
       setLoading(false);
       window.location.replace("/login");

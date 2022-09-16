@@ -36,10 +36,12 @@ export const Posts = () => {
 
   useEffect(() => {
     dispatch(loadingStart());
+
+    console.log(search);
     try {
       const fetchPosts = async () => {
         const res = await axios.get(
-          "https://allan-storyhub-api.herokuapp.com/api/posts" + search
+          "http://localhost:5000/api/posts/" + search
         );
         setPosts(res.data);
         dispatch(loadingStop());

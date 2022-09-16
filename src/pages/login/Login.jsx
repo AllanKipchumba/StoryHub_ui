@@ -39,12 +39,13 @@ export const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://allan-storyhub-api.herokuapp.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         formValues
       );
       // update user state
+      // console.log(res.data);
       dispatch(loginSuccess(res.data));
-      window.location.replace("/");
+      // window.location.replace("/");
       dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());

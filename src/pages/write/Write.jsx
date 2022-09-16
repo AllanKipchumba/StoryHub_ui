@@ -27,7 +27,7 @@ export const Write = () => {
     };
     try {
       const res = await axios.post(
-        "https://allan-storyhub-api.herokuapp.com/api/posts/",
+        "http://localhost:5000/api/posts/",
         newPost,
         { headers }
       );

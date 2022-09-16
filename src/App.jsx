@@ -9,7 +9,7 @@ import { Signup } from "./pages/signUp/Signup";
 import { Write } from "./pages/write/Write";
 import { About } from "./pages/about/About";
 import { Footer } from "./components/footer/Footer";
-import { ReadPost } from "./pages/IndividualPost/ReadPost";
+import { ReadPost } from "./pages/readPost/ReadPost";
 import { useSelector } from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
 import "./app.scss";
@@ -21,13 +21,13 @@ const override = {
 
 const App = () => {
   const { user } = useSelector((store) => store["logIn"]);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setFetching(false);
-    }, 700);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setFetching(false);
+  //   }, 700);
+  // }, []);
 
   return fetching ? (
     <MoonLoader

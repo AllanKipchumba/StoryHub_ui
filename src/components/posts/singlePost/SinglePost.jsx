@@ -13,19 +13,21 @@ import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { Comments } from "./postComments/Comments";
+import BeatLoader from "react-spinners/BeatLoader";
 
-//custom css dor cliploader animation
+//custom css for cliploader animation
 const override = {
   display: "block",
   margin: "0 auto",
 };
 
 export const SinglePost = () => {
+  const dispatch = useDispatch();
   //access user from state
   const { user, loading } = useSelector((store) => store["logIn"]);
   const token = user.token;
-  const dispatch = useDispatch();
-  //headers to send axios request with token
+  //headers to send request alongside tokens
   const headers = { Authorization: `Bearer ${token}` };
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -47,9 +49,7 @@ export const SinglePost = () => {
     dispatch(loadingStart());
 
     const fetchPost = async () => {
-      const res = await axios.get(
-        "https://allan-storyhub-api.herokuapp.com/api/posts/" + path
-      );
+      const res = await axios.get("http://localhost:5000/api/posts/" + path);
       // console.log(res);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
@@ -64,10 +64,9 @@ export const SinglePost = () => {
       // alert user to delete
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
-        await axios.delete(
-          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
-          { headers }
-        );
+        await axios.delete("http://localhost:5000/api/posts/" + path, {
+          headers,
+        });
         window.location.replace("/");
       } else {
         return false;
@@ -89,7 +88,7 @@ export const SinglePost = () => {
     try {
       if (window.confirm("Update Post")) {
         const res = await axios.patch(
-          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          "http://localhost:5000/api/posts/" + path,
           updates,
           { headers }
         );
@@ -107,6 +106,21 @@ export const SinglePost = () => {
   const changeBgColor = () => {
     // toggle
     setIsActive((current) => !current);
+  };
+
+  //like post
+  const likePost = async () => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/post/${path}/like`,
+        {
+          headers,
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //comment post
@@ -238,16 +252,20 @@ export const SinglePost = () => {
             <div className="mt-3">
               <div>{post.description}</div>
 
-              {/* display like and comment icons */}
               <div>
+                {/* display like and comment icons */}
                 <div className="mt-6 flex gap-5">
                   <div className="flex gap-1">
                     <AiOutlineLike
                       className="icon icons-LC"
-                      onClick={changeBgColor}
+                      onClick={() => {
+                        changeBgColor();
+                        likePost();
+                      }}
                       //change icon color on click
                       style={{ color: isActive && "#D10068" }}
                     />
+                    {/* display post likes */}
                     <p>10</p>
                   </div>
                   <div>
@@ -276,11 +294,25 @@ export const SinglePost = () => {
                         type="submit"
                         onClick={() => setCommentForm(!commentForm)}
                       >
-                        Comment
+                        {loading ? (
+                          <BeatLoader
+                            loading={loading}
+                            color="#fff"
+                            margin={4}
+                            size={17}
+                          />
+                        ) : (
+                          `Comment`
+                        )}
                       </button>
                     </form>
                   </div>
                 )}
+
+                {/* display post comments */}
+                <div className="mt-10">
+                  <Comments />
+                </div>
               </div>
             </div>
           )}
