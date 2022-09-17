@@ -39,6 +39,8 @@ export const SinglePost = () => {
   //capture data from comment form
   const [comment, setComment] = useState("");
   const [commentForm, setCommentForm] = useState(false);
+  //capture number of likes
+  const [likes, setLikes] = useState([]);
 
   //access post id
   const location = useLocation();
@@ -47,7 +49,6 @@ export const SinglePost = () => {
   //   get individual posts by id
   useEffect(() => {
     dispatch(loadingStart());
-
     const fetchPost = async () => {
       const res = await axios.get("http://localhost:5000/api/posts/" + path);
       // console.log(res);
@@ -111,17 +112,43 @@ export const SinglePost = () => {
   //like post
   const likePost = async () => {
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/post/${path}/like`,
-        {
-          headers,
-        }
-      );
-      console.log(res.data);
+      const res = await axios({
+        method: "put",
+        url: `http://localhost:5000/api/post/${path}/like`,
+        headers: headers,
+        data: {},
+      });
+      //record new like
+      setLikes(res.data.likes.length);
     } catch (error) {
-      console.log(error);
+      // get error message from server
+      console.log(error.response.data);
+      //get http status code
+      console.log(error.response.status);
     }
   };
+
+  //get likes on a post
+  useEffect(() => {
+    const getLikesOnPost = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/post/${path}/likes`,
+          headers: headers,
+        });
+        //record the number of likes on the post
+        setLikes(res.data);
+      } catch (error) {
+        console.log(error.response.data);
+        // get error message from server
+        console.log(error.response.data);
+        //get http status code
+        console.log(error.response.status);
+      }
+    };
+    getLikesOnPost();
+  }, [likes]);
 
   //comment post
   const commentPost = (e) => {
@@ -266,7 +293,7 @@ export const SinglePost = () => {
                       style={{ color: isActive && "#D10068" }}
                     />
                     {/* display post likes */}
-                    <p>10</p>
+                    <p>{likes}</p>
                   </div>
                   <div>
                     <FaRegComment
