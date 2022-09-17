@@ -13,8 +13,8 @@ import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
-import { Comments } from "./postComments/Comments";
-import BeatLoader from "react-spinners/BeatLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //custom css for cliploader animation
 const override = {
@@ -24,10 +24,8 @@ const override = {
 
 export const SinglePost = () => {
   const dispatch = useDispatch();
-  //access user from state
   const { user, loading } = useSelector((store) => store["logIn"]);
   const token = user.token;
-  //headers to send request alongside tokens
   const headers = { Authorization: `Bearer ${token}` };
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -36,12 +34,11 @@ export const SinglePost = () => {
   const [description, setDescription] = useState();
   const [tooltip, hideTooltip] = useState(true);
   const [isActive, setIsActive] = useState(false);
-  //capture data from comment form
   const [comment, setComment] = useState("");
   const [commentForm, setCommentForm] = useState(false);
-  //capture number of likes
   const [likes, setLikes] = useState([]);
-
+  //for react toastify
+  const [errorMessage, setErrorMessage] = useState("");
   //access post id
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -51,7 +48,6 @@ export const SinglePost = () => {
     dispatch(loadingStart());
     const fetchPost = async () => {
       const res = await axios.get("http://localhost:5000/api/posts/" + path);
-      // console.log(res);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
@@ -85,7 +81,7 @@ export const SinglePost = () => {
       title,
       description,
     };
-    //notify user that they are bout to delete post
+    //alert user to update post
     try {
       if (window.confirm("Update Post")) {
         const res = await axios.patch(
@@ -93,7 +89,6 @@ export const SinglePost = () => {
           updates,
           { headers }
         );
-        console.log(res);
         setUpdateMode(false);
       } else {
         return false;
@@ -118,11 +113,15 @@ export const SinglePost = () => {
         headers: headers,
         data: {},
       });
-      //record new like
+      //record new like to update the number of likes on post
       setLikes(res.data.likes.length);
     } catch (error) {
       // get error message from server
       console.log(error.response.data);
+
+      setErrorMessage(error.response.data);
+      toast(errorMessage);
+
       //get http status code
       console.log(error.response.status);
     }
@@ -151,8 +150,22 @@ export const SinglePost = () => {
   }, [likes]);
 
   //comment post
-  const commentPost = (e) => {
+  const commentPost = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios({
+        method: "post",
+        url: `http://localhost:5000/api/post/comment/${path}`,
+        data: { comment },
+        headers: headers,
+      });
+
+      console.log(res.data.comment);
+      toast("Commented post");
+      setCommentForm(!commentForm);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -283,6 +296,7 @@ export const SinglePost = () => {
                 {/* display like and comment icons */}
                 <div className="mt-6 flex gap-5">
                   <div className="flex gap-1">
+                    {/*  LIKE POST */}
                     <AiOutlineLike
                       className="icon icons-LC"
                       onClick={() => {
@@ -294,6 +308,9 @@ export const SinglePost = () => {
                     />
                     {/* display post likes */}
                     <p>{likes}</p>
+
+                    {/* Notify user that they have liked the posts already */}
+                    <ToastContainer />
                   </div>
                   <div>
                     <FaRegComment
@@ -303,7 +320,7 @@ export const SinglePost = () => {
                   </div>
                 </div>
 
-                {/*comment post  */}
+                {/*COMMENT POST  */}
                 {commentForm && (
                   <div className="mt-4 w-[80%] ml-8">
                     <form onSubmit={commentPost}>
@@ -316,30 +333,15 @@ export const SinglePost = () => {
                         onChange={(e) => setComment(e.target.value)}
                         required
                       />
-                      <button
-                        className="comment-btn"
-                        type="submit"
-                        onClick={() => setCommentForm(!commentForm)}
-                      >
-                        {loading ? (
-                          <BeatLoader
-                            loading={loading}
-                            color="#fff"
-                            margin={4}
-                            size={17}
-                          />
-                        ) : (
-                          `Comment`
-                        )}
+                      <button className="comment-btn" type="submit">
+                        Comment
                       </button>
                     </form>
                   </div>
                 )}
 
-                {/* display post comments */}
-                <div className="mt-10">
-                  <Comments />
-                </div>
+                {/* display comments on the post */}
+                <div className="mt-10"></div>
               </div>
             </div>
           )}
