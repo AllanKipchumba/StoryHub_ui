@@ -168,6 +168,17 @@ export const SinglePost = () => {
     }
   };
 
+  //get comments on a post
+  useEffect(() => {
+    const getCommentsOnPost = async () => {
+      const res = await axios({
+        method: "get",
+        url: `http://localhost:5000/api/post/comment/${path}`,
+      });
+    };
+    getCommentsOnPost();
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -341,7 +352,13 @@ export const SinglePost = () => {
                 )}
 
                 {/* display comments on the post */}
-                <div className="mt-10"></div>
+                <div className="mt-10">
+                  <div>
+                    <p>username</p>
+                    <p>time</p>
+                  </div>
+                  <p>comment</p>
+                </div>
               </div>
             </div>
           )}
