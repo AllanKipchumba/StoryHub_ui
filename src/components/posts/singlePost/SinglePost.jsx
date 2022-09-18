@@ -35,6 +35,7 @@ export const SinglePost = () => {
   const [tooltip, hideTooltip] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [comment, setComment] = useState("");
+  // const [getComments, setGetComments] = useState([]);
   const [commentForm, setCommentForm] = useState(false);
   const [likes, setLikes] = useState([]);
   //for react toastify
@@ -169,12 +170,23 @@ export const SinglePost = () => {
   };
 
   //get comments on a post
+  const comments = [];
   useEffect(() => {
     const getCommentsOnPost = async () => {
-      const res = await axios({
-        method: "get",
-        url: `http://localhost:5000/api/post/comment/${path}`,
-      });
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/post/comment/${path}`,
+          headers: headers,
+        });
+        // setGetComments(res.data);
+        // console.log(getComments);
+        // console.log(res.data);
+        comments.push(res.data);
+        console.log(comments);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getCommentsOnPost();
   }, []);
@@ -353,11 +365,11 @@ export const SinglePost = () => {
 
                 {/* display comments on the post */}
                 <div className="mt-10">
-                  <div>
+                  {/* <div>
                     <p>username</p>
                     <p>time</p>
                   </div>
-                  <p>comment</p>
+                  <p>comment</p> */}
                 </div>
               </div>
             </div>
