@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./singlepost.scss";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -35,11 +35,9 @@ export const SinglePost = () => {
   const [tooltip, hideTooltip] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [comment, setComment] = useState("");
-  // const [getComments, setGetComments] = useState([]);
   const [commentForm, setCommentForm] = useState(false);
   const [likes, setLikes] = useState([]);
-  //for react toastify
-  const [errorMessage, setErrorMessage] = useState("");
+  const [toastifyErrorMessage, setToastifyErrorMessage] = useState("");
   //access post id
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -120,8 +118,8 @@ export const SinglePost = () => {
       // get error message from server
       console.log(error.response.data);
 
-      setErrorMessage(error.response.data);
-      toast(errorMessage);
+      setToastifyErrorMessage(error.response.data);
+      toast(toastifyErrorMessage);
 
       //get http status code
       console.log(error.response.status);
@@ -170,7 +168,7 @@ export const SinglePost = () => {
   };
 
   //get comments on a post
-  const comments = [];
+  const [commentsOnPost, setCommentsOnPost] = useState();
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -179,17 +177,16 @@ export const SinglePost = () => {
           url: `http://localhost:5000/api/post/comment/${path}`,
           headers: headers,
         });
-        // setGetComments(res.data);
-        // console.log(getComments);
+        setCommentsOnPost(res.data);
         // console.log(res.data);
-        comments.push(res.data);
-        console.log(comments);
       } catch (error) {
         console.log(error);
       }
     };
     getCommentsOnPost();
   }, []);
+
+  commentsOnPost?.map((c) => console.log(c._id));
 
   return (
     <>
@@ -365,11 +362,7 @@ export const SinglePost = () => {
 
                 {/* display comments on the post */}
                 <div className="mt-10">
-                  {/* <div>
-                    <p>username</p>
-                    <p>time</p>
-                  </div>
-                  <p>comment</p> */}
+                  <p>Comments</p>
                 </div>
               </div>
             </div>
