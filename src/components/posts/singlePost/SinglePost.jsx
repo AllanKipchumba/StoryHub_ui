@@ -146,7 +146,7 @@ export const SinglePost = () => {
       }
     };
     getLikesOnPost();
-  }, [likes]);
+  }, []);
 
   //comment post
   const commentPost = async (e) => {
@@ -159,6 +159,7 @@ export const SinglePost = () => {
         headers: headers,
       });
 
+      //refresh page when new comment is submitted
       // console.log(res.data.comment);
       toast("Commented post");
       setCommentForm(!commentForm);
@@ -177,6 +178,7 @@ export const SinglePost = () => {
           url: `http://localhost:5000/api/post/comment/${path}`,
           headers: headers,
         });
+
         setCommentsOnPost(res.data);
         // console.log(res.data);
       } catch (error) {
@@ -185,8 +187,7 @@ export const SinglePost = () => {
     };
     getCommentsOnPost();
   }, []);
-
-  commentsOnPost?.map((c) => console.log(c._id));
+  // commentsOnPost?.map((c) => console.log(c.comment));
 
   return (
     <>
@@ -362,7 +363,13 @@ export const SinglePost = () => {
 
                 {/* display comments on the post */}
                 <div className="mt-10">
-                  <p>Comments</p>
+                  {commentsOnPost?.map((comment) => {
+                    return (
+                      <div key={comment._id}>
+                        <p>{comment.comment}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
