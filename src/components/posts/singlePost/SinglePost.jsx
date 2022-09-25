@@ -159,7 +159,7 @@ export const SinglePost = () => {
         headers: headers,
       });
 
-      console.log(res.data.comment);
+      // console.log(res.data.comment);
       toast("Commented post");
       setCommentForm(!commentForm);
     } catch (error) {
