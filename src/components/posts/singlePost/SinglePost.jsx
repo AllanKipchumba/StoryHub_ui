@@ -170,6 +170,7 @@ export const SinglePost = () => {
 
   //get comments on a post
   const [commentsOnPost, setCommentsOnPost] = useState();
+  const [hasComments, setHasComments] = useState();
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -179,8 +180,12 @@ export const SinglePost = () => {
           headers: headers,
         });
 
+        if (res.data.length == 0) {
+          setHasComments(false);
+        } else {
+          setHasComments(true);
+        }
         setCommentsOnPost(res.data);
-        // console.log(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -201,7 +206,7 @@ export const SinglePost = () => {
           cssOverride={override}
         />
       ) : (
-        <div className="singlepost !mx-auto md:max-w-[70%]">
+        <div className="singlepost !mx-auto md:max-w-[80%]">
           <div>
             <div className="flex gap-4">
               {updateMode ? (
@@ -362,15 +367,29 @@ export const SinglePost = () => {
                 )}
 
                 {/* display comments on the post */}
-                <div className="mt-10">
-                  {commentsOnPost?.map((comment) => {
-                    return (
-                      <div key={comment._id}>
-                        <p>{comment.comment}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+
+                {hasComments && (
+                  <>
+                    <div className="shadow-lg p-4">
+                      <p className="uppercase">comments</p>
+                      {commentsOnPost?.map((comment) => {
+                        return (
+                          <div className="mt-10 lg:max-w-[60%] comments">
+                            <div key={comment._id} className="comment">
+                              <div className="mb-3 text-[#ff0581] flex justify-between">
+                                <p>{comment.userID}</p>
+                                <p>
+                                  {new Date(comment.createdAt).toDateString()}
+                                </p>
+                              </div>
+                              <p>{comment.comment}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}

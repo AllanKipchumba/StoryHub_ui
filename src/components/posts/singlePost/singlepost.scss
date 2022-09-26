@@ -56,4 +56,17 @@
             color: #d10068;
         }
     }
+    //comments section
+    .comments {
+        border-radius: 25px;
+        @apply shadow-lg;
+        padding: 20px;
+        //
+        .comment {
+            // @apply shadow-sm;
+            padding: 10px;
+            // border-radius: 15px;
+            margin-bottom: 8px;
+        }
+    }
 }
