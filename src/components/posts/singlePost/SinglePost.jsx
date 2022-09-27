@@ -15,6 +15,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineDelete } from "react-icons/md";
 
 //custom css for cliploader animation
 const override = {
@@ -168,7 +169,7 @@ export const SinglePost = () => {
     }
   };
 
-  //get comments on a post
+  //GET COMMENTS ON A POST
   const [commentsOnPost, setCommentsOnPost] = useState();
   const [hasComments, setHasComments] = useState();
   const [numberOfComments, setNumberOfComments] = useState();
@@ -285,7 +286,8 @@ export const SinglePost = () => {
                     setTimeout(() => hideTooltip(true), 50);
                   }}
                 >
-                  Posted by {author},
+                  Posted by{" "}
+                  <span className="font-bold capitalize">{author}</span>,
                 </p>
               </Link>
 
@@ -295,7 +297,10 @@ export const SinglePost = () => {
                 </ReactTooltip>
               )}
 
-              <p> {new Date(post.createdAt).toDateString()}</p>
+              <p className="text-sm">
+                {" "}
+                {new Date(post.createdAt).toDateString()}
+              </p>
             </div>
           </div>
 
@@ -318,7 +323,7 @@ export const SinglePost = () => {
             </>
           ) : (
             <div className="mt-3">
-              <div>{post.description}</div>
+              <div className="description">{post.description}</div>
 
               <div>
                 {/* display like and comment icons */}
@@ -352,9 +357,8 @@ export const SinglePost = () => {
                 {commentForm && (
                   <div className="mt-4 w-[80%] ml-8">
                     <form onSubmit={commentPost}>
-                      <label className="text-[grey]">Write comment</label>
                       <textarea
-                        placeholder="comment"
+                        placeholder="add comment..."
                         rows="3"
                         cols="8"
                         className="input"
@@ -368,7 +372,7 @@ export const SinglePost = () => {
                   </div>
                 )}
 
-                {/* display comments on the post */}
+                {/*DISPLAY COMMENTS */}
 
                 {hasComments && (
                   <>
@@ -381,31 +385,24 @@ export const SinglePost = () => {
                         )}
                       </p>
 
-                      {commentsOnPost?.map(async (comment) => {
-                        {
-                          /* const userID = comment.userID;
-                        const res = await axios({
-                          method: "get",
-                          url: "http://localhost:5000/api/auth/user",
-                          data: userID,
-                          headers: headers,
-                        }); */
-                        }
-
-                        {
-                          /* console.log(res.data); */
-                        }
-
+                      {commentsOnPost?.map((comment) => {
+                        console.log(comment);
                         return (
                           <div className="mt-5 comments">
                             <div key={comment._id} className="comment">
-                              <div className="mb-3 text-[#ff0581] flex justify-start gap-3">
-                                <p>{comment.userID}</p>
-                                <p>
+                              <div className=" mb-2 text-[#ff0581] flex justify-start gap-3">
+                                <p className="capitalize text-sm font-semibold">
+                                  {comment.authorName}
+                                </p>
+                                <p className="text-xs">
                                   {new Date(comment.createdAt).toDateString()}
                                 </p>
+                                {comment.authorName === user?.user.username && (
+                                  <MdOutlineDelete />
+                                )}
                               </div>
-                              <p>{comment.comment}</p>
+                              <hr />
+                              <p className="align-justify">{comment.comment}</p>
                             </div>
                           </div>
                         );
