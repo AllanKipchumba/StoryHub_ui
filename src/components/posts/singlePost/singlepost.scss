@@ -8,6 +8,8 @@
     top: 100px;
     padding: 60px 25px 50px 25px;
     margin: 100px 30px 0;
+    border-radius: 20px;
+    text-align: justify;
     //
     .icon {
         color: #ff0581;
@@ -57,16 +59,17 @@
         }
     }
     //comments section
-    .comments {
-        border-radius: 25px;
-        @apply shadow-lg;
-        padding: 20px;
+    .comments-container {
+        border: 1px solid #d3d3d3;
+        background-color: #e6e6e6;
+        border-radius: 20px;
         //
-        .comment {
-            // @apply shadow-sm;
-            padding: 10px;
-            // border-radius: 15px;
-            margin-bottom: 8px;
+        .comments {
+            border-radius: 25px;
+            @apply shadow-lg;
+            padding: 15px;
+            background-color: #fff;
+            //
         }
     }
 }

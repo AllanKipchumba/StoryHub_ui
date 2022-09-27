@@ -171,6 +171,7 @@ export const SinglePost = () => {
   //get comments on a post
   const [commentsOnPost, setCommentsOnPost] = useState();
   const [hasComments, setHasComments] = useState();
+  const [numberOfComments, setNumberOfComments] = useState();
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -185,14 +186,15 @@ export const SinglePost = () => {
         } else {
           setHasComments(true);
         }
+
         setCommentsOnPost(res.data);
+        setNumberOfComments(res.data.length);
       } catch (error) {
         console.log(error);
       }
     };
     getCommentsOnPost();
   }, []);
-  // commentsOnPost?.map((c) => console.log(c.comment));
 
   return (
     <>
@@ -370,13 +372,28 @@ export const SinglePost = () => {
 
                 {hasComments && (
                   <>
-                    <div className="shadow-lg p-4">
-                      <p className="uppercase">comments</p>
-                      {commentsOnPost?.map((comment) => {
+                    <div className="comments-container p-10 mt-10 lg:max-w-[70%] mx-auto">
+                      <p className="text-center font-bold tracking-[2px]">
+                        {numberOfComments == 1 ? (
+                          <p>1 comment</p>
+                        ) : (
+                          <p>{numberOfComments} comments</p>
+                        )}
+                      </p>
+                      {commentsOnPost?.map(async (comment) => {
+                        const userID = comment.userID;
+                        const res = await axios({
+                          method: "get",
+                          url: "http://localhost:5000/api/auth/user",
+                          data: userID,
+                          headers: headers,
+                        });
+                        console.log(res);
+
                         return (
-                          <div className="mt-10 lg:max-w-[60%] comments">
+                          <div className="mt-5 comments">
                             <div key={comment._id} className="comment">
-                              <div className="mb-3 text-[#ff0581] flex justify-between">
+                              <div className="mb-3 text-[#ff0581] flex justify-start gap-3">
                                 <p>{comment.userID}</p>
                                 <p>
                                   {new Date(comment.createdAt).toDateString()}
