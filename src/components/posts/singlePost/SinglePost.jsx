@@ -380,15 +380,21 @@ export const SinglePost = () => {
                           <p>{numberOfComments} comments</p>
                         )}
                       </p>
+
                       {commentsOnPost?.map(async (comment) => {
-                        const userID = comment.userID;
+                        {
+                          /* const userID = comment.userID;
                         const res = await axios({
                           method: "get",
                           url: "http://localhost:5000/api/auth/user",
                           data: userID,
                           headers: headers,
-                        });
-                        console.log(res);
+                        }); */
+                        }
+
+                        {
+                          /* console.log(res.data); */
+                        }
 
                         return (
                           <div className="mt-5 comments">
