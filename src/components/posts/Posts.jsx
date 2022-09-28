@@ -36,8 +36,7 @@ export const Posts = () => {
 
   useEffect(() => {
     dispatch(loadingStart());
-
-    console.log(search);
+    // console.log(search);
     try {
       const fetchPosts = async () => {
         const res = await axios.get(
