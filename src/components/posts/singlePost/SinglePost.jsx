@@ -330,8 +330,8 @@ export const SinglePost = () => {
                       //change icon color on click
                       style={{ color: isActive && "#D10068" }}
                     />
-                    {/* display post likes */}
-                    <p>{likes}</p>
+                    {/* display number of likes */}
+                    {likes !== 0 && <p>{likes}</p>}
 
                     {/* Notify user that they have liked the posts already */}
                     <ToastContainer autoClose={2000} hideProgressBar={true} />
@@ -349,7 +349,7 @@ export const SinglePost = () => {
                   <div className="mt-4 w-[80%] ml-8">
                     <form onSubmit={commentPost}>
                       <textarea
-                        placeholder="add comment..."
+                        placeholder="Add comment..."
                         rows="3"
                         cols="8"
                         className="input"

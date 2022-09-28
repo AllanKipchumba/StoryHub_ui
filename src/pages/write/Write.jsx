@@ -31,9 +31,9 @@ export const Write = () => {
         newPost,
         { headers }
       );
+      dispatch(loadingStop());
       // change route to read new post
       window.location.replace("/post/" + res.data._id);
-      dispatch(loadingStop());
     } catch (error) {
       console.log(error);
     }
