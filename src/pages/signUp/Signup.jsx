@@ -7,6 +7,8 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { loginSuccess } from "../../Redux/slices/loginSlice";
+import { useDispatch } from "react-redux";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +17,7 @@ export const Signup = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const formValues = {
     username,
@@ -34,10 +37,14 @@ export const Signup = () => {
     setIsSubmit(true);
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", formValues);
-      // console.log(res.data.user);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formValues
+      );
+      //update user state in store
+      dispatch(loginSuccess(res.data));
       setLoading(false);
-      window.location.replace("/login");
+      window.location.replace("/");
     } catch (error) {
       console.log(error);
     }

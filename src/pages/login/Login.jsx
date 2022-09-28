@@ -27,12 +27,9 @@ export const Login = () => {
     password,
   };
 
-  useEffect(() => {
-    dispatch(loadingStop());
-  }, []);
-
   const submitForm = async (e) => {
     e.preventDefault();
+
     dispatch(loginStart());
     dispatch(loadingStart());
     setFormErrors(validate(formValues));
@@ -43,9 +40,8 @@ export const Login = () => {
         formValues
       );
       // update user state
-      // console.log(res.data);
       dispatch(loginSuccess(res.data));
-      // window.location.replace("/");
+      window.location.replace("/");
       dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());
@@ -96,7 +92,7 @@ export const Login = () => {
               <HiOutlineMail className="icon" />
               <input
                 type="email"
-                placeholder="Input Email"
+                placeholder="Input email"
                 className="input py-4"
                 // ref={emailRef}
                 onChange={(e) => setEmail(e.target.value)}
