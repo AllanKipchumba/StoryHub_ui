@@ -316,7 +316,6 @@ export const SinglePost = () => {
           ) : (
             <div className="mt-3">
               <div className="description">{post.description}</div>
-
               <div>
                 {/* display like and comment icons */}
                 <div className="mt-6 flex gap-5">
@@ -335,7 +334,7 @@ export const SinglePost = () => {
                     <p>{likes}</p>
 
                     {/* Notify user that they have liked the posts already */}
-                    <ToastContainer />
+                    <ToastContainer autoClose={2000} hideProgressBar={true} />
                   </div>
                   <div>
                     <FaRegComment
@@ -365,7 +364,6 @@ export const SinglePost = () => {
                 )}
 
                 {/*DISPLAY COMMENTS */}
-
                 {hasComments && (
                   <>
                     <div className="comments-container p-10 mt-10 lg:max-w-[70%] mx-auto">
