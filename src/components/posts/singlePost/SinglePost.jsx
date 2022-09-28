@@ -42,7 +42,7 @@ export const SinglePost = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
 
-  //   get individual posts by id
+  //   FETCH POST BY ID
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
@@ -54,7 +54,7 @@ export const SinglePost = () => {
     fetchPost();
   }, []);
 
-  // delete post
+  // DELETE POST
   const deletePost = async () => {
     try {
       // alert user to delete
@@ -74,7 +74,7 @@ export const SinglePost = () => {
     }
   };
 
-  // update Post
+  // UPDATE POST
   const updatePost = async () => {
     const updates = {
       title,
@@ -103,7 +103,7 @@ export const SinglePost = () => {
     setIsActive((current) => !current);
   };
 
-  //like post
+  //LIKE POST
   const likePost = async () => {
     try {
       const res = await axios({
@@ -120,7 +120,7 @@ export const SinglePost = () => {
     }
   };
 
-  //get likes on a post
+  //GET LIKES ON POST
   useEffect(() => {
     const getLikesOnPost = async () => {
       try {
@@ -132,11 +132,7 @@ export const SinglePost = () => {
         //record the number of likes on the post
         setLikes(res.data);
       } catch (error) {
-        console.log(error.response.data);
-        // get error message from server
-        console.log(error.response.data);
-        //get http status code
-        console.log(error.response.status);
+        console.log(error);
       }
     };
     getLikesOnPost();
