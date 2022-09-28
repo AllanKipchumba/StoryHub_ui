@@ -38,7 +38,6 @@ export const SinglePost = () => {
   const [comment, setComment] = useState("");
   const [commentForm, setCommentForm] = useState(false);
   const [likes, setLikes] = useState([]);
-  const [toastifyErrorMessage, setToastifyErrorMessage] = useState("");
   //access post id
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -116,14 +115,8 @@ export const SinglePost = () => {
       //record new like to update the number of likes on post
       setLikes(res.data.likes.length);
     } catch (error) {
-      // get error message from server
-      console.log(error.response.data);
-
-      setToastifyErrorMessage(error.response.data);
-      toast(toastifyErrorMessage);
-
-      //get http status code
-      console.log(error.response.status);
+      // toast error message from server
+      toast(error.response.data);
     }
   };
 
@@ -149,19 +142,21 @@ export const SinglePost = () => {
     getLikesOnPost();
   }, []);
 
-  //comment post
+  //COMMENT POST
+  //state to trigger a re-render of get comments on post
+  const [commented, setCommented] = useState(false);
   const commentPost = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios({
+      await axios({
         method: "post",
         url: `http://localhost:5000/api/post/comment/${path}`,
         data: { comment },
         headers: headers,
       });
 
-      //refresh page when new comment is submitted
-      // console.log(res.data.comment);
+      //trigger a re-render on get comments
+      setCommented(!commented);
       toast("Commented post");
       setCommentForm(!commentForm);
     } catch (error) {
@@ -173,6 +168,7 @@ export const SinglePost = () => {
   const [commentsOnPost, setCommentsOnPost] = useState();
   const [hasComments, setHasComments] = useState();
   const [numberOfComments, setNumberOfComments] = useState();
+  //rendered when the page loads and when a new comment is made
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -195,7 +191,7 @@ export const SinglePost = () => {
       }
     };
     getCommentsOnPost();
-  }, []);
+  }, [commented]);
 
   return (
     <>
@@ -385,10 +381,9 @@ export const SinglePost = () => {
                         )}
                       </p>
 
-                      {commentsOnPost?.map((comment) => {
-                        console.log(comment);
+                      {commentsOnPost?.map((comment, index) => {
                         return (
-                          <div className="mt-5 comments">
+                          <div key={index} className="mt-5 comments">
                             <div key={comment._id} className="comment">
                               <div className=" mb-2 text-[#ff0581] flex justify-start gap-3">
                                 <p className="capitalize text-sm font-semibold">
@@ -397,9 +392,9 @@ export const SinglePost = () => {
                                 <p className="text-xs">
                                   {new Date(comment.createdAt).toDateString()}
                                 </p>
-                                {comment.authorName === user?.user.username && (
+                                {/* {comment.authorName === user?.user.username && (
                                   <MdOutlineDelete />
-                                )}
+                                )} */}
                               </div>
                               <hr />
                               <p className="align-justify">{comment.comment}</p>
