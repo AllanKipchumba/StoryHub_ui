@@ -189,6 +189,26 @@ export const SinglePost = () => {
     getCommentsOnPost();
   }, [commented]);
 
+  //LIKE COMMENT
+  const likeComment = async () => {};
+
+  //DELETE COMMENT
+  // const deleteComment = async () => {
+  //   try {
+  //     //Alert user that they are about to delete comment
+  //     if(window.confirm("Delete comment?")) {
+  //       const res =await axios({
+  //         method: "delete",
+  //         url: ``
+  //       })
+  //     }else{
+  //       return false
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
+
   return (
     <>
       {loading ? (
@@ -336,11 +356,13 @@ export const SinglePost = () => {
                     {/* Notify user that they have liked the posts already */}
                     <ToastContainer autoClose={2000} hideProgressBar={true} />
                   </div>
-                  <div>
+
+                  <div className="flex gap-1">
                     <FaRegComment
                       className="icon icons-LC"
                       onClick={() => setCommentForm(!commentForm)}
                     />
+                    <p>{numberOfComments !== 0 && <p>{numberOfComments}</p>}</p>
                   </div>
                 </div>
 
@@ -386,12 +408,49 @@ export const SinglePost = () => {
                                 <p className="text-xs">
                                   {new Date(comment.createdAt).toDateString()}
                                 </p>
-                                {/* {comment.authorName === user?.user.username && (
-                                  <MdOutlineDelete />
-                                )} */}
                               </div>
                               <hr />
                               <p className="align-justify">{comment.comment}</p>
+                              <div className="mt-2 flex gap-2">
+                                {/* like comment */}
+                                <AiOutlineLike
+                                  className="icon icons-LC"
+                                  onClick={() => {
+                                    changeBgColor();
+                                    likeComment();
+                                  }}
+                                  //change icon color on click
+                                  style={{ color: isActive && "#D10068" }}
+                                />
+
+                                {/* delete comment if you are author */}
+                                {comment.authorName === user?.user.username && (
+                                  <MdOutlineDelete
+                                    className="icon icons-LC"
+                                    onClick={async () => {
+                                      //DELETE COMMENT
+                                      try {
+                                        //Alert user that they are about to delete comment
+                                        if (window.confirm("Delete comment?")) {
+                                          await axios({
+                                            method: "delete",
+                                            url: `http://localhost:5000/api/post/comment/${comment._id}`,
+                                            headers: headers,
+                                          });
+                                          //trigger a re-render on get comments
+                                          setCommented(!commented);
+                                          //toastify deletion
+                                          toast("Deleted comment");
+                                        } else {
+                                          return false;
+                                        }
+                                      } catch (error) {
+                                        console.log(error);
+                                      }
+                                    }}
+                                  />
+                                )}
+                              </div>
                             </div>
                           </div>
                         );
