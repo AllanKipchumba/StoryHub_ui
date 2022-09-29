@@ -35,7 +35,6 @@ export const SinglePost = () => {
   const [description, setDescription] = useState();
   const [tooltip, hideTooltip] = useState(true);
   const [isActive, setIsActive] = useState(false);
-  const [comment, setComment] = useState("");
   const [commentForm, setCommentForm] = useState(false);
   const [likes, setLikes] = useState([]);
   //access post id
@@ -141,6 +140,7 @@ export const SinglePost = () => {
   //COMMENT POST
   //state to trigger a re-render of get comments on post
   const [commented, setCommented] = useState(false);
+  const [comment, setComment] = useState("");
   const commentPost = async (e) => {
     e.preventDefault();
     try {
@@ -188,26 +188,6 @@ export const SinglePost = () => {
     };
     getCommentsOnPost();
   }, [commented]);
-
-  //LIKE COMMENT
-  const likeComment = async () => {};
-
-  //DELETE COMMENT
-  // const deleteComment = async () => {
-  //   try {
-  //     //Alert user that they are about to delete comment
-  //     if(window.confirm("Delete comment?")) {
-  //       const res =await axios({
-  //         method: "delete",
-  //         url: ``
-  //       })
-  //     }else{
-  //       return false
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // };
 
   return (
     <>
@@ -415,9 +395,20 @@ export const SinglePost = () => {
                                 {/* like comment */}
                                 <AiOutlineLike
                                   className="icon icons-LC"
-                                  onClick={() => {
-                                    changeBgColor();
-                                    likeComment();
+                                  onClick={async () => {
+                                    //LIKE COMMENT
+                                    try {
+                                      const commentID = comment._id;
+                                      const res = await axios({
+                                        method: "Post",
+                                        url: `http://localhost:5000/api/post/comment/likeComment`,
+                                        data: commentID,
+                                        headers: headers,
+                                      });
+                                      console.log(res.data);
+                                    } catch (error) {
+                                      console.log(error);
+                                    }
                                   }}
                                   //change icon color on click
                                   style={{ color: isActive && "#D10068" }}

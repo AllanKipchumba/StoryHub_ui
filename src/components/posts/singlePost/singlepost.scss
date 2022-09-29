@@ -73,8 +73,7 @@
         border-radius: 20px;
         //
         .comments {
-            border-radius: 10px;
-            @apply shadow-lg;
+            @apply shadow-lg rounded-2xl;
             padding: 15px;
             background-color: #fff;
             //
