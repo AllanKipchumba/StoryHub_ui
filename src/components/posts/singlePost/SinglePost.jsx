@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./singlepost.scss";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -36,7 +36,6 @@ export const SinglePost = () => {
   const [tooltip, hideTooltip] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [commentForm, setCommentForm] = useState(false);
-  const [likes, setLikes] = useState([]);
   //access post id
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -103,6 +102,7 @@ export const SinglePost = () => {
   };
 
   //LIKE POST
+  const [likes, setLikes] = useState([]);
   const likePost = async () => {
     try {
       const res = await axios({
@@ -188,6 +188,19 @@ export const SinglePost = () => {
     };
     getCommentsOnPost();
   }, [commented]);
+
+  // GET LIKES ON A COMMENT
+  const getLikesOnComment = async (commentID) => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `http://localhost:5000/api/post/comment/${commentID}/likes`,
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -378,6 +391,9 @@ export const SinglePost = () => {
                       </p>
 
                       {commentsOnPost?.map((comment, index) => {
+                        //call get number of likes function
+                        getLikesOnComment(comment._id);
+
                         return (
                           <div key={index} className="mt-5 comments">
                             <div key={comment._id} className="comment">
@@ -392,27 +408,33 @@ export const SinglePost = () => {
                               <hr />
                               <p className="align-justify">{comment.comment}</p>
                               <div className="mt-2 flex gap-2">
-                                {/* like comment */}
+                                {/* LIKE COMMENT  */}
                                 <AiOutlineLike
                                   className="icon icons-LC"
                                   onClick={async () => {
-                                    //LIKE COMMENT
+                                    //like comment
                                     try {
                                       const commentID = comment._id;
                                       const res = await axios({
-                                        method: "Post",
-                                        url: `http://localhost:5000/api/post/comment/likeComment`,
-                                        data: commentID,
+                                        method: "put",
+                                        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
+                                        data: {},
                                         headers: headers,
                                       });
+
                                       console.log(res.data);
                                     } catch (error) {
-                                      console.log(error);
+                                      //toastify error message
+                                      toast(error.response.data);
+                                      console.log(error.response.data);
                                     }
                                   }}
                                   //change icon color on click
                                   style={{ color: isActive && "#D10068" }}
                                 />
+
+                                {/* display number of likes on cmment */}
+                                <p>likes</p>
 
                                 {/* delete comment if you are author */}
                                 {comment.authorName === user?.user.username && (
