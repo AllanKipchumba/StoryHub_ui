@@ -189,18 +189,60 @@ export const SinglePost = () => {
     getCommentsOnPost();
   }, [commented]);
 
-  // GET LIKES ON A COMMENT
-  const getLikesOnComment = async (commentID) => {
+  //LIKE COMMENT
+  const likeComment = async (commentID) => {
     try {
+      // const commentID = comment._id;
       const res = await axios({
-        method: "get",
-        url: `http://localhost:5000/api/post/comment/${commentID}/likes`,
+        method: "put",
+        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
+        data: {},
+        headers: headers,
       });
+
       console.log(res.data);
     } catch (error) {
-      console.log(error);
+      //toastify error message
+      toast(error.response.data);
+      console.log(error.response.data);
     }
   };
+
+  // GET LIKES ON A COMMENT
+  const [likesOnComment, setLikesOnComment] = useState(null);
+  useEffect(() => {
+    commentsOnPost?.map((comment) => {
+      const getLikesOnComment = async () => {
+        try {
+          const res = await axios({
+            method: "get",
+            url: `http://localhost:5000/api/post/comment/${comment._id}/likes`,
+          });
+
+          setLikesOnComment(res.data);
+          console.log(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getLikesOnComment();
+    });
+  }, []);
+
+  // console.log(likesOnComment);
+
+  // const getLikesOnComment = async (commentID) => {
+  //   try {
+  //     const res = await axios({
+  //       method: "get",
+  //       url: `http://localhost:5000/api/post/comment/${commentID}/likes`,
+  //     });
+  //     // console.log(res.data);
+  //     return res.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -392,7 +434,6 @@ export const SinglePost = () => {
 
                       {commentsOnPost?.map((comment, index) => {
                         //call get number of likes function
-                        getLikesOnComment(comment._id);
 
                         return (
                           <div key={index} className="mt-5 comments">
@@ -411,30 +452,14 @@ export const SinglePost = () => {
                                 {/* LIKE COMMENT  */}
                                 <AiOutlineLike
                                   className="icon icons-LC"
-                                  onClick={async () => {
-                                    //like comment
-                                    try {
-                                      const commentID = comment._id;
-                                      const res = await axios({
-                                        method: "put",
-                                        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
-                                        data: {},
-                                        headers: headers,
-                                      });
-
-                                      console.log(res.data);
-                                    } catch (error) {
-                                      //toastify error message
-                                      toast(error.response.data);
-                                      console.log(error.response.data);
-                                    }
-                                  }}
+                                  onClick={() => likeComment(comment._id)}
                                   //change icon color on click
                                   style={{ color: isActive && "#D10068" }}
                                 />
 
-                                {/* display number of likes on cmment */}
-                                <p>likes</p>
+                                {/* display number of likes on comment */}
+
+                                <p>{likesOnComment}</p>
 
                                 {/* delete comment if you are author */}
                                 {comment.authorName === user?.user.username && (
