@@ -190,6 +190,8 @@ export const SinglePost = () => {
   }, [commented]);
 
   //LIKE COMMENT
+  //capture the like instance
+  const [likeInstance, setLikeInstance] = useState(false);
   const likeComment = async (commentID) => {
     try {
       // const commentID = comment._id;
@@ -200,7 +202,8 @@ export const SinglePost = () => {
         headers: headers,
       });
 
-      console.log(res.data);
+      //trigger a re-render of get likes on comment
+      setLikeInstance(!likeInstance);
     } catch (error) {
       //toastify error message
       toast(error.response.data);
@@ -209,7 +212,7 @@ export const SinglePost = () => {
   };
 
   // GET LIKES ON A COMMENT
-  const [likesOnComment, setLikesOnComment] = useState(null);
+  const [likesOnComment, setLikesOnComment] = useState();
   useEffect(() => {
     commentsOnPost?.map((comment) => {
       const getLikesOnComment = async () => {
@@ -220,29 +223,16 @@ export const SinglePost = () => {
           });
 
           setLikesOnComment(res.data);
-          console.log(res.data);
+          // console.log(res.data);
         } catch (error) {
           console.log(error);
         }
       };
       getLikesOnComment();
     });
-  }, []);
+  }, [likeInstance]);
 
-  // console.log(likesOnComment);
-
-  // const getLikesOnComment = async (commentID) => {
-  //   try {
-  //     const res = await axios({
-  //       method: "get",
-  //       url: `http://localhost:5000/api/post/comment/${commentID}/likes`,
-  //     });
-  //     // console.log(res.data);
-  //     return res.data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  likesOnComment !== undefined && console.log(likesOnComment);
 
   return (
     <>
@@ -433,8 +423,6 @@ export const SinglePost = () => {
                       </p>
 
                       {commentsOnPost?.map((comment, index) => {
-                        //call get number of likes function
-
                         return (
                           <div key={index} className="mt-5 comments">
                             <div key={comment._id} className="comment">
@@ -459,7 +447,7 @@ export const SinglePost = () => {
 
                                 {/* display number of likes on comment */}
 
-                                <p>{likesOnComment}</p>
+                                {/* <p>{likesOnComment}</p> */}
 
                                 {/* delete comment if you are author */}
                                 {comment.authorName === user?.user.username && (
