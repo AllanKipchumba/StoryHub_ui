@@ -191,7 +191,6 @@ export const SinglePost = () => {
 
   //LIKE COMMENT
   //capture the like instance
-  const [likeInstance, setLikeInstance] = useState(false);
   const likeComment = async (commentID) => {
     try {
       // const commentID = comment._id;
@@ -201,9 +200,6 @@ export const SinglePost = () => {
         data: {},
         headers: headers,
       });
-
-      //trigger a re-render of get likes on comment
-      setLikeInstance(!likeInstance);
     } catch (error) {
       //toastify error message
       toast(error.response.data);
@@ -417,14 +413,19 @@ export const SinglePost = () => {
                                 {/* LIKE COMMENT  */}
                                 <AiOutlineLike
                                   className="icon icons-LC"
-                                  onClick={() => likeComment(comment._id)}
+                                  onClick={() => {
+                                    likeComment(comment._id);
+                                    //trigger a re-render on comments to update the new like
+                                    setCommented(!commented);
+                                  }}
                                   //change icon color on click
                                   style={{ color: isActive && "#D10068" }}
                                 />
 
                                 {/* display number of likes on comment */}
-
-                                <p>{comment.likes.length}</p>
+                                {comment.likes.length !== 0 && (
+                                  <p>{comment.likes.length}</p>
+                                )}
 
                                 {/* delete comment if you are author */}
                                 {comment.authorName === user?.user.username && (
