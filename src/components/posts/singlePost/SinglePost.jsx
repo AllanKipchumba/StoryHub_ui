@@ -207,32 +207,9 @@ export const SinglePost = () => {
     } catch (error) {
       //toastify error message
       toast(error.response.data);
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
-
-  // GET LIKES ON A COMMENT
-  const [likesOnComment, setLikesOnComment] = useState();
-  useEffect(() => {
-    commentsOnPost?.map((comment) => {
-      const getLikesOnComment = async () => {
-        try {
-          const res = await axios({
-            method: "get",
-            url: `http://localhost:5000/api/post/comment/${comment._id}/likes`,
-          });
-
-          setLikesOnComment(res.data);
-          // console.log(res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getLikesOnComment();
-    });
-  }, [likeInstance]);
-
-  likesOnComment !== undefined && console.log(likesOnComment);
 
   return (
     <>
@@ -447,7 +424,7 @@ export const SinglePost = () => {
 
                                 {/* display number of likes on comment */}
 
-                                {/* <p>{likesOnComment}</p> */}
+                                <p>{comment.likes.length}</p>
 
                                 {/* delete comment if you are author */}
                                 {comment.authorName === user?.user.username && (
