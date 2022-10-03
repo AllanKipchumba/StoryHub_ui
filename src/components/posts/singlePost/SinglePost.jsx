@@ -81,11 +81,9 @@ export const SinglePost = () => {
     //alert user to update post
     try {
       if (window.confirm("Update Post")) {
-        const res = await axios.patch(
-          "http://localhost:5000/api/posts/" + path,
-          updates,
-          { headers }
-        );
+        await axios.patch("http://localhost:5000/api/posts/" + path, updates, {
+          headers,
+        });
         setUpdateMode(false);
       } else {
         return false;
@@ -174,7 +172,7 @@ export const SinglePost = () => {
           headers: headers,
         });
 
-        if (res.data.length == 0) {
+        if (res.data.length === 0) {
           setHasComments(false);
         } else {
           setHasComments(true);
@@ -194,7 +192,7 @@ export const SinglePost = () => {
   const likeComment = async (commentID) => {
     try {
       // const commentID = comment._id;
-      const res = await axios({
+      await axios({
         method: "put",
         url: `http://localhost:5000/api/post/comment/${commentID}/like`,
         data: {},
@@ -388,7 +386,7 @@ export const SinglePost = () => {
                   <>
                     <div className="comments-container p-10 mt-10 lg:max-w-[70%] mx-auto">
                       <p className="text-center font-bold tracking-[2px]">
-                        {numberOfComments == 1 ? (
+                        {numberOfComments === 1 ? (
                           <p>1 comment</p>
                         ) : (
                           <p>{numberOfComments} comments</p>
