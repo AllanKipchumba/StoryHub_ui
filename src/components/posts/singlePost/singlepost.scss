@@ -22,8 +22,12 @@
     .icon {
         color: #ff0581;
         font-size: 16px;
+        //
         &:outline {
             border: none;
+        }
+        &:hover {
+            color: #d10068;
         }
     }
     .input {

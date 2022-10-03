@@ -93,12 +93,6 @@ export const SinglePost = () => {
     }
   };
 
-  //change bgColor of like icon onClick
-  const changeBgColor = () => {
-    // toggle
-    setIsActive((current) => !current);
-  };
-
   //LIKE POST
   const [likes, setLikes] = useState([]);
   const likePost = async () => {
@@ -336,11 +330,8 @@ export const SinglePost = () => {
                     <AiOutlineLike
                       className="icon icons-LC"
                       onClick={() => {
-                        changeBgColor();
                         likePost();
                       }}
-                      //change icon color on click
-                      style={{ color: isActive && "#D10068" }}
                     />
                     {/* display number of likes */}
                     {likes !== 0 && <p>{likes}</p>}
@@ -413,8 +404,6 @@ export const SinglePost = () => {
                                     //trigger a re-render on getComments on post to update the new like
                                     setCommented(!commented);
                                   }}
-                                  //change icon color on click
-                                  style={{ color: isActive && "#D10068" }}
                                 />
 
                                 {/* display number of likes on comment */}
