@@ -59,10 +59,9 @@
         cursor: pointer;
     }
     .comment-btn {
-        @apply py-2;
-        width: 20%;
         border: 2px solid #ff0581;
-        border-radius: 20px;
+        border-radius: 15px;
+        padding: 10px;
         color: #ff0581;
         //
         &:hover {

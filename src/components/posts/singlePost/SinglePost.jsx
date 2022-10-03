@@ -34,8 +34,8 @@ export const SinglePost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState();
   const [tooltip, hideTooltip] = useState(true);
-  const [isActive, setIsActive] = useState(false);
-  const [commentForm, setCommentForm] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [addComment, setAddComment] = useState(false);
   //access post id
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -145,7 +145,7 @@ export const SinglePost = () => {
       //trigger a re-render on get comments when a new comment is made
       setCommented(!commented);
       toast("Commented post");
-      setCommentForm(!commentForm);
+      setAddComment(!addComment);
     } catch (error) {
       console.log(error);
     }
@@ -343,15 +343,30 @@ export const SinglePost = () => {
                   <div className="flex gap-1">
                     <FaRegComment
                       className="icon icons-LC"
-                      onClick={() => setCommentForm(!commentForm)}
+                      onClick={() => setAddComment(!addComment)}
+                      onMouseEnter={() => setHover(true)}
+                      onMouseLeave={() => setHover(false)}
                     />
-                    <p>{numberOfComments !== 0 && <p>{numberOfComments}</p>}</p>
+                    {/* Show Number of comments */}
+                    {numberOfComments !== 0 && <p>{numberOfComments}</p>}
                   </div>
+
+                  {/* display tool tip conditionally */}
+                  {hover && !addComment && (
+                    <p className="italic text-sm font-semi-bold">
+                      Click to add comment.
+                    </p>
+                  )}
+                  {addComment && hover && (
+                    <p className="italic text-sm font-semi-bold">
+                      Click to close.
+                    </p>
+                  )}
                 </div>
 
                 {/*COMMENT POST  */}
-                {commentForm && (
-                  <div className="mt-4 w-[80%] ml-8">
+                {addComment && (
+                  <div className="mt-14 w-[80%] ">
                     <form onSubmit={commentPost}>
                       <textarea
                         placeholder="Add comment..."
