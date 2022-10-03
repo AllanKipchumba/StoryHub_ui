@@ -18,13 +18,14 @@ export const Header = () => {
             story<span className="text-[#ff0581]">Hub</span>{" "}
           </p>
 
-          <p className="text-[#292929]">
-            The Darwinian theory of natural selection holds that it is not the
+          <p className="text-[#292929] italic">
+            "The Darwinian theory of natural selection holds that it is not the
             strongest of the species that survives, or even the most
             intelligent, but the most adaptable. It’s the same in business: the
             companies that will thrive in the digital economy are those that are
             best able to respond to its demands – in particular, the shift to a
-            consumer driven marketplace.
+            consumer driven marketplace." -{" "}
+            <span className=" font-bold">Anonymous</span>
           </p>
           <div className="socials flex mt-8 gap-8">
             {!user ? (
