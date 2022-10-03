@@ -136,7 +136,7 @@ export const SinglePost = () => {
   }, []);
 
   //COMMENT POST
-  //state to trigger a re-render of get comments on post
+  //'commented' state to trigger a re-render of get comments on post
   const [commented, setCommented] = useState(false);
   const [comment, setComment] = useState("");
   const commentPost = async (e) => {
@@ -148,8 +148,7 @@ export const SinglePost = () => {
         data: { comment },
         headers: headers,
       });
-
-      //trigger a re-render on get comments
+      //trigger a re-render on get comments when a new comment is made
       setCommented(!commented);
       toast("Commented post");
       setCommentForm(!commentForm);
@@ -158,11 +157,11 @@ export const SinglePost = () => {
     }
   };
 
-  //GET COMMENTS ON A POST
+  //GET COMMENTS ON POST
   const [commentsOnPost, setCommentsOnPost] = useState();
   const [hasComments, setHasComments] = useState();
   const [numberOfComments, setNumberOfComments] = useState();
-  //rendered when the page loads and when a new comment is made
+  // hook rendered when the page loads and when a new comment is made
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -188,10 +187,8 @@ export const SinglePost = () => {
   }, [commented]);
 
   //LIKE COMMENT
-  //capture the like instance
   const likeComment = async (commentID) => {
     try {
-      // const commentID = comment._id;
       await axios({
         method: "put",
         url: `http://localhost:5000/api/post/comment/${commentID}/like`,
@@ -201,7 +198,6 @@ export const SinglePost = () => {
     } catch (error) {
       //toastify error message
       toast(error.response.data);
-      // console.log(error.response.data);
     }
   };
 
@@ -393,6 +389,7 @@ export const SinglePost = () => {
                         )}
                       </p>
 
+                      {/*Map through all the comments */}
                       {commentsOnPost?.map((comment, index) => {
                         return (
                           <div key={index} className="mt-5 comments">
@@ -413,7 +410,7 @@ export const SinglePost = () => {
                                   className="icon icons-LC"
                                   onClick={() => {
                                     likeComment(comment._id);
-                                    //trigger a re-render on comments to update the new like
+                                    //trigger a re-render on getComments on post to update the new like
                                     setCommented(!commented);
                                   }}
                                   //change icon color on click
