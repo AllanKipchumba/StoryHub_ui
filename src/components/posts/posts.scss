@@ -2,25 +2,9 @@
     padding: 0 25px 80px 25px;
     //
     h1 {
-        //
         span {
             border-bottom: 2px solid #d10068;
             padding-bottom: 6px;
-        }
-    }
-    .input {
-        @apply shadow-md;
-        padding: 10px;
-        border: 2px solid rgba(211, 211, 211, 0.5);
-        border-radius: 20px;
-        width: 100%;
-        color: gray;
-        margin-bottom: 20px;
-        outline: none;
-        //
-        option {
-            outline: none;
-            width: 100%;
         }
     }
 }
