@@ -24,11 +24,12 @@ export const Write = () => {
       description,
     };
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/posts/",
-        newPost,
-        { headers }
-      );
+      const res = await axios({
+        method: "post",
+        url: "http://localhost:5000/api/posts/",
+        data: newPost,
+        headers: headers,
+      });
       dispatch(loadingStop());
       // change route to read new post
       window.location.replace("/post/" + res.data._id);
