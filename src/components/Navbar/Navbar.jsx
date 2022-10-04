@@ -35,8 +35,9 @@ export const Navbar = () => {
 
         <ul className={mobileView ? "nav-links-mobile" : "nav-links"}>
           <li onClick={handleClick} className="link">
-            <HashLink to="/#category">Category</HashLink>
+            <Link to="/">Home</Link>
           </li>
+
           <li onClick={handleClick} className="link">
             <Link to="/about">About</Link>
           </li>
