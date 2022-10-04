@@ -46,7 +46,7 @@ export const About = () => {
                 biggest strengths is problem solving. I like to confront
                 problems front on by devising workable solutions to them.
               </p>
-              <h2 className="mt-3 mb-3 tracking-[2.72px]">Find me on</h2>
+              <h2 className="mt-3 mb-1 tracking-[2.72px] ">Find me on</h2>
               <div className="flex ">
                 <a href="https://github.com/AllanKipchumba">
                   <AiFillGithub className="icon" />

@@ -165,11 +165,8 @@ export const SinglePost = () => {
           headers: headers,
         });
 
-        if (res.data.length === 0) {
-          setHasComments(false);
-        } else {
-          setHasComments(true);
-        }
+        //query if the posts has comments
+        res.data.length !== 0 ? setHasComments(true) : setHasComments(false);
 
         setCommentsOnPost(res.data);
         setNumberOfComments(res.data.length);
@@ -207,7 +204,7 @@ export const SinglePost = () => {
           cssOverride={override}
         />
       ) : (
-        <div className="singlepost !mx-auto md:max-w-[80%]">
+        <div className="singlepost rounded-3xl !mx-auto md:max-w-[80%]">
           <div>
             <div className="flex gap-4">
               {updateMode ? (
@@ -295,9 +292,9 @@ export const SinglePost = () => {
                 </ReactTooltip>
               )}
 
-              <p className="text-sm">
+              <p className="italic text-sm">
                 {" "}
-                {new Date(post.createdAt).toDateString()}
+                {new Date(post.createdAt).toLocaleString()}
               </p>
             </div>
           </div>
@@ -404,8 +401,8 @@ export const SinglePost = () => {
                                 <p className="capitalize text-sm font-semibold">
                                   {comment.authorName}
                                 </p>
-                                <p className="text-xs">
-                                  {new Date(comment.createdAt).toDateString()}
+                                <p className="text-xs italic">
+                                  {new Date(comment.createdAt).toLocaleString()}
                                 </p>
                               </div>
                               <hr />

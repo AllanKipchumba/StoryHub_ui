@@ -13,12 +13,12 @@ export const Header = () => {
         </div>
 
         <div className="flex flex-col justify-center md:col-span-2">
-          <p className="capitalize mb-3 height-[15px]  md:text-4xl sm:ext-3xl text-2xl mx-auto md:mx-0 py-2">
-            {user && <span className="">{user.user.username},</span>} Welcome to
-            story<span className="text-[#ff0581]">Hub</span>{" "}
+          <p className="mb-3 height-[15px] text-2xl md:text-3xl mx-auto md:mx-0 py-2">
+            {user && <span className="capitalize">{user.user.username},</span>}{" "}
+            Welcome to Story<span className="text-[#ff0581]">Hub</span>{" "}
           </p>
 
-          <p className="text-[#292929] italic">
+          <p className="text-justify italic">
             "The Darwinian theory of natural selection holds that it is not the
             strongest of the species that survives, or even the most
             intelligent, but the most adaptable. It’s the same in business: the
@@ -30,7 +30,7 @@ export const Header = () => {
           <div className="socials flex mt-8 gap-8">
             {!user ? (
               <p className="capitalize text-[#ff0581]">
-                login to read and publish posts
+                Login to read and publish posts
               </p>
             ) : (
               <p>Be the first to read the latest stories</p>

@@ -74,7 +74,7 @@ export const Signup = () => {
 
   return (
     <>
-      <div className="signup max-w-[1240px] flex-col p-4 mx-auto lg:mt-[100px] grid md:grid-cols-4 gap-10">
+      <div className="signup max-w-[1240px] rounded-3xl flex-col p-4 mx-auto lg:mt-[100px] grid md:grid-cols-4 gap-10">
         <div className="intro col-span-2">
           <div className="mb-6 mt-12 lg:mt-0">
             <h1 className="py-4">

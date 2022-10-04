@@ -44,5 +44,5 @@ export const {
     loadingStart,
     loadingStop,
 } = loginSlice.actions;
-// axport reducer
+// export reducer
 export default loginSlice.reducer;
