@@ -14,7 +14,6 @@ export const Write = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState([]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -23,7 +22,6 @@ export const Write = () => {
     const newPost = {
       title,
       description,
-      categories,
     };
     try {
       const res = await axios.post(
@@ -64,19 +62,6 @@ export const Write = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-
-          <label>Category</label>
-          <select
-            className="input"
-            onChange={(e) => setCategories(e.target.value)}
-          >
-            <option value="education">Education</option>
-            <option value="news">News</option>
-            <option value="health">Health</option>
-            <option value="engineering">Engineering</option>
-            <option value="sports">Sports</option>
-            <option value="other">Other</option>
-          </select>
 
           <label>Content</label>
           <textarea

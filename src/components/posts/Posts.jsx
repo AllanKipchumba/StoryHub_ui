@@ -17,7 +17,7 @@ export const Posts = () => {
   const { loading } = useSelector((store) => store["logIn"]);
   const dispatch = useDispatch();
   const { search } = useLocation();
-  const [getPosts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   const handleChange = (e) => {
     setCategory(e.target.value);
@@ -34,6 +34,7 @@ export const Posts = () => {
     }
   }, [category]);
 
+  //FETCH POSTS FROM DB
   useEffect(() => {
     dispatch(loadingStart());
     // console.log(search);
@@ -42,6 +43,7 @@ export const Posts = () => {
         const res = await axios.get(
           "http://localhost:5000/api/posts/" + search
         );
+        console.log(res.data.length);
         setPosts(res.data);
         dispatch(loadingStop());
       };
@@ -83,7 +85,7 @@ export const Posts = () => {
             </div>
 
             <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {getPosts.map((post) => (
+              {posts.map((post) => (
                 <Post key={post._id} post={post} />
               ))}
             </div>
