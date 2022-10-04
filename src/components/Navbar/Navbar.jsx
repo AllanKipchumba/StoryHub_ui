@@ -5,7 +5,6 @@ import { GrFormClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { logout } from "../../Redux/slices/loginSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { HashLink } from "react-router-hash-link";
 
 export const Navbar = () => {
   const { user } = useSelector((store) => store["logIn"]);

@@ -7,4 +7,16 @@
             padding-bottom: 6px;
         }
     }
+    .pagination {
+        margin-top: 50px;
+        button {
+            @apply rounded-xl;
+            padding: 10px;
+            border: 1px solid #ff0581;
+        }
+        .icon {
+            margin-top: 12px;
+            font-size: 20px;
+        }
+    }
 }

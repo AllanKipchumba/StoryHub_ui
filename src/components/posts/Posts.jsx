@@ -6,6 +6,8 @@ import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
 const override = {
   display: "block",
@@ -17,6 +19,7 @@ export const Posts = () => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const [posts, setPosts] = useState([]);
+  const [skip, setSkip] = useState(0);
 
   //FETCH POSTS FROM DB
   useEffect(() => {
@@ -60,6 +63,31 @@ export const Posts = () => {
               {posts.map((post) => (
                 <Post key={post._id} post={post} />
               ))}
+            </div>
+
+            {/* PAGINATION */}
+            <div className="pagination flex">
+              <div className=" mx-auto flex">
+                <div className="flex gap-2">
+                  {skip > 0 && (
+                    <>
+                      <GrLinkPrevious className="icon" />
+                      <button
+                        className="mr-10"
+                        onClick={() => setSkip(skip - 1)}
+                      >
+                        <Link to={`/?skip=${skip}`}>Previous</Link>
+                      </button>
+                    </>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => setSkip(skip + 1)}>
+                    <Link to={`/?skip=${skip}`}>Next</Link>
+                  </button>
+                  <GrLinkNext className="icon" />
+                </div>
+              </div>
             </div>
           </>
         )}
