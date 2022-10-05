@@ -23,11 +23,11 @@ const App = () => {
   const { user } = useSelector((store) => store["logIn"]);
   const [fetching, setFetching] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setFetching(false);
-  //   }, 700);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setFetching(false);
+    }, 700);
+  }, []);
 
   return fetching ? (
     <MoonLoader
