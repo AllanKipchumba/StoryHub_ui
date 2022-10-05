@@ -44,7 +44,9 @@ export const SinglePost = () => {
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
-      const res = await axios.get("http://localhost:5000/api/posts/" + path);
+      const res = await axios.get(
+        "https://allan-storyhub-api.herokuapp.com/api/posts/" + path
+      );
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
@@ -58,9 +60,12 @@ export const SinglePost = () => {
       // alert user to delete
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
-        await axios.delete("http://localhost:5000/api/posts/" + path, {
-          headers,
-        });
+        await axios.delete(
+          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          {
+            headers,
+          }
+        );
         window.location.replace("/");
       } else {
         return false;
@@ -81,9 +86,13 @@ export const SinglePost = () => {
     //alert user to update post
     try {
       if (window.confirm("Update Post")) {
-        await axios.patch("http://localhost:5000/api/posts/" + path, updates, {
-          headers,
-        });
+        await axios.patch(
+          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          updates,
+          {
+            headers,
+          }
+        );
         setUpdateMode(false);
       } else {
         return false;
@@ -99,7 +108,7 @@ export const SinglePost = () => {
     try {
       const res = await axios({
         method: "put",
-        url: `http://localhost:5000/api/post/${path}/like`,
+        url: `https://allan-storyhub-api.herokuapp.com/api/post/${path}/like`,
         headers: headers,
         data: {},
       });
@@ -117,7 +126,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/${path}/likes`,
+          url: `https://allan-storyhub-api.herokuapp.com/api/post/${path}/likes`,
           headers: headers,
         });
         //record the number of likes on the post
@@ -138,7 +147,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "post",
-        url: `http://localhost:5000/api/post/comment/${path}`,
+        url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${path}`,
         data: { comment },
         headers: headers,
       });
@@ -161,7 +170,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/comment/${path}`,
+          url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${path}`,
           headers: headers,
         });
 
@@ -182,7 +191,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "put",
-        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
+        url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${commentID}/like`,
         data: {},
         headers: headers,
       });
@@ -434,7 +443,7 @@ export const SinglePost = () => {
                                         if (window.confirm("Delete comment?")) {
                                           await axios({
                                             method: "delete",
-                                            url: `http://localhost:5000/api/post/comment/${comment._id}`,
+                                            url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${comment._id}`,
                                             headers: headers,
                                           });
                                           //trigger a re-render on get comments

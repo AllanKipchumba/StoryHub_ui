@@ -38,7 +38,7 @@ export const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://allan-storyhub-api.herokuapp.com/api/auth/register",
         formValues
       );
       //update user state in store

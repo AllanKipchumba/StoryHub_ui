@@ -28,7 +28,7 @@ export const Posts = () => {
     try {
       const fetchPosts = async () => {
         const res = await axios.get(
-          "http://localhost:5000/api/posts/" + search
+          "https://allan-storyhub-api.herokuapp.com/api/posts/" + search
         );
         setPosts(res.data);
         dispatch(loadingStop());
