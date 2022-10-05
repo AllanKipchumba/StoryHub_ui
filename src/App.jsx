@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Navbar } from "./components/Navbar/Navbar";
 import { ScrollButon } from "./components/scrollButton/ScrollButon";
 import { Content } from "./components/scrollButton/Styles";
@@ -23,11 +23,10 @@ const App = () => {
   const { user } = useSelector((store) => store["logIn"]);
   const [fetching, setFetching] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setFetching(false);
-    }, 700);
-  }, []);
+  //load moonLoader for 700ms on-load
+  setTimeout(() => {
+    setFetching(false);
+  }, 700);
 
   return fetching ? (
     <MoonLoader
