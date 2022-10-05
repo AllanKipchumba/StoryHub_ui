@@ -21,7 +21,7 @@ const override = {
 
 const App = () => {
   const { user } = useSelector((store) => store["logIn"]);
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
