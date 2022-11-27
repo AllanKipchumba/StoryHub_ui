@@ -136,7 +136,7 @@ export const SinglePost = () => {
       }
     };
     getLikesOnPost();
-  }, []);
+  });
 
   //COMMENT POST
   //'commented' state to trigger a re-render of get comments on post

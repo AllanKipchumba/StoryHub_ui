@@ -40,11 +40,11 @@ export const Navbar = () => {
           <li onClick={handleClick} className="link">
             <Link to="/about">About</Link>
           </li>
-          {user && (
-            <li onClick={handleClick} className="link">
-              <Link to="/write">Publish</Link>
-            </li>
-          )}
+
+          <li onClick={handleClick} className="link">
+            <Link to="/write">Publish</Link>
+          </li>
+
           {user ? (
             <li
               onClick={() => {

@@ -1,10 +1,10 @@
 import React from "react";
 import "./post.scss";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 export const Post = ({ post }) => {
-  const { user } = useSelector((store) => store["logIn"]);
+  // const { user } = useSelector((store) => store["logIn"]);
 
   return (
     <>
@@ -21,7 +21,7 @@ export const Post = ({ post }) => {
           </div>
 
           <button>
-            <Link to={user ? `/post/${post._id}` : "/login"}>Read More</Link>
+            <Link to={`/post/${post._id}`}>Read More</Link>
           </button>
         </div>
       </div>
