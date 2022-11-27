@@ -36,7 +36,7 @@ export const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://allan-storyhub-api.herokuapp.com/api/auth/login",
+        "https://storyhub-api.onrender.com/api/auth/login",
         formValues
       );
       // update user state
