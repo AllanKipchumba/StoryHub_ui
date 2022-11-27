@@ -45,7 +45,7 @@ export const SinglePost = () => {
     dispatch(loadingStart());
     const fetchPost = async () => {
       const res = await axios.get(
-        "https://allan-storyhub-api.herokuapp.com/api/posts/" + path
+        "https://storyhub-api.onrender.com/api/posts/" + path
       );
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
@@ -61,7 +61,7 @@ export const SinglePost = () => {
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
         await axios.delete(
-          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          "https://storyhub-api.onrender.com/api/posts/" + path,
           {
             headers,
           }
@@ -87,7 +87,7 @@ export const SinglePost = () => {
     try {
       if (window.confirm("Update Post")) {
         await axios.patch(
-          "https://allan-storyhub-api.herokuapp.com/api/posts/" + path,
+          "https://storyhub-api.onrender.com/api/posts/" + path,
           updates,
           {
             headers,
@@ -108,7 +108,7 @@ export const SinglePost = () => {
     try {
       const res = await axios({
         method: "put",
-        url: `https://allan-storyhub-api.herokuapp.com/api/post/${path}/like`,
+        url: `https://storyhub-api.onrender.com/api/post/${path}/like`,
         headers: headers,
         data: {},
       });
@@ -126,7 +126,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `https://allan-storyhub-api.herokuapp.com/api/post/${path}/likes`,
+          url: `https://storyhub-api.onrender.com/api/post/${path}/likes`,
           headers: headers,
         });
         //record the number of likes on the post
@@ -147,7 +147,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "post",
-        url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${path}`,
+        url: `https://storyhub-api.onrender.com/api/post/comment/${path}`,
         data: { comment },
         headers: headers,
       });
@@ -170,7 +170,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${path}`,
+          url: `https://storyhub-api.onrender.com/api/post/comment/${path}`,
           headers: headers,
         });
 
@@ -191,7 +191,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "put",
-        url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${commentID}/like`,
+        url: `https://storyhub-api.onrender.com/api/post/comment/${commentID}/like`,
         data: {},
         headers: headers,
       });
@@ -443,7 +443,7 @@ export const SinglePost = () => {
                                         if (window.confirm("Delete comment?")) {
                                           await axios({
                                             method: "delete",
-                                            url: `https://allan-storyhub-api.herokuapp.com/api/post/comment/${comment._id}`,
+                                            url: `https://storyhub-api.onrender.com/api/post/comment/${comment._id}`,
                                             headers: headers,
                                           });
                                           //trigger a re-render on get comments

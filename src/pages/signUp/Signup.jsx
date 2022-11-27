@@ -38,7 +38,7 @@ export const Signup = () => {
 
     try {
       const res = await axios.post(
-        "https://allan-storyhub-api.herokuapp.com/api/auth/register",
+        "https://https://storyhub-api.onrender.com/api/auth/register",
         formValues
       );
       //update user state in store
