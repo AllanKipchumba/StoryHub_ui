@@ -42,7 +42,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:id" element={<ReadPost />} />
+        <Route path="/post/:id" element={user ? <ReadPost /> : <Home />} />
         <Route path="/login" element={!user ? <Login /> : <Home />} />
         <Route path="/signup" element={!user ? <Signup /> : <Home />} />
         <Route path="/write" element={user ? <Write /> : <Login />} />
