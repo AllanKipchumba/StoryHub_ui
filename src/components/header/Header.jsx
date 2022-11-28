@@ -36,18 +36,6 @@ export const Header = () => {
               <p>Be the first to read the latest stories</p>
             )}
           </div>
-          {!user && (
-            <p className="italic text-xs">
-              <p>
-                You can use the following test logs to unlock read and write
-                privileges
-              </p>
-              <p className="ml-12">
-                <p>Email: foobar@gmail.com</p>
-                <p>Pass: 123456</p>
-              </p>
-            </p>
-          )}
         </div>
       </div>
     </>

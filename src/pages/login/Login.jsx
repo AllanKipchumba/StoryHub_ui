@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./login.scss";
 import login from "./assests/login.svg";
 import { HiOutlineMail } from "react-icons/hi";
@@ -17,8 +17,8 @@ import axios from "axios";
 
 export const Login = () => {
   const { fetching, error, loading } = useSelector((store) => store["logIn"]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("foobar@gmail.com");
+  const [password, setPassword] = useState("123456");
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
 
@@ -41,7 +41,6 @@ export const Login = () => {
       );
       // update user state
       dispatch(loginSuccess(res.data));
-      window.location.replace("/");
       dispatch(loadingStop());
     } catch (error) {
       dispatch(loginFail());
@@ -94,6 +93,7 @@ export const Login = () => {
                 type="email"
                 placeholder="Input email"
                 className="input py-4"
+                value={email}
                 // ref={emailRef}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -107,6 +107,7 @@ export const Login = () => {
                 type="password"
                 placeholder="Input password"
                 className="py-4 input"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
