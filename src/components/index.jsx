@@ -6,3 +6,4 @@ export { Post } from "./posts/post/Post";
 export { SinglePost } from "./posts/singlePost/SinglePost";
 export { ScrollButton } from "./scrollButton/ScrollButon";
 export { Content } from "./scrollButton/Styles";
+export { Authenticated, NotAuthenticated } from "./Authenticated/Authenticated";

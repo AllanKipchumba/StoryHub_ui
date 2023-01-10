@@ -1,47 +1,58 @@
 import "./app.scss";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import MoonLoader from "react-spinners/MoonLoader";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 //import pages
 import { Publish, Signup, Home, About, Login, ReadPost } from "./pages";
 
 //import components
-import { Footer, ScrollButton, Navbar, Content } from "./components";
-
-const override = {
-  display: "block",
-  margin: "0 auto",
-};
+import {
+  Footer,
+  ScrollButton,
+  Navbar,
+  Content,
+  Authenticated,
+  NotAuthenticated,
+} from "./components";
 
 const App = () => {
-  const { user } = useSelector((store) => store["logIn"]);
-  const [fetching, setFetching] = useState(true);
-
-  //load moonLoader for 700ms on-load
-  setTimeout(() => {
-    setFetching(false);
-  }, 700);
-
-  return fetching ? (
-    <MoonLoader
-      className="loader"
-      loading={fetching}
-      color="#ff0581"
-      margin={4}
-      size={50}
-      cssOverride={override}
-    />
-  ) : (
+  return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:id" element={user ? <ReadPost /> : <Login />} />
-        <Route path="/login" element={!user ? <Login /> : <Home />} />
-        <Route path="/signup" element={!user ? <Signup /> : <Home />} />
-        <Route path="/write" element={user ? <Publish /> : <Login />} />
+        <Route
+          path="/post/:id"
+          element={
+            <Authenticated>
+              <ReadPost />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <NotAuthenticated>
+              <Login />
+            </NotAuthenticated>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <NotAuthenticated>
+              <Signup />
+            </NotAuthenticated>
+          }
+        />
+        <Route
+          path="/write"
+          element={
+            <Authenticated>
+              <Publish />
+            </Authenticated>
+          }
+        />
         <Route path="/about" element={<About />} />
       </Routes>
 
