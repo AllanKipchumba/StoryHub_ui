@@ -1,5 +1,5 @@
 import React from "react";
-import "./post.scss";
+import styles from "./post.module.scss";
 import { Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
@@ -8,21 +8,19 @@ export const Post = ({ post }) => {
 
   return (
     <>
-      <div className="post mt-4 max-w-[1240px]">
+      <div className={`${styles.post} mt-4 `}>
         <div>
           <div>
-            <h1 className="capitalize font-medium">
+            <img src={post.imageURL} alt={post.title} className={styles.img} />
+          </div>
+
+          <div className={styles["post-title"]}>
+            <h1>
               <Link to={`/post/${post._id}`}>{post.title}</Link>
             </h1>
 
-            <p className="mb-3 mt-3 italic font-light">
-              {new Date(post.createdAt).toDateString()}
-            </p>
+            <p>{new Date(post.createdAt).toDateString()}</p>
           </div>
-
-          <button>
-            <Link to={`/post/${post._id}`}>Read More</Link>
-          </button>
         </div>
       </div>
     </>
