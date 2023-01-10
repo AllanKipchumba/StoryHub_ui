@@ -6,7 +6,7 @@ import { Home } from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/login/Login";
 import { Signup } from "./pages/signUp/Signup";
-import { Write } from "./pages/write/Write";
+import { Publish } from "./pages/write/Publish";
 import { About } from "./pages/about/About";
 import { Footer } from "./components/footer/Footer";
 import { ReadPost } from "./pages/readPost/ReadPost";
@@ -45,7 +45,7 @@ const App = () => {
         <Route path="/post/:id" element={user ? <ReadPost /> : <Login />} />
         <Route path="/login" element={!user ? <Login /> : <Home />} />
         <Route path="/signup" element={!user ? <Signup /> : <Home />} />
-        <Route path="/write" element={user ? <Write /> : <Login />} />
+        <Route path="/write" element={user ? <Publish /> : <Login />} />
         <Route path="/about" element={<About />} />
       </Routes>
 

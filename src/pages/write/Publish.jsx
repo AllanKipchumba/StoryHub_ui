@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import "./write.scss";
+import "./publish.scss";
 import write from "./assets/write.svg";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
+import { storage } from "../../firebase/config";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
-export const Write = () => {
+export const Publish = () => {
   const { user, loading } = useSelector((store) => store["logIn"]);
   const author = user.user.username;
   const token = user.token;
@@ -14,6 +16,41 @@ export const Write = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [imageURL, setImageURL] = useState("");
+
+  //UPLOAD IMAGE TO FIREBASE STORAGE
+  const handleImageChange = (e) => {
+    //access the file being uploaded
+    const file = e.target.files[0];
+    //store the file in the images folder in firebase storage
+    const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+    //upload task to firebase
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    //monitor upload progress
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = Math.trunc(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        // setUploadProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        // Handle successful uploads on complete
+        // get the image url
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageURL(downloadURL);
+          // toast.success("Image uploaded succesfully");
+        });
+      }
+    );
+  };
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -21,6 +58,8 @@ export const Write = () => {
 
     const newPost = {
       title,
+      category,
+      imageURL,
       description,
     };
     try {
@@ -63,6 +102,36 @@ export const Write = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+
+          <label>Category</label>
+          <input
+            type="text"
+            Placeholder="Category"
+            className="input"
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          />
+
+          {/* image input */}
+          <label>Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            placeholder="product image"
+            name="image"
+            onChange={(e) => handleImageChange(e)}
+          />
+
+          {imageURL !== "" && (
+            <input
+              type="text"
+              required
+              placeholder="image URL"
+              name="imageURL"
+              value={imageURL}
+              disabled
+            />
+          )}
 
           <label>Content</label>
           <textarea
