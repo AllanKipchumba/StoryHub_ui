@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { Button } from "./Styles";
 
-export const ScrollButon = () => {
+export const ScrollButton = () => {
   const [visible, setVisible] = useState(false);
 
   const toggleVisible = () => {

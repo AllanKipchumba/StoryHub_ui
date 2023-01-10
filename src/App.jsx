@@ -1,18 +1,14 @@
+import "./app.scss";
 import React, { useState } from "react";
-import { Navbar } from "./components/Navbar/Navbar";
-import { ScrollButon } from "./components/scrollButton/ScrollButon";
-import { Content } from "./components/scrollButton/Styles";
-import { Home } from "./pages/home/Home";
-import { Routes, Route } from "react-router-dom";
-import { Login } from "./pages/login/Login";
-import { Signup } from "./pages/signUp/Signup";
-import { Publish } from "./pages/write/Publish";
-import { About } from "./pages/about/About";
-import { Footer } from "./components/footer/Footer";
-import { ReadPost } from "./pages/readPost/ReadPost";
 import { useSelector } from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
-import "./app.scss";
+import { Routes, Route } from "react-router-dom";
+
+//import pages
+import { Publish, Signup, Home, About, Login, ReadPost } from "./pages";
+
+//import components
+import { Footer, ScrollButton, Navbar, Content } from "./components";
 
 const override = {
   display: "block",
@@ -50,7 +46,7 @@ const App = () => {
       </Routes>
 
       <Content />
-      <ScrollButon />
+      <ScrollButton />
       <Footer />
     </>
   );
