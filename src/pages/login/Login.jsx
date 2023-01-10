@@ -17,7 +17,7 @@ import axios from "axios";
 
 export const Login = () => {
   const { fetching, error, loading } = useSelector((store) => store["logIn"]);
-  const [email, setEmail] = useState("foobar@gmail.com");
+  const [email, setEmail] = useState("testuser@gmail.com");
   const [password, setPassword] = useState("123456");
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
