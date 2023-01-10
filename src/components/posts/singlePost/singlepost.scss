@@ -27,10 +27,9 @@
     .description {
         &::first-letter {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff0581;
             text-transform: uppercase;
         }
+        white-space: pre-wrap;
     }
     .icon {
         color: #ff0581;
