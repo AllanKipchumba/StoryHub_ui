@@ -205,7 +205,10 @@ export const SinglePost = () => {
         />
       ) : (
         <div className="singlepost rounded-3xl !mx-auto md:max-w-[80%]">
-          <div>
+          <div className={`image`}>
+            <img src={post.imageURL} alt={post.title} className={`img`} />
+          </div>
+          <div className={`post-title mx-auto text-center`}>
             <div className="flex gap-4">
               {updateMode ? (
                 <>
@@ -220,7 +223,7 @@ export const SinglePost = () => {
                 </>
               ) : (
                 <>
-                  <h1 className="font-semibold mb-3 uppercase">{post.title}</h1>
+                  <h1 className="font-semibold uppercase">{post.title}</h1>
                   {/* display edit and delete icons if the logged in user is the post owner */}
                   {author === user?.user.username && (
                     <div className="flex gap-3">
@@ -269,8 +272,9 @@ export const SinglePost = () => {
               )}
             </div>
 
-            <div className="flex gap-2 text-[#ff0581]">
-              <Link to={`/?author=${author}`}>
+            <div>
+              {/* AUTHOR */}
+              {/* <Link to={`/?author=${author}`}>
                 <p
                   // tooltip props
                   data-tip
@@ -281,10 +285,12 @@ export const SinglePost = () => {
                     setTimeout(() => hideTooltip(true), 50);
                   }}
                 >
-                  Posted by{" "}
-                  <span className="font-bold capitalize">{author}</span>,
+                  By: &nbsp;
+                  <span className="font-bold capitalize text-[#ff0581]">
+                    {author}
+                  </span>
                 </p>
-              </Link>
+              </Link> */}
 
               {tooltip && (
                 <ReactTooltip id="showAuthorPosts" place="top" effect="solid">
@@ -292,8 +298,7 @@ export const SinglePost = () => {
                 </ReactTooltip>
               )}
 
-              <p className="italic text-sm">
-                {" "}
+              <p className=" text-sm">
                 {new Date(post.createdAt).toLocaleString()}
               </p>
             </div>

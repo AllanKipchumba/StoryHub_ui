@@ -8,13 +8,14 @@ export const Post = ({ post }) => {
 
   return (
     <>
-      <div className={`${styles.post} mt-4 `}>
+      <div className={`${styles.post}`}>
         <div>
           <div>
             <img src={post.imageURL} alt={post.title} className={styles.img} />
           </div>
 
           <div className={styles["post-title"]}>
+            <p className={styles.category}>{post.category}</p>
             <h1>
               <Link to={`/post/${post._id}`}>{post.title}</Link>
             </h1>
