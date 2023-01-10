@@ -36,7 +36,7 @@ export const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://storyhub-api.onrender.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         formValues
       );
       // update user state

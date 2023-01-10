@@ -28,7 +28,7 @@ export const Posts = () => {
     try {
       const fetchPosts = async () => {
         const res = await axios.get(
-          "https://storyhub-api.onrender.com/api/posts/" + search
+          "http://localhost:5000/api/posts/" + search
         );
         setPosts(res.data);
         dispatch(loadingStop());

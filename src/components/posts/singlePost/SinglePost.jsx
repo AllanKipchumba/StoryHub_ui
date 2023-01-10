@@ -44,9 +44,7 @@ export const SinglePost = () => {
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
-      const res = await axios.get(
-        "https://storyhub-api.onrender.com/api/posts/" + path
-      );
+      const res = await axios.get("http://localhost:5000/api/posts/" + path);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
@@ -60,12 +58,9 @@ export const SinglePost = () => {
       // alert user to delete
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
-        await axios.delete(
-          "https://storyhub-api.onrender.com/api/posts/" + path,
-          {
-            headers,
-          }
-        );
+        await axios.delete("http://localhost:5000/api/posts/" + path, {
+          headers,
+        });
         window.location.replace("/");
       } else {
         return false;
@@ -86,13 +81,9 @@ export const SinglePost = () => {
     //alert user to update post
     try {
       if (window.confirm("Update Post")) {
-        await axios.patch(
-          "https://storyhub-api.onrender.com/api/posts/" + path,
-          updates,
-          {
-            headers,
-          }
-        );
+        await axios.patch("http://localhost:5000/api/posts/" + path, updates, {
+          headers,
+        });
         setUpdateMode(false);
       } else {
         return false;
@@ -108,7 +99,7 @@ export const SinglePost = () => {
     try {
       const res = await axios({
         method: "put",
-        url: `https://storyhub-api.onrender.com/api/post/${path}/like`,
+        url: `http://localhost:5000/api/post/${path}/like`,
         headers: headers,
         data: {},
       });
@@ -126,7 +117,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `https://storyhub-api.onrender.com/api/post/${path}/likes`,
+          url: `http://localhost:5000/api/post/${path}/likes`,
           headers: headers,
         });
         //record the number of likes on the post
@@ -147,7 +138,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "post",
-        url: `https://storyhub-api.onrender.com/api/post/comment/${path}`,
+        url: `http://localhost:5000/api/post/comment/${path}`,
         data: { comment },
         headers: headers,
       });
@@ -170,7 +161,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `https://storyhub-api.onrender.com/api/post/comment/${path}`,
+          url: `http://localhost:5000/api/post/comment/${path}`,
           headers: headers,
         });
 
@@ -191,7 +182,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "put",
-        url: `https://storyhub-api.onrender.com/api/post/comment/${commentID}/like`,
+        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
         data: {},
         headers: headers,
       });
@@ -443,7 +434,7 @@ export const SinglePost = () => {
                                         if (window.confirm("Delete comment?")) {
                                           await axios({
                                             method: "delete",
-                                            url: `https://storyhub-api.onrender.com/api/post/comment/${comment._id}`,
+                                            url: `http://localhost:5000/api/post/comment/${comment._id}`,
                                             headers: headers,
                                           });
                                           //trigger a re-render on get comments

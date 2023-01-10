@@ -26,7 +26,7 @@ export const Write = () => {
     try {
       const res = await axios({
         method: "post",
-        url: "https://storyhub-api.onrender.com/api/posts/",
+        url: "http://localhost:5000/api/posts/",
         data: newPost,
         headers: headers,
       });
