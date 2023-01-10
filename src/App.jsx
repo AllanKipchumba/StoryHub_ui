@@ -1,4 +1,3 @@
-import "./app.scss";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,6 +20,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/post/:id"
           element={
@@ -46,14 +46,13 @@ const App = () => {
           }
         />
         <Route
-          path="/write"
+          path="/publish"
           element={
             <Authenticated>
               <Publish />
             </Authenticated>
           }
         />
-        <Route path="/about" element={<About />} />
       </Routes>
 
       <Content />

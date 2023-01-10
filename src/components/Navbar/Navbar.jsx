@@ -42,7 +42,7 @@ export const Navbar = () => {
           </li>
 
           <li onClick={handleClick} className="link">
-            <Link to="/write">Publish</Link>
+            <Link to="/publish">Publish</Link>
           </li>
 
           {user ? (
