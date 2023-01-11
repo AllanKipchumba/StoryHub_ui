@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+    --dark-blue: #0a1930;
+}
+
 body {
     font-family: Mulish, sans-serif;
     background-color: #fafafa;
