@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
-import ReactTooltip from "react-tooltip";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
@@ -33,7 +32,6 @@ export const SinglePost = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState();
-  const [tooltip, hideTooltip] = useState(true);
   const [hover, setHover] = useState(false);
   const [addComment, setAddComment] = useState(false);
   //access post id
@@ -50,12 +48,14 @@ export const SinglePost = () => {
       dispatch(loadingStop());
     };
     fetchPost();
-  }, []);
+  }, [dispatch, path]);
 
+  // REFACTOR TO USE NOTIFLIX
   // DELETE POST
   const deletePost = async () => {
     try {
       // alert user to delete
+      //USE NOIFLIX
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
         await axios.delete("http://localhost:5000/api/posts/" + path, {
@@ -79,6 +79,7 @@ export const SinglePost = () => {
       description,
     };
     //alert user to update post
+    // REFACTOR TO USE NOTIFLIX
     try {
       if (window.confirm("Update Post")) {
         await axios.patch("http://localhost:5000/api/posts/" + path, updates, {
@@ -210,6 +211,8 @@ export const SinglePost = () => {
           </div>
           <div className={`post-title mx-auto text-center`}>
             <div className="flex gap-4">
+              {/* FOR OPTIMISATION */}
+              {/* SHOW IF UPDATEMODE*/}
               {updateMode ? (
                 <>
                   <input
@@ -225,47 +228,15 @@ export const SinglePost = () => {
                 <>
                   <h1 className="font-semibold uppercase">{post.title}</h1>
                   {/* display edit and delete icons if the logged in user is the post owner */}
+
+                  {/* SHOW IF AUTHOR */}
                   {author === user?.user.username && (
                     <div className="flex gap-3">
                       <FiEdit
                         className="icon"
                         onClick={() => setUpdateMode(true)}
-                        data-tip
-                        data-for="editPost"
-                        onMouseEnter={() => hideTooltip(true)}
-                        onMouseLeave={() => {
-                          hideTooltip(false);
-                          setTimeout(() => hideTooltip(true), 50);
-                        }}
                       />
-                      <MdDeleteOutline
-                        className="icon"
-                        onClick={deletePost}
-                        // tooltip props
-                        data-tip
-                        data-for="deletePost"
-                        onMouseEnter={() => hideTooltip(true)}
-                        onMouseLeave={() => {
-                          hideTooltip(false);
-                          setTimeout(() => hideTooltip(true), 50);
-                        }}
-                      />
-                      {/* tooltip to display text on mouse over delete and edit icons */}
-                      {tooltip && (
-                        <ReactTooltip
-                          id="deletePost"
-                          place="top"
-                          effect="solid"
-                        >
-                          Delete post
-                        </ReactTooltip>
-                      )}
-
-                      {tooltip && (
-                        <ReactTooltip id="editPost" place="top" effect="solid">
-                          Edit post
-                        </ReactTooltip>
-                      )}
+                      <MdDeleteOutline className="icon" onClick={deletePost} />
                     </div>
                   )}
                 </>
@@ -274,29 +245,14 @@ export const SinglePost = () => {
 
             <div>
               {/* AUTHOR */}
-              {/* <Link to={`/?author=${author}`}>
-                <p
-                  // tooltip props
-                  data-tip
-                  data-for="showAuthorPosts"
-                  onMouseEnter={() => hideTooltip(true)}
-                  onMouseLeave={() => {
-                    hideTooltip(false);
-                    setTimeout(() => hideTooltip(true), 50);
-                  }}
-                >
+              <Link to={`/?author=${author}`}>
+                <p>
                   By: &nbsp;
                   <span className="font-bold capitalize text-[#ff0581]">
                     {author}
                   </span>
                 </p>
-              </Link> */}
-
-              {tooltip && (
-                <ReactTooltip id="showAuthorPosts" place="top" effect="solid">
-                  Show all posts by {author}
-                </ReactTooltip>
-              )}
+              </Link>
 
               <p className=" text-sm">
                 {new Date(post.createdAt).toLocaleString()}
@@ -304,6 +260,7 @@ export const SinglePost = () => {
             </div>
           </div>
 
+          {/* SOW IF UPDATEMODE */}
           {updateMode ? (
             <>
               <textarea
@@ -325,6 +282,7 @@ export const SinglePost = () => {
             <div className="mt-3">
               <div className="description">{post.description}</div>
               <div>
+                {/* LIKE AND COMMENT ICONS */}
                 {/* display like and comment icons */}
                 <div className="mt-6 flex gap-5">
                   <div className="flex gap-1">
@@ -367,6 +325,7 @@ export const SinglePost = () => {
                 </div>
 
                 {/*COMMENT POST  */}
+                {/* SHOW IF ADDCOMMENT */}
                 {addComment && (
                   <div className="mt-14 w-[80%] ">
                     <form onSubmit={commentPost}>
@@ -386,6 +345,7 @@ export const SinglePost = () => {
                 )}
 
                 {/*DISPLAY COMMENTS */}
+                {/* SHOW IF HAD COMMENTS */}
                 {hasComments && (
                   <>
                     <div className="comments-container p-10 mt-10 lg:max-w-[70%] mx-auto">
@@ -436,6 +396,7 @@ export const SinglePost = () => {
                                       //DELETE COMMENT
                                       try {
                                         //Alert user that they are about to delete comment
+                                        // USE NOTIFLIX
                                         if (window.confirm("Delete comment?")) {
                                           await axios({
                                             method: "delete",

@@ -3,6 +3,7 @@
 @tailwind utilities;
 :root {
     --dark-blue: #0a1930;
+    --warm-red: #eb0202;
 }
 
 body {
