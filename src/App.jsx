@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 //import pages
 import { Publish, Signup, Home, About, Login, ReadPost } from "./pages";
@@ -17,6 +19,8 @@ import {
 const App = () => {
   return (
     <>
+      <ToastContainer autoClose={2000} />
+
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
