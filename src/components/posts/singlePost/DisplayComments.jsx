@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./singlepost.scss";
 import { AiOutlineLike } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
@@ -12,6 +12,7 @@ export const DisplayComments = ({
   deleteComment,
   author,
   handleData,
+  loggedinUser,
 }) => {
   if (hasComments) {
     return (
@@ -47,7 +48,7 @@ export const DisplayComments = ({
 
                   {comment.likes.length !== 0 && <p>{comment.likes.length}</p>}
 
-                  <AuthorOnly author={author}>
+                  <AuthorOnly author={author} loggedinUser={loggedinUser}>
                     <MdOutlineDelete
                       className="icon icons-LC"
                       onClick={deleteComment}

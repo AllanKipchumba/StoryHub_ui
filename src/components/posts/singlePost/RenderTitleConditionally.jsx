@@ -1,17 +1,7 @@
 import React from "react";
-import { FiEdit } from "react-icons/fi";
-import { MdDeleteOutline } from "react-icons/md";
-import { AuthorOnly } from "./AuthorOnly";
 import "./singlepost.scss";
 
-export const RenderTitleConditionally = ({
-  updateMode,
-  title,
-  onChange,
-  editPost,
-  deletePost,
-  author,
-}) => {
+export const RenderTitleConditionally = ({ updateMode, title, onChange }) => {
   if (updateMode) {
     return (
       <input
@@ -24,16 +14,6 @@ export const RenderTitleConditionally = ({
       />
     );
   } else {
-    return (
-      <>
-        <h1 className="font-semibold uppercase">{title}</h1>
-        <AuthorOnly author={author}>
-          <div className="flex gap-3">
-            <FiEdit className="icon" onClick={editPost} />
-            <MdDeleteOutline className="icon" onClick={deletePost} />
-          </div>
-        </AuthorOnly>
-      </>
-    );
+    return <h1 className="font-semibold uppercase">{title}</h1>;
   }
 };

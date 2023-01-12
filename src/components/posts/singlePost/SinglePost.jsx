@@ -34,6 +34,10 @@ export const SinglePost = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
 
+  //get name of the logged in user
+  const email = user.user.email;
+  const loggedinUser = email.substring(0, email.indexOf("@"));
+
   //receive comment._id from child
   const [commentID, setCommentID] = useState("");
   const handleDataFromChild = (childData) => {
@@ -231,18 +235,16 @@ export const SinglePost = () => {
         />
       ) : (
         <div className="singlepost rounded-3xl !mx-auto md:max-w-[80%]">
-          <div className={`image`}>
-            <img src={post.imageURL} alt={post.title} className={`img`} />
+          <div className="image">
+            <img src={post.imageURL} alt={post.title} className="img" />
           </div>
           <div className={`post-title mx-auto text-center`}>
             <div className="flex gap-4">
               <RenderTitleConditionally
                 updateMode={updateMode}
                 title={post.title}
-                author={user?.user.username}
+                loggedinUser={loggedinUser}
                 onChange={(e) => setTitle(e.target.value)}
-                editPost={() => setUpdateMode(true)}
-                deletePost={deletePost}
               />
             </div>
 
@@ -262,7 +264,7 @@ export const SinglePost = () => {
           </div>
 
           <RenderBodyConditionally
-            author={user?.user.username}
+            author={author}
             updateMode={updateMode}
             description={description}
             changeDescription={(e) => setDescription(e.target.value)}
@@ -286,6 +288,10 @@ export const SinglePost = () => {
             }}
             deleteComment={deleteComment}
             handleData={handleDataFromChild}
+            cancelUpdate={() => setUpdateMode(false)}
+            loggedinUser={loggedinUser}
+            editPost={() => setUpdateMode(true)}
+            deletePost={deletePost}
           />
         </div>
       )}

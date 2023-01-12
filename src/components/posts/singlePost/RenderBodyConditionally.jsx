@@ -4,6 +4,9 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { CreateComment } from "./CreateComment";
 import { DisplayComments } from "./DisplayComments";
+import { AuthorOnly } from "./AuthorOnly";
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
 
 export const RenderBodyConditionally = ({
   author,
@@ -23,8 +26,11 @@ export const RenderBodyConditionally = ({
   commentsOnPost,
   likeComment,
   deleteComment,
-  handleData
-
+  handleData,
+  cancelUpdate,
+  loggedinUser,
+  editPost,
+  deletePost,
 }) => {
   if (updateMode) {
     return (
@@ -38,9 +44,15 @@ export const RenderBodyConditionally = ({
           cols="50"
         />
         {/* edit button */}
-        <div className="mt-10">
-          <button onClick={updatePost} className="edit-btn">
+        <div className="mt-10 flex gap-8">
+          <button onClick={updatePost} className="edit-btn w-[30%] md:w-[15%]">
             Update
+          </button>
+          <button
+            onClick={cancelUpdate}
+            className="edit-btn w-[30%] md:w-[15%]"
+          >
+            Cancel
           </button>
         </div>
       </>
@@ -63,6 +75,13 @@ export const RenderBodyConditionally = ({
               />
               {numberOfComments !== 0 && <p>{numberOfComments}</p>}
             </div>
+
+            <AuthorOnly author={author} loggedinUser={loggedinUser}>
+              <div className="flex gap-3">
+                <FiEdit className="icon" onClick={editPost} />
+                <MdDeleteOutline className="icon" onClick={deletePost} />
+              </div>
+            </AuthorOnly>
           </div>
 
           <CreateComment
@@ -79,6 +98,7 @@ export const RenderBodyConditionally = ({
             author={author}
             commentsOnPost={commentsOnPost}
             handleData={handleData}
+            loggedinUser={loggedinUser}
           />
         </div>
       </div>

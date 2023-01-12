@@ -1,5 +1,5 @@
-export const AuthorOnly = ({ children, author }) => {
-  if (author) {
+export const AuthorOnly = ({ children, author, loggedinUser }) => {
+  if (author === loggedinUser) {
     return children;
   }
 };
