@@ -5,14 +5,15 @@ import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowOnAuth } from "./ShowOnAuth";
+import { NoAuth, ShowOnAuth } from "./ShowOnAuth";
+import { logout } from "../../Redux/slices/loginSlice";
 
 //re-use jsx
 const logo = (
   <div className={styles.logo}>
     <Link to="/">
       <h2>
-        Story<span className="text-[#ff0581]">Hub</span>
+        Story<span>Hub</span>
       </h2>
     </Link>
   </div>
@@ -24,6 +25,8 @@ const activeLink = ({ isActive }) => isActive && `${styles.active}`;
 export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setscrollPage] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //make Navbar sticky
   const fixNavBar = () => {
@@ -62,7 +65,7 @@ export const Navbar = () => {
             {/* only display on mobile */}
             <li className={styles["logo-mobile"]}>
               {logo}
-              <FaTimes size={22} color="#fff" onClick={hideMenu} />
+              <FaTimes size={22} color="#161c1c" onClick={hideMenu} />
             </li>
 
             <li>
@@ -84,7 +87,29 @@ export const Navbar = () => {
 
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <ShowOnAuth hideMenu={hideMenu} className={activeLink} />
+              <ShowOnAuth>
+                <li
+                  onClick={() => {
+                    hideMenu();
+                    dispatch(logout());
+                    navigate("/");
+                  }}
+                >
+                  logout
+                </li>
+              </ShowOnAuth>
+              <NoAuth>
+                <li onClick={hideMenu}>
+                  <NavLink to="/signup" className={activeLink}>
+                    Sign up
+                  </NavLink>
+                </li>
+                <li onClick={hideMenu}>
+                  <NavLink to="/login" className={activeLink}>
+                    Login
+                  </NavLink>
+                </li>
+              </NoAuth>
             </span>
           </div>
         </nav>
