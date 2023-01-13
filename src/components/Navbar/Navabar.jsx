@@ -64,7 +64,12 @@ export const Navbar = () => {
             {/* only display on mobile */}
             <li className={styles["logo-mobile"]}>
               {logo}
-              <FaTimes size={22} color="#161c1c" onClick={hideMenu} />
+              <FaTimes
+                size={22}
+                className={styles["close-icon"]}
+                color="#161c1c"
+                onClick={hideMenu}
+              />
             </li>
 
             <li>
@@ -93,18 +98,26 @@ export const Navbar = () => {
                     dispatch(logout());
                     navigate("/");
                   }}
+                  style={{ cursor: "pointer" }}
+                  className="bg-[#DDDDDD] rounded !px-[15px] !py-[3px]"
                 >
-                  logout
+                  Logout
                 </li>
               </ShowOnAuth>
               <NoAuth>
                 <li onClick={hideMenu}>
-                  <NavLink to="/signup" className={activeLink}>
+                  <NavLink
+                    to="/signup"
+                    className={`${activeLink} bg-[#DDDDDD] rounded !px-[15px] !py-[3px]`}
+                  >
                     Sign up
                   </NavLink>
                 </li>
                 <li onClick={hideMenu}>
-                  <NavLink to="/login" className={activeLink}>
+                  <NavLink
+                    to="/login"
+                    className={`${activeLink} bg-[#DDDDDD] rounded !px-[15px] !py-[3px]`}
+                  >
                     Login
                   </NavLink>
                 </li>

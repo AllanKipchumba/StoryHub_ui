@@ -12,7 +12,7 @@ import {
   loadingStart,
   loadingStop,
 } from "../../Redux/slices/loginSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Login = () => {
@@ -21,6 +21,7 @@ export const Login = () => {
   const [password, setPassword] = useState("123456");
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
 
   const formValues = {
     email,
@@ -42,6 +43,7 @@ export const Login = () => {
       // update user state
       dispatch(loginSuccess(res.data));
       dispatch(loadingStop());
+      navigate("/");
     } catch (error) {
       dispatch(loginFail());
       dispatch(loadingStop());

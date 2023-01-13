@@ -90,7 +90,7 @@ header {
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
+            width: 60%;
             height: 100vh;
             background-color: #f6f6f6;
             padding: 4rem;
@@ -116,16 +116,21 @@ header {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    position: relative;
                     h2 {
                         color: #000;
                     }
                     >* {
                         cursor: pointer;
                     }
+                    .close-icon {
+                        position: absolute;
+                        left: 110%;
+                    }
                 }
                 li {
                     color: #161c1c;
-                    padding: 5px 0;
+                    padding: 10px 0;
                     a {
                         display: block;
                     }
@@ -139,7 +144,7 @@ header {
                         color: #161c1c;
                         display: block;
                         margin: 0;
-                        padding: 5px 0;
+                        padding: 10px 0;
                     }
                 }
             }
