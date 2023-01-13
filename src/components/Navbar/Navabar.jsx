@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./navbar.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NoAuth, ShowOnAuth } from "./ShowOnAuth";
 import { logout } from "../../Redux/slices/loginSlice";
 

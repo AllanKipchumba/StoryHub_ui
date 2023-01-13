@@ -5,6 +5,7 @@ import loginReducer from "./slices/loginSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
+import postReducer from "./slices/postSlice";
 
 //persist user state
 const loginPersistConfig = {
@@ -15,6 +16,7 @@ const loginPersistConfig = {
 
 const rootReducer = combineReducers({
     logIn: persistReducer(loginPersistConfig, loginReducer),
+    posts: postReducer,
 });
 
 export const store = configureStore({

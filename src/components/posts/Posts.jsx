@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./posts.scss";
-import { Post } from "./post/Post";
 import { useSelector, useDispatch } from "react-redux";
 import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 import MoonLoader from "react-spinners/MoonLoader";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import { STORE_POSTS } from "../../Redux/slices/postSlice";
+import { LatestPosts } from "./LatestPosts";
+import { AllPosts } from "./AllPosts";
 
 const override = {
   display: "block",
@@ -17,27 +15,29 @@ const override = {
 export const Posts = () => {
   const { loading } = useSelector((store) => store["logIn"]);
   const dispatch = useDispatch();
-  const { search } = useLocation();
   const [posts, setPosts] = useState([]);
+
+  const getLatestPosts = [...posts].slice(-4);
+  const latestPosts = [...getLatestPosts].reverse();
 
   //FETCH POSTS FROM DB
   useEffect(() => {
     dispatch(loadingStart());
-    // console.log(search);
     try {
-      const fetchPosts = async () => {
-        const res = await axios.get(
-          "http://localhost:5000/api/posts/" + search
-        );
-        setPosts(res.data);
-        dispatch(loadingStop());
-      };
-      fetchPosts();
+      fetch("http://localhost:5000/api/posts/")
+        .then((response) => response.json())
+        .then((data) => {
+          setPosts(data);
+          dispatch(loadingStop());
+        });
     } catch (error) {
       console.log(error);
       dispatch(loadingStop());
     }
-  }, [search]);
+  }, [dispatch]);
+
+  //dispatch posts to store
+  posts.length !== 0 && dispatch(STORE_POSTS(posts));
 
   return (
     <>
@@ -52,17 +52,8 @@ export const Posts = () => {
           />
         ) : (
           <>
-            <div className="mx-auto grid grid-cols-2 md:grid-cols-3">
-              <h1 className="md:px-16 font-bold tracking-[2.72px] text-[16px] capitalize">
-                latest stories
-              </h1>
-            </div>
-
-            <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 gap-10">
-              {posts.map((post) => (
-                <Post key={post._id} post={post} />
-              ))}
-            </div>
+            <LatestPosts latestPosts={latestPosts} />
+            <AllPosts posts={posts} />
           </>
         )}
       </div>
