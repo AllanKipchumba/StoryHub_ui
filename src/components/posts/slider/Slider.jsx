@@ -28,43 +28,52 @@ export const Slider = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
 
+  //autoscroll functionality
+  const autoscroll = true;
+  let slideInterval;
+  let intervalTime = 5000;
+
+  const auto = () => {
+    slideInterval = setInterval(nextSlide, intervalTime);
+  };
+
+  useEffect(() => {
+    autoscroll && auto();
+
+    // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
+    return () => clearInterval(slideInterval);
+  }, [currentSlide, autoscroll, slideInterval]);
+
   return (
     <div className="slider">
+      <AiOutlineArrowLeft className="arrow prev" onClick={prevSlide} />
+      <AiOutlineArrowRight className="arrow next" onClick={nextSlide} />
+
       {randomPosts.map((post, index) => {
         const { title, description, imageURL, createdAt } = post;
         const shortenedDescription = description
           .substring(0, 200)
           .concat("...");
-
         return (
           <div
             key={index}
             className={index === currentSlide ? "slide current" : "slide"}
           >
             {index === currentSlide && (
-              <div className="grid md:grid-cols-2  gap-4">
-                <div className="img-container">
-                  <img src={imageURL} alt={title} />
-                </div>
-                <div>
+              <>
+                <img src={imageURL} alt={title} className="max-w-full h-auto" />
+
+                <div className="content">
                   <h1>
                     <Link to={`/post/${post._id}`}>{title}</Link>
                   </h1>
                   <Timestamp createdAt={createdAt} />
-                  <p>{shortenedDescription}</p>
-
-                  <div>
-                    <AiOutlineArrowLeft
-                      className="arrow prev"
-                      onClick={prevSlide}
-                    />
-                    <AiOutlineArrowRight
-                      className="arrow next"
-                      onClick={nextSlide}
-                    />
+                  <hr />
+                  <div className="mt-3 break-all">
+                    <p>{shortenedDescription}</p>
                   </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         );
