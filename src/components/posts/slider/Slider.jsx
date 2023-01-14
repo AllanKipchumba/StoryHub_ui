@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./slider.scss";
 import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
@@ -28,27 +28,8 @@ export const Slider = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
 
-  //autoscroll functionality
-  const autoscroll = true;
-  let slideInterval;
-  let intervalTime = 5000;
-
-  const auto = () => {
-    slideInterval = setInterval(nextSlide, intervalTime);
-  };
-
-  useEffect(() => {
-    autoscroll && auto();
-
-    // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
-    return () => clearInterval(slideInterval);
-  }, [currentSlide, autoscroll, slideInterval]);
-
   return (
     <div className="slider">
-      <AiOutlineArrowLeft className="arrow prev" onClick={prevSlide} />
-      <AiOutlineArrowRight className="arrow next" onClick={nextSlide} />
-
       {randomPosts.map((post, index) => {
         const { title, description, imageURL, createdAt } = post;
         const shortenedDescription = description
@@ -60,9 +41,8 @@ export const Slider = () => {
             className={index === currentSlide ? "slide current" : "slide"}
           >
             {index === currentSlide && (
-              <>
-                <img src={imageURL} alt={title} className="max-w-full h-auto" />
-
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* CONT */}
                 <div className="content">
                   <h1>
                     <Link to={`/post/${post._id}`}>{title}</Link>
@@ -72,8 +52,27 @@ export const Slider = () => {
                   <div className="mt-3 break-all">
                     <p>{shortenedDescription}</p>
                   </div>
+
+                  {/* ICONS */}
+                  <FaAngleLeft
+                    size={30}
+                    className="arrow prev"
+                    onClick={prevSlide}
+                  />
+                  <FaAngleRight
+                    size={30}
+                    className="arrow next"
+                    onClick={nextSlide}
+                  />
                 </div>
-              </>
+
+                {/* IMAGE
+                <img
+                  src={imageURL}
+                  alt={title}
+                  className="max-w-full h-auto grid  sm:hidden"
+                /> */}
+              </div>
             )}
           </div>
         );
