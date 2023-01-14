@@ -19,14 +19,27 @@ export const Slider = () => {
   useEffect(() => {
     setCurrentSlide(0);
   }, []);
-
   const nextSlide = () => {
     setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1);
   };
-
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
+  //   //autoscroll functionality
+  //   const autoscroll = true;
+  //   let slideInterval;
+  //   let intervalTime = 5000;
+
+  //   const auto = () => {
+  //     slideInterval = setInterval(nextSlide, intervalTime);
+  //   };
+
+  //   useEffect(() => {
+  //     autoscroll && auto();
+
+  //     // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
+  //     return () => clearInterval(slideInterval);
+  //   }, [currentSlide, autoscroll, slideInterval]);
 
   return (
     <div className="slider">
