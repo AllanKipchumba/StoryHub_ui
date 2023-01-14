@@ -6,6 +6,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { STORE_POSTS } from "../../Redux/slices/postSlice";
 import { LatestPosts } from "./LatestPosts";
 import { AllPosts } from "./AllPosts";
+import { Slider } from "./slider/Slider";
 
 const override = {
   display: "block",
@@ -52,6 +53,9 @@ export const Posts = () => {
           />
         ) : (
           <>
+            {/* 3 Random carousels COMPONENT */}
+            <Slider />
+            {/* 3 random posts - title only */}
             <LatestPosts latestPosts={latestPosts} />
             <AllPosts posts={posts} />
           </>
