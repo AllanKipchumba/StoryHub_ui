@@ -13,3 +13,28 @@ body {
     font-size: 16px;
     line-height: 24px;
 }
+
+h1 {
+    text-transform: capitalize;
+    font-family: "Frank Ruhl Libre", sans-serif;
+    color: #161c1c;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+}
+
+h1 :hover {
+    text-decoration: underline;
+}
+
+.category {
+    color: #eb0202;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.timestamp {
+    margin-top: 15px;
+    line-height: 1rem;
+}

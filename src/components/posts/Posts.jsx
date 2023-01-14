@@ -42,7 +42,7 @@ export const Posts = () => {
 
   return (
     <>
-      <div className="posts">
+      <div className="posts md:mx-[3rem] lg:mx-[4rem]">
         {loading ? (
           <MoonLoader
             loading={loading}

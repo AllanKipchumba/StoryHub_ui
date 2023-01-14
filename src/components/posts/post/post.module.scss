@@ -12,25 +12,5 @@
     }
     .post-title {
         padding: 20px;
-        .category {
-            color: #eb0202;
-            font-size: 16px;
-            font-weight: 400;
-        }
-        h1 {
-            text-transform: capitalize;
-            font-family: "Frank Ruhl Libre", sans-serif;
-            color: #161c1c;
-            font-size: 24px;
-            line-height: 32px;
-            font-weight: 700;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        p {
-            @apply mb-1 mt-3 font-light;
-            font-size: 14px;
-        }
     }
 }
