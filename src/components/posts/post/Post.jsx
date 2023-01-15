@@ -15,7 +15,10 @@ export const Post = ({ post }) => {
           </div>
 
           <div className={styles["post-title"]}>
-            <p className="category">{post.category}</p>
+            <div className="line-subtitle">
+              <div className="line"></div>
+              <div className="subtitle">{post.category}</div>
+            </div>
             <h1>
               <Link to={`/post/${post._id}`}>{post.title}</Link>
             </h1>

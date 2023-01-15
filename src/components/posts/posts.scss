@@ -1,4 +1,6 @@
 .posts {
-    padding: 0 25px 80px 25px;
-    //
+    padding: 30px;
+    @media screen and (max-width: 640px) {
+        padding: 10px;
+    }
 }
