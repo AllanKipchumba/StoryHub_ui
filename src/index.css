@@ -22,14 +22,39 @@ h1 {
     text-transform: capitalize;
     font-family: "Frank Ruhl Libre", sans-serif;
     color: #161c1c;
-    font-size: 24px;
-    line-height: 32px;
     font-weight: 700;
+    /* font-size: 40px;
+    line-height: 48px;
+    font-weight: 700; */
 }
 
 h1:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+h3 {
+    font-family: "Frank Ruhl Libre", sans-serif;
+    color: var(--dark-blue);
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+h3:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 991px) {
+    h3 {
+        line-height: 1.4em;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    h3 {
+        font-size: 24px;
+    }
 }
 
 .line-subtitle {
@@ -51,17 +76,10 @@ h1:hover {
     text-transform: capitalize;
 }
 
-
-/* .category {
-    color: #eb0202;
-    font-size: 20px;
-    font-weight: 400;
-    text-transform: capitalize;
-} */
-
 .timestamp {
     margin-top: 15px;
-    line-height: 1rem;
+    line-height: 16px;
+    font-family: Mulish, sans-serif;
 }
 
 

@@ -6,6 +6,8 @@ import { Timestamp } from "../Timestamp";
 
 export const Post = ({ post }) => {
   // const { user } = useSelector((store) => store["logIn"]);
+  const { title } = post;
+  // const title = originalTitle.substring(0, 30).concat("...");
   return (
     <>
       <div className={`${styles.post}`}>
@@ -19,9 +21,9 @@ export const Post = ({ post }) => {
               <div className="line"></div>
               <div className="subtitle">{post.category}</div>
             </div>
-            <h1>
-              <Link to={`/post/${post._id}`}>{post.title}</Link>
-            </h1>
+            <h3>
+              <Link to={`/post/${post._id}`}>{title}</Link>
+            </h3>
 
             <Timestamp createdAt={post.createdAt} />
           </div>

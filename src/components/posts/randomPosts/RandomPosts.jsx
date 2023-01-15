@@ -24,7 +24,7 @@ export const RandomPosts = () => {
                 <div className="subtitle">{category}</div>
               </div>
               <Link to={`/post/${post._id}`}>
-                <h1>{title}</h1>
+                <h3>{title}</h3>
               </Link>
               <Timestamp createdAt={createdAt} />
             </div>

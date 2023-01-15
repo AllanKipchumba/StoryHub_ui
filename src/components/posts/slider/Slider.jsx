@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import "./slider.scss";
+import styles from "./slider.module.scss";
 import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
 
@@ -25,39 +25,47 @@ export const Slider = () => {
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
-  //   //autoscroll functionality
-  //   const autoscroll = true;
-  //   let slideInterval;
-  //   let intervalTime = 5000;
+  //autoscroll functionality
+  // const autoscroll = true;
+  // let slideInterval;
+  // let intervalTime = 5000;
 
-  //   const auto = () => {
-  //     slideInterval = setInterval(nextSlide, intervalTime);
-  //   };
+  // const auto = () => {
+  //   slideInterval = setInterval(nextSlide, intervalTime);
+  // };
 
-  //   useEffect(() => {
-  //     autoscroll && auto();
+  // useEffect(() => {
+  //   autoscroll && auto();
 
-  //     // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
-  //     return () => clearInterval(slideInterval);
-  //   }, [currentSlide, autoscroll, slideInterval]);
+  //   // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
+  //   return () => clearInterval(slideInterval);
+  // }, [currentSlide, autoscroll, slideInterval]);
 
   return (
-    <div className="slider">
+    <div className={styles.slider}>
       {randomPosts.map((post, index) => {
-        const { title, description, imageURL, createdAt } = post;
+        const { title, description, imageURL, createdAt, category } = post;
         const shortenedDescription = description
-          .substring(0, 200)
+          .substring(0, 100)
           .concat("...");
         return (
           <div
             key={index}
-            className={index === currentSlide ? "slide current" : "slide"}
+            className={
+              index === currentSlide
+                ? `${styles.slide} ${styles.current}`
+                : `${styles.slide}`
+            }
           >
             {index === currentSlide && (
               <div className="grid lg:grid-cols-2 gap-8">
                 {/* CONT */}
-                <div className="content">
-                  <h1>
+                <div className={styles.content}>
+                  <div className="line-subtitle">
+                    <div className="line"></div>
+                    <div className="subtitle">{category}</div>
+                  </div>
+                  <h1 className={styles["hero-title"]}>
                     <Link to={`/post/${post._id}`}>{title}</Link>
                   </h1>
                   <Timestamp createdAt={createdAt} />
@@ -67,16 +75,18 @@ export const Slider = () => {
                   </div>
 
                   {/* ICONS */}
-                  <FaAngleLeft
-                    size={30}
-                    className="arrow prev"
-                    onClick={prevSlide}
-                  />
-                  <FaAngleRight
-                    size={30}
-                    className="arrow next"
-                    onClick={nextSlide}
-                  />
+                  <div className={styles.icons}>
+                    <FaAngleLeft
+                      size={30}
+                      className={`${styles.arrow} }`}
+                      onClick={prevSlide}
+                    />
+                    <FaAngleRight
+                      size={30}
+                      className={`${styles.arrow} `}
+                      onClick={nextSlide}
+                    />
+                  </div>
                 </div>
 
                 {/* IMAGE
