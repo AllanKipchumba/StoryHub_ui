@@ -5,9 +5,7 @@ import styles from "./newpost.module.scss";
 export const LatestPosts = ({ latestPosts }) => {
   return (
     <div className={styles["latest-posts"]}>
-      <div className="mx-auto mt-3 grid grid-cols-2 md:grid-cols-3">
-        <h3 className="hover:no-underline">Latest Posts</h3>
-      </div>
+      <h3 className="hover:no-underline">Latest Posts</h3>
       <div className="underLine"></div>
       <div className=" py-3 m-auto grid grid-cols-2 md:grid-cols-3 gap-10">
         {latestPosts.map((post) => (

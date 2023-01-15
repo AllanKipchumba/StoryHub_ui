@@ -25,26 +25,32 @@ export const Slider = () => {
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
-  //autoscroll functionality
-  // const autoscroll = true;
-  // let slideInterval;
-  // let intervalTime = 5000;
+  // autoscroll functionality
+  const autoscroll = true;
+  let slideInterval;
+  let intervalTime = 5000;
 
-  // const auto = () => {
-  //   slideInterval = setInterval(nextSlide, intervalTime);
-  // };
+  const auto = () => {
+    slideInterval = setInterval(nextSlide, intervalTime);
+  };
 
-  // useEffect(() => {
-  //   autoscroll && auto();
+  useEffect(() => {
+    autoscroll && auto();
 
-  //   // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
-  //   return () => clearInterval(slideInterval);
-  // }, [currentSlide, autoscroll, slideInterval]);
+    // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
+    return () => clearInterval(slideInterval);
+  }, [currentSlide, autoscroll, slideInterval]);
 
   return (
     <div className={styles.slider}>
       {randomPosts.map((post, index) => {
-        const { title, description, imageURL, createdAt, category } = post;
+        const { title: originalTitle, description, createdAt, category } = post;
+        let title;
+
+        originalTitle.length < 15
+          ? (title = originalTitle)
+          : (title = originalTitle.substring(0, 30).concat("..."));
+
         const shortenedDescription = description
           .substring(0, 100)
           .concat("...");
@@ -77,24 +83,17 @@ export const Slider = () => {
                   {/* ICONS */}
                   <div className={styles.icons}>
                     <FaAngleLeft
-                      size={30}
+                      size={35}
                       className={`${styles.arrow} }`}
                       onClick={prevSlide}
                     />
                     <FaAngleRight
-                      size={30}
+                      size={35}
                       className={`${styles.arrow} `}
                       onClick={nextSlide}
                     />
                   </div>
                 </div>
-
-                {/* IMAGE
-                <img
-                  src={imageURL}
-                  alt={title}
-                  className="max-w-full h-auto grid  sm:hidden"
-                /> */}
               </div>
             )}
           </div>

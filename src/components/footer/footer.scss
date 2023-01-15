@@ -2,4 +2,10 @@
     position: relative;
     bottom: 0 !important;
     width: 100%;
+    background-color: var(--dark-blue);
+    color: #fff;
+    font-size: 18px;
+    span {
+        color: var(--warm-red);
+    }
 }
