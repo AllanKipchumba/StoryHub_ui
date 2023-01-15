@@ -2,15 +2,24 @@
     @apply mt-4 max-w-[1240px] shadow-2xl rounded-lg;
     font-family: "Frank Ruhl Libre", sans-serif;
     width: 100%;
-    // text-align: center;
+    position: relative;
     color: #161c1c;
     .img {
-        max-width: 100%;
-        height: auto;
+        width: 100%;
+        height: 300px;
         object-fit: cover;
-        object-position: bottom;
     }
     .post-title {
-        padding: 20px;
+        padding: 2rem;
     }
+    // @media screen and (min-width: 1024px) {
+    //     .post-title {
+    //         position: absolute;
+    //         background-color: #fff;
+    //         top: 40%;
+    //         width: 85%;
+    //         height: 12rem;
+    //         padding: 1.5rem;
+    //     }
+    // }
 }

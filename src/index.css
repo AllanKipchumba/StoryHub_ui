@@ -71,6 +71,14 @@ h3:hover {
     background-color: var(--warm-red);
 }
 
+.underLine {
+    margin-top: 2px;
+    width: 100%;
+    height: 1px;
+    margin-right: 6px;
+    background-color: var(--dark-blue);
+}
+
 .subtitle {
     color: var(--warm-red);
     text-transform: capitalize;

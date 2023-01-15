@@ -3,4 +3,14 @@
     @media screen and (max-width: 640px) {
         padding: 10px;
     }
+    @media screen and (min-width: 1024px) {
+        .latest {
+            position: absolute;
+            background-color: #fff;
+            top: 40%;
+            width: 85%;
+            height: 12rem;
+            padding: 1.5rem;
+        }
+    }
 }

@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
 // import { useSelector } from "react-redux";
 
-export const Post = ({ post }) => {
+export const Post = ({ post, latest }) => {
   // const { user } = useSelector((store) => store["logIn"]);
-  const { title } = post;
-  // const title = originalTitle.substring(0, 30).concat("...");
+  const { title: originalTitle } = post;
+  let title;
+
+  originalTitle.length < 30
+    ? (title = originalTitle)
+    : (title = originalTitle.substring(0, 30).concat("..."));
+
   return (
     <>
       <div className={`${styles.post}`}>
@@ -16,7 +21,7 @@ export const Post = ({ post }) => {
             <img src={post.imageURL} alt={post.title} className={styles.img} />
           </div>
 
-          <div className={styles["post-title"]}>
+          <div className={`${styles["post-title"]} ${latest}`}>
             <div className="line-subtitle">
               <div className="line"></div>
               <div className="subtitle">{post.category}</div>

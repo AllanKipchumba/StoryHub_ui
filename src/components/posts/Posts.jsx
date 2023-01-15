@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 import MoonLoader from "react-spinners/MoonLoader";
 import { STORE_POSTS } from "../../Redux/slices/postSlice";
-import { LatestPosts } from "./LatestPosts";
+import { LatestPosts } from "./latestPosts/LatestPosts";
 import { AllPosts } from "./AllPosts";
 import { Slider } from "./slider/Slider";
 import { RandomPosts } from "./randomPosts/RandomPosts";
