@@ -3,7 +3,7 @@ import styles from "./navbar.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NoAuth, ShowOnAuth } from "./ShowOnAuth";
 import { logout } from "../../Redux/slices/loginSlice";
 
@@ -27,6 +27,13 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user } = useSelector((store) => store["logIn"]);
+  let userName;
+  //get name of the logged in user
+  if (user !== null) {
+    const uEmail = user.user.email;
+    userName = uEmail.substring(0, uEmail.indexOf("@"));
+  }
   //make Navbar sticky
   const fixNavBar = () => {
     window.scrollY > 50 ? setscrollPage(true) : setscrollPage(false);
@@ -92,6 +99,9 @@ export const Navbar = () => {
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
               <ShowOnAuth>
+                <li className={styles.uname}>
+                  Hi, <b>{userName}</b>
+                </li>
                 <li
                   onClick={() => {
                     hideMenu();

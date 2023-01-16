@@ -77,6 +77,15 @@ header {
                     color: var(--color-danger);
                 }
             }
+            .uname {
+                &:hover {
+                    color: #161c1c !important;
+                }
+                b {
+                    color: var(--warm-red);
+                    text-transform: capitalize;
+                }
+            }
         }
     }
     .menu-icon {
@@ -138,6 +147,7 @@ header {
             }
             .header-right {
                 display: block;
+                margin-top: 1.5rem;
                 .links {
                     display: block;
                     li {
@@ -145,6 +155,15 @@ header {
                         display: block;
                         margin: 0;
                         padding: 10px 0;
+                    }
+                    .uname {
+                        &:hover {
+                            color: #161c1c !important;
+                        }
+                        b {
+                            color: var(--warm-red);
+                            text-transform: capitalize;
+                        }
                     }
                 }
             }
