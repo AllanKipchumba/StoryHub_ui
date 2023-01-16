@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import "./login.scss";
-import login from "./assests/login.svg";
+import React, { useEffect, useState } from "react";
+import styles from "../signUp/signup.module.scss";
 import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlineUnlock } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUnlock,
+} from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -14,14 +17,43 @@ import {
 } from "../../Redux/slices/loginSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
 
 export const Login = () => {
   const { fetching, error, loading } = useSelector((store) => store["logIn"]);
-  const [email, setEmail] = useState("testuser@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("testuser3@gmail.com");
+  const [password, setPassword] = useState("123456Aa");
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(false);
+
+  //pasword strength states
+  const [passLetter, setPassLetter] = useState(false);
+  const [passNumber, setPassNumber] = useState(false);
+  const [passLength, setPassLength] = useState(false);
+  const [passComplete, setPassComplete] = useState(false);
+
+  //monitor if requirements for strong password are met
+  useEffect(() => {
+    //check lowercase and uppercase
+    password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)
+      ? setPassLetter(true)
+      : setPassLetter(false);
+
+    //check for numbers
+    password.match(/([0-9])/) ? setPassNumber(true) : setPassNumber(false);
+
+    //check if password is greater than 8
+    password.length > 5 ? setPassLength(true) : setPassLength(false);
+
+    //all criteria is met
+    passLetter && passNumber && passLength
+      ? setPassComplete(true)
+      : setPassComplete(false);
+  }, [password, passLength, passLetter, passNumber]);
 
   const formValues = {
     email,
@@ -60,62 +92,68 @@ export const Login = () => {
     } else if (!regex.test(values.email)) {
       errors.email = "This is not a valid email format!";
     }
-    if (!values.password) {
-      errors.password = "Password is required";
-    } else if (values.password.length < 6) {
-      errors.password = "Password must be more than 6 characters";
-    } else if (values.password.length > 10) {
-      errors.password = "Password cannot exceed more than 10 characters";
-    }
+
     return errors;
   };
 
   return (
     <>
-      <div className="login max-w-[1240px] rounded-3xl flex-col mx-auto lg:mt-[100px] grid md:grid-cols-3 gap-10">
-        <img src={login} alt="/" className="col-span-1 w-[50%]" />
-
-        <div className="col-span-2 py-8 ">
+      <div className={styles.signup}>
+        <div className={styles["form-wrapper"]}>
           <form onSubmit={submitForm}>
             <h1>
               Login to your story
-              <span className="text-[#ff0581]">Hub</span> account
+              <span>Hub</span> account
             </h1>
 
             {error && (
-              <p className="text-[red]">
+              <p className={styles.error}>
                 Failed to login! check your credentials!
               </p>
             )}
 
             <label>Email</label>
-            <div className="inputWrapper flex flex-row gap-2">
-              <HiOutlineMail className="icon" />
+            <div className={styles.inputWrapper}>
+              <HiOutlineMail className={styles.icon} />
               <input
                 type="email"
                 placeholder="Input email"
-                className="input py-4"
                 value={email}
-                // ref={emailRef}
                 onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
               />
             </div>
-            <p className="error">{formErrors.email}</p>
+            <p className={styles.error}>{formErrors.email}</p>
 
             <label>Password</label>
-            <div className="inputWrapper flex flex-row gap-2">
-              <AiOutlineUnlock className="icon" />
+            <div className={styles.inputWrapper}>
+              <AiOutlineUnlock className={styles.icon} />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Input password"
-                className="py-4 input"
                 value={password}
+                onFocus={() => setShowIndicator(true)}
                 onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
               />
+              <span
+                className={`${styles.icon} ${styles["pass-icon"]}`}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible className={styles.icon} />
+                ) : (
+                  <AiOutlineEye className={styles.icon} />
+                )}
+              </span>
             </div>
             <p className="error">{formErrors.password}</p>
 
-            <button type="submit">
+            <button
+              type="submit"
+              className={!passComplete && `${styles["btn-disabled"]}`}
+              disabled={!passComplete}
+            >
               {loading ? (
                 <BeatLoader
                   loading={fetching}
@@ -124,16 +162,23 @@ export const Login = () => {
                   size={17}
                 />
               ) : (
-                `Sign in`
+                `Login`
               )}
             </button>
 
-            <p>
-              new to storyHub?{" "}
+            <PasswordStrengthIndicator
+              passLength={passLength}
+              passNumber={passNumber}
+              passLetter={passLetter}
+              showIndicator={showIndicator}
+            />
+
+            <h5>
+              New to storyHub?{" "}
               <Link to="/signup">
                 <span>create account</span>
               </Link>
-            </p>
+            </h5>
           </form>
         </div>
       </div>

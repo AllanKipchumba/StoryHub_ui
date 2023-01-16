@@ -24,8 +24,11 @@
             h1 {
                 font-family: "Fira Sans", sans-serif;
                 font-size: 20px;
-                letter-spacing: 2.72px;
-                @apply py-8 capitalize font-bold;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+                text-transform: none;
+                font-weight: normal;
+                text-align: center;
                 span {
                     color: var(--warm-red);
                 }
@@ -35,7 +38,7 @@
                 }
             }
             h5 {
-                margin-bottom: 1rem;
+                margin: 1rem 0;
                 span {
                     color: var(--warm-red);
                     hover {
@@ -72,11 +75,13 @@
                 }
             }
             .error {
-                color: red;
+                color: var(--warm-red);
                 margin-bottom: 7px;
             }
             button {
-                @apply py-3 capitalize mt-4;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                margin-top: 1rem;
                 display: flex;
                 width: 30%;
                 background-color: var(--warm-red);
