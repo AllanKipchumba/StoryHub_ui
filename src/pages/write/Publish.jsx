@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import "./publish.scss";
-import write from "./assets/write.svg";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 import { storage } from "../../firebase/config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 export const Publish = () => {
   const { user, loading } = useSelector((store) => store["logIn"]);
-  const author = user.user.username;
   const token = user.token;
   const headers = { Authorization: `Bearer ${token}` };
   const dispatch = useDispatch();
@@ -18,6 +17,7 @@ export const Publish = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const navigate = useNavigate();
 
   //UPLOAD IMAGE TO FIREBASE STORAGE
   const handleImageChange = (e) => {
@@ -71,28 +71,14 @@ export const Publish = () => {
       });
       dispatch(loadingStop());
       // change route to read new post
-      window.location.replace("/post/" + res.data._id);
+      navigate("/post/" + res.data._id);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <>
-      <div className="write max-w-[1240px] flex-col p-4 mx-auto grid md:grid-cols-5 gap-10">
-        <div className="intro sm:ml-[50px] col-span-2 flex sm:flex-row md:flex-col ">
-          <div>
-            <h1 className="font-bold">
-              Welcome <span className="uppercase text-[#ff0581]">{author}</span>
-            </h1>
-            <p className="mt-2 mb-4">Create and publish your posts here</p>
-          </div>
-          <img
-            src={write}
-            alt="/"
-            className="w-[50%] md:w-[100%] md:mt-[40px]"
-          />
-        </div>
-
+      <div className="write ">
         <form onSubmit={submitForm} className="col-span-3">
           <label>Title</label>
           <input
