@@ -1,7 +1,5 @@
 import React from "react";
-import "./about.scss";
-import about from "./assets/about.svg";
-import allan from "./assets/devAllan.png";
+import styles from "./about.module.scss";
 import {
   AiFillGithub,
   AiOutlineTwitter,
@@ -11,51 +9,53 @@ import {
 export const About = () => {
   return (
     <>
-      <div className="about ">
-        <div className="grid md:grid-cols-4 gap-6 shadow-lg p-5 mb-10 rounded-3xl">
+      <div className={styles.about}>
+        <div className={styles.wrapper}>
           <div className="col-span-2">
-            <h1 className="capitalize tracking-[2.72px] mb-3 text-center">
-              about story<span className="text-[#ff0581]">hub</span>
-            </h1>
+            <h4>
+              about story<span>hub</span>
+            </h4>
             <p className="text-[#292929] mb-4 text-justify">
-              StoryHub is an informational website that allows users to publish
-              and access information. Publish your interests your way. Create a
-              unique and elegant blog to share your knowledge, experiences, or
-              the latest news.
+              StoryHub is an informational website that enables users to share
+              and access information. Create a personalized and stylish blog to
+              share your knowledge, experiences, or latest news.
             </p>
           </div>
-          <img src={about} alt="/" className="col-span-2 mb-8" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/storyhub-ced7b.appspot.com/o/images%2F1673853162170undraw_product_tour_re_8bai.png?alt=media&token=b86728f9-625d-4d7b-8958-2f83ec9e9f7c"
+            alt="/"
+            className="col-span-2 mb-8"
+          />
         </div>
 
-        <div className="shadow-lg p-5 rounded-3xl">
-          <h1 className="capitalize tracking-[2.72px] mb-3 text-center">
-            About the<span className="text-[#ff0581]">Developer</span>
-          </h1>
-          <div className="grid md:grid-cols-4 mb-6">
+        <div className={styles.wrapper}>
+          <h4>
+            About the<span>Developer</span>
+          </h4>
+          <div className=" mb-6">
             <img
-              src={allan}
+              src="https://firebasestorage.googleapis.com/v0/b/storyhub-ced7b.appspot.com/o/images%2F1673852772208devAllan.png?alt=media&token=9faa5577-b8fe-4cf0-8d6b-06237826ac97"
               alt="/"
               className="w-[30%] md:w-[50%] col-span-1 m-auto"
             />
             <div className="col-span-3">
               <p className=" mt-3 text-[#292929] m-auto text-justify">
-                Hi, I'm Allan, an Electrical and Electronics Engineering Student
-                at  Moi university. My passion is learning about technology and
-                computer software. I enjoy keeping up with the latest technology
-                and learning everything I can about how it works. One of my
-                biggest strengths is problem solving. I like to confront
-                problems front on by devising workable solutions to them.
+                Meet Allan, an Electrical and Electronics Engineering Student at
+                Moi University. Allan is passionate about technology and
+                computer software and enjoys staying updated on the latest
+                advancements. He is skilled in problem-solving and tackling
+                issues head-on by finding practical solutions.
               </p>
-              <h2 className="mt-3 mb-1 tracking-[2.72px] ">Find me on</h2>
-              <div className="flex ">
+
+              <div className="flex mt-3">
                 <a href="https://github.com/AllanKipchumba">
-                  <AiFillGithub className="icon" />
+                  <AiFillGithub className={styles.icon} />
                 </a>
                 <a href="https://twitter.com/devAllan_">
-                  <AiOutlineTwitter className="icon" />
+                  <AiOutlineTwitter className={styles.icon} />
                 </a>
                 <a href="https://www.instagram.com/allan_kipchumba/">
-                  <AiOutlineInstagram className="icon" />
+                  <AiOutlineInstagram className={styles.icon} />
                 </a>
               </div>
             </div>
