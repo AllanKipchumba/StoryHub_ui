@@ -1,62 +1,106 @@
 .signup {
-    @apply shadow-lg max-w-[1240px];
-    padding: 60px 25px 20px 25px;
-    //
-    .intro {
-        h1 {
-            text-transform: capitalize;
-            letter-spacing: 2.72px;
-        }
-    }
-    img {
-        @apply py-4;
-        margin: auto;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        //@at-root
-        h1 {
-            font-family: "Fira Sans", sans-serif;
-            font-size: 20px;
-            letter-spacing: 2.72px;
-            @apply py-8 capitalize font-bold;
-        }
-        .inputWrapper {
+    padding: 40px;
+    margin-bottom: 4rem;
+    .form-wrapper {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 1.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        @media screen and (max-width: 640px) {
             width: 100%;
-            margin: 10px 0;
-            border: 1px solid rgba(211, 211, 211, 0.5);
-            border-radius: 20px;
+        }
+        @media screen and (min-width: 640px) {
+            width: 80%;
+        }
+        @media screen and (min-width: 1024px) {
+            width: 50%;
+        }
+        form {
             display: flex;
-            padding: 10px;
-            .icon {
-                color: #ff0581;
+            flex-direction: column;
+            //@at-root
+            h1 {
+                font-family: "Fira Sans", sans-serif;
                 font-size: 20px;
-            }
-            .input {
-                width: 100%;
-                margin-left: 10px;
-                color: #292929;
-                &:focus {
-                    outline: none;
+                letter-spacing: 2.72px;
+                @apply py-8 capitalize font-bold;
+                span {
+                    color: var(--warm-red);
+                }
+                &:hover {
+                    text-decoration: none;
+                    cursor: inherit;
                 }
             }
-        }
-        .error {
-            color: red;
-            margin-bottom: 7px;
-        }
-        button {
-            @apply py-3 capitalize mt-4;
-            display: flex;
-            width: 50%;
-            background-color: #ff0581;
-            border-radius: 20px;
-            justify-content: center;
-            color: #fff;
-            //
-            &:hover {
-                background-color: #d10068;
+            h5 {
+                margin-bottom: 1rem;
+                span {
+                    color: var(--warm-red);
+                    hover {
+                        color: var(--hover-warm-red);
+                        cursor: pointer;
+                    }
+                }
+            }
+            .inputWrapper {
+                position: relative;
+                width: 100%;
+                margin: 10px 0;
+                border: 1px solid rgba(211, 211, 211, 0.5);
+                border-radius: 20px;
+                display: flex;
+                padding: 10px;
+                .icon {
+                    color: var(--warm-red);
+                    font-size: 20px;
+                }
+                .pass-icon {
+                    position: absolute;
+                    top: 15px;
+                    margin-left: 90%;
+                    cursor: pointer;
+                }
+                .input {
+                    width: 100%;
+                    margin-left: 10px;
+                    color: #292929;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+            .error {
+                color: red;
+                margin-bottom: 7px;
+            }
+            button {
+                @apply py-3 capitalize mt-4;
+                display: flex;
+                width: 30%;
+                background-color: var(--warm-red);
+                border-radius: 20px;
+                justify-content: center;
+                color: #fff;
+                //
+                &:hover {
+                    background-color: var(--hover-warm-red);
+                }
+            }
+            .btn-disabled {
+                position: relative;
+                cursor: not-allowed;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    z-index: 999;
+                }
             }
         }
     }

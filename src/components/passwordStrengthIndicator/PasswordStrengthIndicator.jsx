@@ -45,7 +45,7 @@ export const PasswordStrengthIndicator = ({
         >
           <span>
             {passLength ? <FaCheck /> : <GoPrimitiveDot />}
-            &nbsp; &nbsp; &nbsp; At least 8 characters
+            &nbsp; &nbsp; &nbsp; At least 6 characters
           </span>
         </li>
       </ul>
