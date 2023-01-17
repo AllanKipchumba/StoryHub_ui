@@ -1,23 +1,56 @@
 import React, { useState } from "react";
-import "./publish.scss";
-import { useSelector, useDispatch } from "react-redux";
+import styles from "./publish.module.scss";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
-import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
 import { storage } from "../../firebase/config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+//categories
+const categories = [
+  { id: 1, name: "Technology" },
+  { id: 2, name: "Health and wellness" },
+  { id: 3, name: "Personal stories and memoir" },
+  { id: 4, name: "Personal Development" },
+  { id: 5, name: "Politics and current events" },
+  { id: 6, name: "Other" },
+];
+
+const initialState = {
+  title: "",
+  imageURL: "",
+  category: "",
+  description: "",
+};
 
 export const Publish = () => {
-  const { user, loading } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["logIn"]);
   const token = user.token;
   const headers = { Authorization: `Bearer ${token}` };
-  const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [imageURL, setImageURL] = useState("");
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { posts } = useSelector((store) => store["posts"]);
+  const postEdit = posts.find((item) => item.id === id);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const detectForm = (id, f1, f2) => {
+    if (id === "write") {
+      return f1;
+    }
+    return f2;
+  };
+  const [post, setPost] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, postEdit);
+    return newState;
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPost({ ...post, [name]: value });
+  };
+  const { title, category, imageURL, description } = post;
+  // console.log(post);
 
   //UPLOAD IMAGE TO FIREBASE STORAGE
   const handleImageChange = (e) => {
@@ -36,25 +69,27 @@ export const Publish = () => {
         const progress = Math.trunc(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        // setUploadProgress(progress);
+        setUploadProgress(progress);
       },
       (error) => {
         console.log(error);
+        toast.error(error.message);
       },
       () => {
         // Handle successful uploads on complete
         // get the image url
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageURL(downloadURL);
-          // toast.success("Image uploaded succesfully");
+          setPost({ ...post, imageURL: downloadURL });
+          toast.success("Image uploaded succesfully");
         });
       }
     );
   };
 
-  const submitForm = async (e) => {
+  //CREATE POST
+  const createPost = async (e) => {
     e.preventDefault();
-    dispatch(loadingStart());
+    setLoading(true);
 
     const newPost = {
       title,
@@ -69,75 +104,142 @@ export const Publish = () => {
         data: newPost,
         headers: headers,
       });
-      dispatch(loadingStop());
+      setLoading(false);
+      toast.success("Post Created");
       // change route to read new post
       navigate("/post/" + res.data._id);
     } catch (error) {
       console.log(error);
+      toast.error(error);
+      setLoading(false);
     }
   };
+
+  // EDIT POST
+  const editPost = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const updates = {
+      title,
+      category,
+      imageURL,
+      description,
+    };
+
+    try {
+      const res = await axios({
+        method: "patch",
+        url: "http://localhost:5000/api/posts/" + id,
+        data: updates,
+        headers: headers,
+      });
+
+      setLoading(false);
+      toast.success("Post error");
+      navigate("/post/" + res.data._id);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+      setLoading(false);
+    }
+  };
+
   return (
-    <>
-      <div className="write ">
-        <form onSubmit={submitForm} className="col-span-3">
-          <label>Title</label>
-          <input
-            type="text"
-            Placeholder="Post Title"
-            className="input"
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-
-          <label>Category</label>
-          <input
-            type="text"
-            Placeholder="Category"
-            className="input"
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          />
-
-          {/* image input */}
-          <label>Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            placeholder="product image"
-            name="image"
-            onChange={(e) => handleImageChange(e)}
-          />
-
-          {imageURL !== "" && (
-            <input
-              type="text"
-              required
-              placeholder="image URL"
-              name="imageURL"
-              value={imageURL}
-              disabled
-            />
-          )}
-
-          <label>Content</label>
-          <textarea
-            placeholder="Write your content here"
-            rows="15"
-            cols="60"
-            className="input"
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          ></textarea>
-
-          <button type="submit">
-            {loading ? (
-              <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
-            ) : (
-              `Publish`
-            )}
-          </button>
-        </form>
+    <div className={styles.write}>
+      <div className={styles.header}>
+        <h3>{detectForm(id, "Create New Post", "Edit Post")}</h3>
       </div>
-    </>
+      <form
+        onSubmit={detectForm(id, createPost, editPost)}
+        className="col-span-3"
+      >
+        <label>Post title</label>
+        <input
+          type="text"
+          Placeholder="Post title"
+          className={styles.input}
+          name="title"
+          value={title}
+          onChange={(e) => handleInputChange(e)}
+          required
+        />
+
+        <label>Post category</label>
+        <select
+          required
+          name="category"
+          value={category}
+          onChange={(e) => handleInputChange(e)}
+          className={styles.input}
+        >
+          <option value="" disabled>
+            -- choose category --
+          </option>
+          {categories.map((cat) => {
+            return (
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
+            );
+          })}
+        </select>
+
+        <label>Upload image</label>
+        <input
+          type="file"
+          accept="image/*"
+          placeholder="product image"
+          name="image"
+          onChange={(e) => handleImageChange(e)}
+          className={styles.input}
+        />
+
+        {uploadProgress !== 0 && (
+          <div className={styles.progress}>
+            <div
+              className={styles["progress-bar"]}
+              style={{ width: `${uploadProgress}%` }}
+            >
+              {uploadProgress < 100
+                ? `Uploading ${uploadProgress}%`
+                : `Upload Complete ${uploadProgress}%`}
+            </div>
+          </div>
+        )}
+
+        {imageURL !== "" && (
+          <input
+            type="text"
+            required
+            placeholder="image URL"
+            name="imageURL"
+            value={imageURL}
+            className={styles.input}
+            disabled
+          />
+        )}
+
+        <label>Content</label>
+        <textarea
+          placeholder="Write your content here"
+          rows="15"
+          cols="60"
+          className={styles.input}
+          name="description"
+          value={description}
+          onChange={(e) => handleInputChange(e)}
+          required
+        ></textarea>
+
+        <button type="submit">
+          {loading ? (
+            <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
+          ) : (
+            detectForm(id, "Publish", "Edit")
+          )}
+        </button>
+      </form>
+    </div>
   );
 };

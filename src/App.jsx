@@ -50,7 +50,7 @@ const App = () => {
           }
         />
         <Route
-          path="/publish"
+          path="/publish/:id"
           element={
             <Authenticated>
               <Publish />

@@ -90,7 +90,7 @@ export const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/publish" className={activeLink}>
+              <NavLink to="/publish/write" className={activeLink}>
                 Publish
               </NavLink>
             </li>
