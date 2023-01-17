@@ -1,6 +1,6 @@
 import React from "react";
 import "./singlepost.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -32,7 +32,7 @@ export const SinglePost = () => {
   const [addComment, setAddComment] = useState(false);
   //access post id
   const location = useLocation();
-  const path = location.pathname.split("/")[2];
+  const { id } = useParams();
 
   //get name of the logged in user
   const email = user.user.email;
@@ -48,13 +48,13 @@ export const SinglePost = () => {
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
-      const res = await axios.get("http://localhost:5000/api/posts/" + path);
+      const res = await axios.get("http://localhost:5000/api/posts/" + id);
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
     };
     fetchPost();
-  }, [dispatch, path]);
+  }, [dispatch, id]);
 
   // REFACTOR TO USE NOTIFLIX
   // DELETE POST
@@ -64,7 +64,7 @@ export const SinglePost = () => {
       //USE NOIFLIX
       if (window.confirm(`Delete ${post.title}?`)) {
         // send Bearer tokens along with axios
-        await axios.delete("http://localhost:5000/api/posts/" + path, {
+        await axios.delete("http://localhost:5000/api/posts/" + id, {
           headers,
         });
         window.location.replace("/");
@@ -78,35 +78,13 @@ export const SinglePost = () => {
     }
   };
 
-  // UPDATE POST
-  const updatePost = async () => {
-    const updates = {
-      title,
-      description,
-    };
-    //alert user to update post
-    // REFACTOR TO USE NOTIFLIX
-    try {
-      if (window.confirm("Update Post")) {
-        await axios.patch("http://localhost:5000/api/posts/" + path, updates, {
-          headers,
-        });
-        setUpdateMode(false);
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   //LIKE POST
   const [likes, setLikes] = useState([]);
   const likePost = async () => {
     try {
       const res = await axios({
         method: "put",
-        url: `http://localhost:5000/api/post/${path}/like`,
+        url: `http://localhost:5000/api/post/${id}/like`,
         headers: headers,
         data: {},
       });
@@ -124,7 +102,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/${path}/likes`,
+          url: `http://localhost:5000/api/post/${id}/likes`,
           headers: headers,
         });
         //record the number of likes on the post
@@ -145,7 +123,7 @@ export const SinglePost = () => {
     try {
       await axios({
         method: "post",
-        url: `http://localhost:5000/api/post/comment/${path}`,
+        url: `http://localhost:5000/api/post/comment/${id}`,
         data: { comment },
         headers: headers,
       });
@@ -168,7 +146,7 @@ export const SinglePost = () => {
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/comment/${path}`,
+          url: `http://localhost:5000/api/post/comment/${id}`,
           headers: headers,
         });
 
@@ -264,11 +242,11 @@ export const SinglePost = () => {
           </div>
 
           <RenderBodyConditionally
+            id={id}
             author={author}
             updateMode={updateMode}
             description={description}
             changeDescription={(e) => setDescription(e.target.value)}
-            updatePost={updatePost}
             post={post}
             likePost={() => {
               likePost();

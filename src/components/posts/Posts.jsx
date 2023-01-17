@@ -54,7 +54,6 @@ export const Posts = () => {
           />
         ) : (
           <>
-            {/* 3 Random carousels COMPONENT */}
             <Slider />
             <RandomPosts />
             <LatestPosts latestPosts={latestPosts} />

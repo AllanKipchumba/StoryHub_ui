@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./publish.module.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -31,8 +31,17 @@ export const Publish = () => {
   const headers = { Authorization: `Bearer ${token}` };
   const navigate = useNavigate();
   const { id } = useParams();
-  const { posts } = useSelector((store) => store["posts"]);
-  const postEdit = posts.find((item) => item.id === id);
+  let postEdit = useRef();
+  useEffect(() => {
+    const fetchPost = async () => {
+      const res = await axios.get("http://localhost:5000/api/posts/" + id);
+      postEdit.current = res.data.post;
+    };
+    fetchPost();
+  }, [id]);
+  // console.log(postEdit);
+  // const { posts } = useSelector((store) => store["posts"]);
+  // const postEdit = posts.find((item) => item.id === id);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false);
   const detectForm = (id, f1, f2) => {
@@ -41,16 +50,17 @@ export const Publish = () => {
     }
     return f2;
   };
+
   const [post, setPost] = useState(() => {
     const newState = detectForm(id, { ...initialState }, postEdit);
     return newState;
   });
+  // console.log(post);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPost({ ...post, [name]: value });
   };
   const { title, category, imageURL, description } = post;
-  // console.log(post);
 
   //UPLOAD IMAGE TO FIREBASE STORAGE
   const handleImageChange = (e) => {
@@ -157,7 +167,7 @@ export const Publish = () => {
         <label>Post title</label>
         <input
           type="text"
-          Placeholder="Post title"
+          placeholder="Post title"
           className={styles.input}
           name="title"
           value={title}

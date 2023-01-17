@@ -7,6 +7,7 @@ import { DisplayComments } from "./DisplayComments";
 import { AuthorOnly } from "./AuthorOnly";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 
 export const RenderBodyConditionally = ({
   author,
@@ -31,6 +32,7 @@ export const RenderBodyConditionally = ({
   loggedinUser,
   editPost,
   deletePost,
+  id,
 }) => {
   if (updateMode) {
     return (
@@ -45,9 +47,7 @@ export const RenderBodyConditionally = ({
         />
         {/* edit button */}
         <div className="mt-10 flex gap-8">
-          <button onClick={updatePost} className="edit-btn w-[30%] md:w-[15%]">
-            Update
-          </button>
+          <button className="edit-btn w-[30%] md:w-[15%]">Update</button>
           <button
             onClick={cancelUpdate}
             className="edit-btn w-[30%] md:w-[15%]"
@@ -78,7 +78,9 @@ export const RenderBodyConditionally = ({
 
             <AuthorOnly author={author} loggedinUser={loggedinUser}>
               <div className="flex gap-3">
-                <FiEdit className="icon" onClick={editPost} />
+                <NavLink to={`/publish/${id}`}>
+                  <FiEdit className="icon" />
+                </NavLink>
                 <MdDeleteOutline className="icon" onClick={deletePost} />
               </div>
             </AuthorOnly>
