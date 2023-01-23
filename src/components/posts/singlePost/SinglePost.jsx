@@ -9,8 +9,7 @@ import axios from "axios";
 import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { RenderTitleConditionally } from "./RenderTitleConditionally";
-import { RenderBodyConditionally } from "./RenderBodyConditionally";
+import { RenderBody } from "./RenderBody";
 import { toast } from "react-toastify";
 import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
 
@@ -27,9 +26,8 @@ export const SinglePost = () => {
   const headers = { Authorization: `Bearer ${token}` };
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
-  const [updateMode, setUpdateMode] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState();
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState();
   const [addComment, setAddComment] = useState(false);
   //access post id
   const { id } = useParams();
@@ -218,21 +216,17 @@ export const SinglePost = () => {
           <div className="image">
             <img src={post.imageURL} alt={post.title} className="img" />
           </div>
+
           <div className={`post-title mx-auto text-center`}>
             <div className="flex gap-4">
-              <RenderTitleConditionally
-                updateMode={updateMode}
-                title={post.title}
-                loggedinUser={loggedinUser}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <h1 className="font-semibold uppercase">{post.title}</h1>
             </div>
 
             <div>
               <Link to={`/?author=${author}`}>
                 <p>
                   By: &nbsp;
-                  <span className="font-bold capitalize text-[#ff0581]">
+                  <span className="font-bold capitalize text-[#eb0202]">
                     {author}
                   </span>
                 </p>
@@ -243,12 +237,10 @@ export const SinglePost = () => {
             </div>
           </div>
 
-          <RenderBodyConditionally
+          <RenderBody
             id={id}
             author={author}
-            updateMode={updateMode}
-            description={description}
-            changeDescription={(e) => setDescription(e.target.value)}
+            description={post.description}
             post={post}
             likePost={() => {
               likePost();
@@ -268,9 +260,7 @@ export const SinglePost = () => {
             }}
             deleteComment={deleteComment}
             handleData={handleDataFromChild}
-            cancelUpdate={() => setUpdateMode(false)}
             loggedinUser={loggedinUser}
-            editPost={() => setUpdateMode(true)}
             deletePost={deletePost}
           />
         </div>

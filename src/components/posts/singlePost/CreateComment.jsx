@@ -7,7 +7,7 @@ export const CreateComment = ({ addComment, commentPost, setComment }) => {
       <div className="mt-14 w-[80%] ">
         <form onSubmit={commentPost}>
           <textarea
-            placeholder="Add comment..."
+            placeholder="Leave comment..."
             rows="3"
             cols="8"
             className="input"

@@ -43,53 +43,43 @@
         white-space: pre-wrap;
     }
     .icon {
-        color: #ff0581;
+        color: var(--warm-red);
         font-size: 16px;
         //
         &:outline {
             border: none;
         }
         &:hover {
-            color: #d10068;
+            color: var(--hover-warm-red);
         }
     }
     .input {
-        @apply shadow-md;
-        padding: 10px;
-        border: 2px solid rgba(211, 211, 211, 0.5);
-        border-radius: 20px;
-        width: 100%;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         color: gray;
-        margin: 10px 0;
-        //
-        &:focus {
-            outline: none;
-        }
-    }
-    .edit-btn {
-        @apply py-3 capitalize mt-4;
-        // width: 15%;
-        background-color: #ff0581;
-        border-radius: 20px;
-        color: #fff;
-        //
-        &:hover {
-            background-color: #d10068;
-        }
+        margin-bottom: 20px;
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 300;
+        padding: 1rem;
+        margin: 1rem auto;
+        width: 100%;
+        border: 1px solid #777;
+        border-radius: 10px;
+        outline: none;
     }
     .icons-LC {
         font-size: 23px;
         cursor: pointer;
     }
     .comment-btn {
-        border: 2px solid #ff0581;
+        border: 2px solid var(--warm-red);
         border-radius: 15px;
         padding: 10px;
-        color: #ff0581;
+        color: var(--warm-red);
         //
         &:hover {
-            border: 2px solid #d10068;
-            color: #d10068;
+            border: 2px solid var(--hover-warm-red);
+            color: var(--hover-warm-red);
         }
     }
     //comments section

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./publish.module.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";

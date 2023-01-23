@@ -14,11 +14,11 @@ export const RandomPosts = () => {
 
   return (
     <div className={styles.wrapper}>
-      {randomPosts.map((post, index) => {
-        const { category, title, createdAt } = post;
+      {randomPosts.map((post) => {
+        const { _id, category, title, createdAt } = post;
         return (
           <>
-            <div key={index} className={styles.content}>
+            <div key={_id} className={styles.content}>
               <div className="line-subtitle">
                 <div className="line"></div>
                 <div className="subtitle">{category}</div>
