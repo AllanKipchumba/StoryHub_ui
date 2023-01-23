@@ -1,6 +1,6 @@
 import React from "react";
 import "./singlepost.scss";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -12,6 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { RenderTitleConditionally } from "./RenderTitleConditionally";
 import { RenderBodyConditionally } from "./RenderBodyConditionally";
 import { toast } from "react-toastify";
+import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
 
 //custom css for cliploader animation
 const override = {
@@ -31,7 +32,6 @@ export const SinglePost = () => {
   const [description, setDescription] = useState();
   const [addComment, setAddComment] = useState(false);
   //access post id
-  const location = useLocation();
   const { id } = useParams();
 
   //get name of the logged in user
@@ -52,9 +52,11 @@ export const SinglePost = () => {
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
+      // dispatch(STORE_POST(res.data.post));
     };
     fetchPost();
   }, [dispatch, id]);
+  dispatch(STORE_POST(post));
 
   // REFACTOR TO USE NOTIFLIX
   // DELETE POST

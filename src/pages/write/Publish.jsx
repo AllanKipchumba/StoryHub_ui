@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./publish.module.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -8,14 +8,12 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-//categories
 const categories = [
-  { id: 1, name: "Technology" },
-  { id: 2, name: "Health and wellness" },
-  { id: 3, name: "Personal stories and memoir" },
-  { id: 4, name: "Personal Development" },
-  { id: 5, name: "Politics and current events" },
-  { id: 6, name: "Other" },
+  { id: 1, name: "Tech" },
+  { id: 2, name: "Design" },
+  { id: 3, name: "Development" },
+  { id: 4, name: "Inspiration" },
+  { id: 5, name: "News" },
 ];
 
 const initialState = {
@@ -25,42 +23,36 @@ const initialState = {
   description: "",
 };
 
+const detectForm = (id, publish, edit) => {
+  if (id === "write") {
+    return publish;
+  }
+  return edit;
+};
+
 export const Publish = () => {
   const { user } = useSelector((store) => store["logIn"]);
+  const postDetails = useSelector((store) => store["post"]);
+  const postEdit = postDetails.post;
   const token = user.token;
   const headers = { Authorization: `Bearer ${token}` };
   const navigate = useNavigate();
   const { id } = useParams();
-  let postEdit = useRef();
-  useEffect(() => {
-    const fetchPost = async () => {
-      const res = await axios.get("http://localhost:5000/api/posts/" + id);
-      postEdit.current = res.data.post;
-    };
-    fetchPost();
-  }, [id]);
-  // console.log(postEdit);
-  // const { posts } = useSelector((store) => store["posts"]);
-  // const postEdit = posts.find((item) => item.id === id);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [loading, setLoading] = useState(false);
-  const detectForm = (id, f1, f2) => {
-    if (id === "write") {
-      return f1;
-    }
-    return f2;
-  };
 
   const [post, setPost] = useState(() => {
     const newState = detectForm(id, { ...initialState }, postEdit);
     return newState;
   });
   // console.log(post);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPost({ ...post, [name]: value });
   };
   const { title, category, imageURL, description } = post;
+  // console.log(post);
 
   //UPLOAD IMAGE TO FIREBASE STORAGE
   const handleImageChange = (e) => {
@@ -107,6 +99,7 @@ export const Publish = () => {
       imageURL,
       description,
     };
+
     try {
       const res = await axios({
         method: "post",
@@ -116,10 +109,8 @@ export const Publish = () => {
       });
       setLoading(false);
       toast.success("Post Created");
-      // change route to read new post
       navigate("/post/" + res.data._id);
     } catch (error) {
-      console.log(error);
       toast.error(error);
       setLoading(false);
     }
@@ -144,12 +135,10 @@ export const Publish = () => {
         data: updates,
         headers: headers,
       });
-
       setLoading(false);
-      toast.success("Post error");
+      toast.success("Post edited");
       navigate("/post/" + res.data._id);
     } catch (error) {
-      console.log(error);
       toast.error(error);
       setLoading(false);
     }
@@ -242,13 +231,19 @@ export const Publish = () => {
           required
         ></textarea>
 
-        <button type="submit">
-          {loading ? (
-            <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
-          ) : (
-            detectForm(id, "Publish", "Edit")
+        <div className="flex gap-5">
+          <button type="submit">
+            {loading ? (
+              <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
+            ) : (
+              detectForm(id, "Publish", "Edit")
+            )}
+          </button>
+
+          {id !== "write" && (
+            <button onClick={() => navigate(`/post/${id}`)}> Cancel</button>
           )}
-        </button>
+        </div>
       </form>
     </div>
   );
