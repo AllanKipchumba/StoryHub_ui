@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import { RenderBody } from "./RenderBody";
 import { toast } from "react-toastify";
@@ -21,22 +20,22 @@ const override = {
 
 export const SinglePost = () => {
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((store) => store["logIn"]);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { user } = useSelector((store) => store["logIn"]);
   const email = user.user.email;
   const loggedinUser = email.substring(0, email.indexOf("@"));
   const token = user.token;
-  // const headers = { Authorization: `Bearer ${token}` };
   const headers = useMemo(() => {
     const headers = { Authorization: `Bearer ${token}` };
     return headers;
   }, [token]);
+  const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({});
+  const [likes, setLikes] = useState([]);
   const [author, setAuthor] = useState("");
   const [addComment, setAddComment] = useState(false);
-  const { id } = useParams();
   const [commentID, setCommentID] = useState("");
-  const navigate = useNavigate();
-  const [likes, setLikes] = useState([]);
   const [commentsOnPost, setCommentsOnPost] = useState();
   const [hasComments, setHasComments] = useState();
   const [numberOfComments, setNumberOfComments] = useState();
@@ -48,7 +47,7 @@ export const SinglePost = () => {
 
   //   FETCH A POST BY ID
   useEffect(() => {
-    dispatch(loadingStart());
+    setLoading(true);
     const fetchPost = async () => {
       const res = await axios({
         method: "get",
@@ -56,7 +55,7 @@ export const SinglePost = () => {
       });
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
-      dispatch(loadingStop());
+      setLoading(false);
     };
     fetchPost();
   }, [dispatch, id]);
