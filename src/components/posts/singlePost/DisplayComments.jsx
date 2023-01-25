@@ -29,7 +29,7 @@ export const DisplayComments = ({
           return (
             <div key={index} className="mt-5 comments">
               <div key={comment._id} className="comment">
-                <div className=" mb-2 text-[#ff0581] flex justify-start gap-3">
+                <div className=" mb-2 text-[#eb0202] flex justify-start gap-3">
                   <p className="capitalize text-sm font-semibold">
                     {comment.authorName}
                   </p>
@@ -52,6 +52,7 @@ export const DisplayComments = ({
                     <MdOutlineDelete
                       className="icon icons-LC"
                       onClick={deleteComment}
+                      onMouseEnter={() => handleData(comment._id)}
                     />
                   </AuthorOnly>
                 </div>

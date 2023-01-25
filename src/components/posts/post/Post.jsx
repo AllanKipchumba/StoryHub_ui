@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./post.module.scss";
 import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
-// import { useSelector } from "react-redux";
 
 export const Post = ({ post, latest }) => {
   // const { user } = useSelector((store) => store["logIn"]);

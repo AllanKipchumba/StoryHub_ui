@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./singlepost.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { loadingStart, loadingStop } from "../../../Redux/slices/loginSlice";
 import ClipLoader from "react-spinners/ClipLoader";
-
 import { RenderBody } from "./RenderBody";
 import { toast } from "react-toastify";
 import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
+import Notiflix from "notiflix";
 
 //custom css for cliploader animation
 const override = {
@@ -22,64 +22,47 @@ const override = {
 export const SinglePost = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((store) => store["logIn"]);
-  const token = user.token;
-  const headers = { Authorization: `Bearer ${token}` };
-  const [post, setPost] = useState({});
-  const [author, setAuthor] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState();
-  const [addComment, setAddComment] = useState(false);
-  //access post id
-  const { id } = useParams();
-
-  //get name of the logged in user
   const email = user.user.email;
   const loggedinUser = email.substring(0, email.indexOf("@"));
-
-  //receive comment._id from child
+  const token = user.token;
+  // const headers = { Authorization: `Bearer ${token}` };
+  const headers = useMemo(() => {
+    const headers = { Authorization: `Bearer ${token}` };
+    return headers;
+  }, [token]);
+  const [post, setPost] = useState({});
+  const [author, setAuthor] = useState("");
+  const [addComment, setAddComment] = useState(false);
+  const { id } = useParams();
   const [commentID, setCommentID] = useState("");
-  const handleDataFromChild = (childData) => {
+  const navigate = useNavigate();
+  const [likes, setLikes] = useState([]);
+  const [commentsOnPost, setCommentsOnPost] = useState();
+  const [hasComments, setHasComments] = useState();
+  const [numberOfComments, setNumberOfComments] = useState();
+  const [commented, setCommented] = useState(false);
+  const [comment, setComment] = useState("");
+  const receiveComment_id = (childData) => {
     setCommentID(childData);
   };
 
-  //   FETCH POST BY ID
+  //   FETCH A POST BY ID
   useEffect(() => {
     dispatch(loadingStart());
     const fetchPost = async () => {
-      const res = await axios.get("http://localhost:5000/api/posts/" + id);
+      const res = await axios({
+        method: "get",
+        url: `http://localhost:5000/api/posts/${id}`,
+      });
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       dispatch(loadingStop());
-      // dispatch(STORE_POST(res.data.post));
     };
     fetchPost();
   }, [dispatch, id]);
   dispatch(STORE_POST(post));
 
-  // REFACTOR TO USE NOTIFLIX
-  // DELETE POST
-  const deletePost = async () => {
-    try {
-      // alert user to delete
-      //USE NOIFLIX
-      if (window.confirm(`Delete ${post.title}?`)) {
-        // send Bearer tokens along with axios
-        await axios.delete("http://localhost:5000/api/posts/" + id, {
-          headers,
-        });
-        window.location.replace("/");
-      } else {
-        return false;
-      }
-      // redirect to home page
-      window.location.replace("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //LIKE POST
-  const [likes, setLikes] = useState([]);
+  //LIKE A POST
   const likePost = async () => {
     try {
       const res = await axios({
@@ -88,15 +71,13 @@ export const SinglePost = () => {
         headers: headers,
         data: {},
       });
-      //record new like to update the number of likes on post
       setLikes(res.data.likes.length);
     } catch (error) {
-      // toast error message from server
       toast(error.response.data);
     }
   };
 
-  //GET LIKES ON POST
+  //GET THE NUMBER OF LIKES ON A POST
   useEffect(() => {
     const getLikesOnPost = async () => {
       try {
@@ -105,7 +86,6 @@ export const SinglePost = () => {
           url: `http://localhost:5000/api/post/${id}/likes`,
           headers: headers,
         });
-        //record the number of likes on the post
         setLikes(res.data);
       } catch (error) {
         console.log(error);
@@ -115,9 +95,6 @@ export const SinglePost = () => {
   });
 
   //COMMENT POST
-  //'commented' state to trigger a re-render of get comments on post
-  const [commented, setCommented] = useState(false);
-  const [comment, setComment] = useState("");
   const commentPost = async (e) => {
     e.preventDefault();
     try {
@@ -136,11 +113,7 @@ export const SinglePost = () => {
     }
   };
 
-  //GET COMMENTS ON POST
-  const [commentsOnPost, setCommentsOnPost] = useState();
-  const [hasComments, setHasComments] = useState();
-  const [numberOfComments, setNumberOfComments] = useState();
-  // hook rendered when the page loads and when a new comment is made
+  //GET THE COMMENTS ON A POST
   useEffect(() => {
     const getCommentsOnPost = async () => {
       try {
@@ -149,10 +122,7 @@ export const SinglePost = () => {
           url: `http://localhost:5000/api/post/comment/${id}`,
           headers: headers,
         });
-
-        //query if the posts has comments
         res.data.length !== 0 ? setHasComments(true) : setHasComments(false);
-
         setCommentsOnPost(res.data);
         setNumberOfComments(res.data.length);
       } catch (error) {
@@ -160,9 +130,9 @@ export const SinglePost = () => {
       }
     };
     getCommentsOnPost();
-  }, [commented]);
+  }, [commented, id, headers]);
 
-  //LIKE COMMENT
+  //LIKE A COMMENT
   const likeComment = async (commentID) => {
     try {
       await axios({
@@ -172,32 +142,77 @@ export const SinglePost = () => {
         headers: headers,
       });
     } catch (error) {
-      //toastify error message
       toast.error(error.response.data);
     }
   };
 
+  //DELETE A COMMENT
   const deleteComment = async () => {
-    //DELETE COMMENT
     try {
-      //Alert user that they are about to delete comment
-      // USE NOTIFLIX
-      if (window.confirm("Delete comment?")) {
-        await axios({
-          method: "delete",
-          url: `http://localhost:5000/api/post/comment/${comment._id}`,
-          headers: headers,
-        });
-        //trigger a re-render on get comments
-        setCommented(!commented);
-        //toastify deletion
-        toast("Deleted comment");
-      } else {
-        return false;
-      }
+      await axios({
+        method: "delete",
+        url: `http://localhost:5000/api/post/comment/${commentID}`,
+        headers: headers,
+      });
+      //trigger a re-render on get comments on a post
+      setCommented(!commented);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const confirmDeleteComment = () => {
+    Notiflix.Confirm.show(
+      "Delete Comment!!!",
+      `You are about to delete this comment`,
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deleteComment();
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "8px",
+        titleColor: "#eb0202",
+        okButtonBackground: "#eb0202",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
+
+  // DELETE A POST
+  const deletePost = async () => {
+    try {
+      await axios({
+        method: "delete",
+        url: `http://localhost:5000/api/posts/${id}`,
+        headers: headers,
+      });
+      navigate("/");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
+  const confirmDelete = () => {
+    Notiflix.Confirm.show(
+      "Delete Post!!!",
+      `You are about to delete ${post.title}`,
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deletePost();
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "8px",
+        titleColor: "#eb0202",
+        okButtonBackground: "#eb0202",
+        cssAnimationStyle: "zoom",
+      }
+    );
   };
 
   return (
@@ -258,10 +273,10 @@ export const SinglePost = () => {
               //trigger a re-render on getComments on post to update the new like
               setCommented(!commented);
             }}
-            deleteComment={deleteComment}
-            handleData={handleDataFromChild}
+            deleteComment={confirmDeleteComment}
+            handleData={receiveComment_id}
             loggedinUser={loggedinUser}
-            deletePost={deletePost}
+            deletePost={confirmDelete}
           />
         </div>
       )}

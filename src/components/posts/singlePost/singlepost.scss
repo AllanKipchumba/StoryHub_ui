@@ -4,18 +4,16 @@
 }
 
 .singlepost {
-    @apply shadow-2xl;
-    padding: 0px 25px 50px 25px;
-    margin: 100px 30px 0;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 1rem;
     text-align: justify;
-    //
     .image {
         width: 100%;
-        padding: 0 !important;
+        padding: 0;
         .img {
-            max-width: 100%;
-            object-fit: contain;
-            border-radius: 5px;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
         }
     }
     .post-title {
@@ -23,13 +21,12 @@
         padding: 30px;
         max-width: 80%;
         border-radius: 10px;
-        //draw a line
         &::after {
             content: "";
             position: absolute;
             left: 50%;
             bottom: 0;
-            height: 3px;
+            height: 2px;
             width: 130%;
             background-color: var(--dark-blue);
             transform: translateX(-50%);
@@ -45,7 +42,6 @@
     .icon {
         color: var(--warm-red);
         font-size: 16px;
-        //
         &:outline {
             border: none;
         }
