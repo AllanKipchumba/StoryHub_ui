@@ -11,6 +11,8 @@ import { RenderBody } from "./RenderBody";
 import { toast } from "react-toastify";
 import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
 import Notiflix from "notiflix";
+import { Timestamp } from "../Timestamp";
+// import Shimmer from 'react-shimmer'
 
 //custom css for cliploader animation
 const override = {
@@ -226,28 +228,24 @@ export const SinglePost = () => {
           cssOverride={override}
         />
       ) : (
-        <div className="singlepost rounded-3xl !mx-auto md:max-w-[80%]">
-          <div className="image">
+        <div className="singlepost ">
+          <div className="headline">
             <img src={post.imageURL} alt={post.title} className="img" />
-          </div>
 
-          <div className={`post-title mx-auto text-center`}>
-            <div className="flex gap-4">
-              <h1 className="font-semibold uppercase">{post.title}</h1>
-            </div>
+            <div className={`post-title `}>
+              <h1>{post.title}</h1>
+              <div>
+                <Link to={`/?author=${author}`}>
+                  <p>
+                    By: &nbsp;
+                    <span className="font-bold capitalize text-[#eb0202]">
+                      {author}
+                    </span>
+                  </p>
+                </Link>
 
-            <div>
-              <Link to={`/?author=${author}`}>
-                <p>
-                  By: &nbsp;
-                  <span className="font-bold capitalize text-[#eb0202]">
-                    {author}
-                  </span>
-                </p>
-              </Link>
-              <p className=" text-sm">
-                {new Date(post.createdAt).toLocaleString()}
-              </p>
+                <Timestamp createdAt={post.createdAt} />
+              </div>
             </div>
           </div>
 

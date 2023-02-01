@@ -1,94 +1,132 @@
 .loader {
-    position: relative;
-    top: 300px;
+  position: relative;
+  top: 300px;
 }
 
 .singlepost {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    padding: 1rem;
-    text-align: justify;
-    .image {
-        width: 100%;
-        padding: 0;
-        .img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  text-align: justify;
+  border-radius: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+
+  //   @media (min-width: 768px) {
+  //     max-width: 90%;
+  //   }
+
+  .headline {
+    width: 100%;
+    padding: 0;
+    position: relative;
+    .img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+
+      @media screen and (max-width: 1024px) {
+        margin-bottom: 1rem;
+      }
     }
     .post-title {
-        position: relative;
-        padding: 30px;
-        max-width: 80%;
-        border-radius: 10px;
-        &::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            height: 2px;
-            width: 130%;
-            background-color: var(--dark-blue);
-            transform: translateX(-50%);
-        }
+      padding: 30px;
+      max-width: 80%;
+      border-radius: 10px;
+      text-align: justify;
+      margin-left: auto;
+      margin-right: auto;
+
+      h1 {
+        font-weight: 600;
+        text-transform: uppercase;
+      }
     }
-    .description {
-        &::first-letter {
-            font-size: 1.5rem;
-            text-transform: uppercase;
-        }
-        white-space: pre-wrap;
+
+    @media screen and (min-width: 1024px) {
+      .post-title {
+        position: absolute;
+        background-color: #fff;
+        top: 30%;
+        width: 85%;
+        border-radius: 0;
+        margin-left: 4rem;
+      }
     }
-    .icon {
-        color: var(--warm-red);
-        font-size: 16px;
-        &:outline {
-            border: none;
-        }
-        &:hover {
-            color: var(--hover-warm-red);
-        }
+  }
+
+  .description {
+    &::first-letter {
+      font-size: 1.5rem;
+      text-transform: uppercase;
     }
-    .input {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        color: gray;
-        margin-bottom: 20px;
-        display: block;
-        font-size: 1.2rem;
-        font-weight: 300;
-        padding: 1rem;
-        margin: 1rem auto;
-        width: 100%;
-        border: 1px solid #777;
-        border-radius: 10px;
-        outline: none;
+    white-space: pre-wrap;
+  }
+  .icon {
+    color: var(--warm-red);
+    font-size: 16px;
+    &:outline {
+      border: none;
     }
-    .icons-LC {
-        font-size: 23px;
-        cursor: pointer;
+    &:hover {
+      color: var(--hover-warm-red);
     }
-    .comment-btn {
-        border: 2px solid var(--warm-red);
-        border-radius: 15px;
-        padding: 10px;
-        color: var(--warm-red);
-        //
-        &:hover {
-            border: 2px solid var(--hover-warm-red);
-            color: var(--hover-warm-red);
-        }
+  }
+  .input {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    color: gray;
+    margin-bottom: 20px;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 300;
+    padding: 1rem;
+    margin: 1rem auto;
+    width: 100%;
+    border: 1px solid #777;
+    border-radius: 10px;
+    outline: none;
+  }
+  .icons-LC {
+    font-size: 23px;
+    cursor: pointer;
+  }
+  .comment-btn {
+    border: 2px solid var(--warm-red);
+    border-radius: 15px;
+    padding: 10px;
+    color: var(--warm-red);
+    //
+    &:hover {
+      border: 2px solid var(--hover-warm-red);
+      color: var(--hover-warm-red);
     }
-    //comments section
-    .comments-container {
-        @apply rounded-3xl;
-        border: 1px solid #d3d3d3;
-        background-color: #e6e6e6;
-        //
-        .comments {
-            @apply shadow-lg rounded-3xl;
-            padding: 15px;
-            background-color: #fff;
-            //
-        }
+  }
+  //comments section
+  .comments-container {
+    @apply rounded-3xl;
+    border: 1px solid #d3d3d3;
+    background-color: #e6e6e6;
+    //
+    .comments {
+      @apply shadow-lg rounded-3xl;
+      padding: 15px;
+      background-color: #fff;
+      //
     }
+  }
+  //   .shimmer {
+  //     background: linear-gradient(to right, lightgray, white);
+  //     background-size: 400% 400%;
+  //     animation: shimmer 1s ease-in-out infinite;
+  //   }
+
+  //   @keyframes shimmer {
+  //     0% {
+  //       background-position: -200% 0;
+  //     }
+  //     100% {
+  //       background-position: 200% 0;
+  //     }
+  //   }
 }
