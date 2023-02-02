@@ -6,7 +6,7 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { loginSuccess } from "../../Redux/slices/loginSlice";
+import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
 
@@ -48,11 +48,24 @@ export const Signup = () => {
       : setPassComplete(false);
   }, [password, passLength, passLetter, passNumber]);
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      setLoading(true);
+  // Regex email validation
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
     }
-  }, [formErrors, isSubmit]);
+    return errors;
+  };
+
+  // useEffect(() => {
+  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
+  //     setLoading(true);
+  //   }
+  // }, [formErrors, isSubmit]);
 
   const formValues = {
     email,
@@ -69,27 +82,12 @@ export const Signup = () => {
         "http://localhost:5000/api/auth/register",
         formValues
       );
-      //update user state in store
-      dispatch(loginSuccess(res.data));
+      dispatch(AUTH_SUCCESS(res.data));
       setLoading(false);
       navigate("/");
     } catch (error) {
       console.log(error);
     }
-  };
-
-  // FORM VALIDATION LOGIC
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-    if (!values.email) {
-      errors.email = "Email is required!";
-    } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
-    }
-
-    return errors;
   };
 
   return (
@@ -100,7 +98,7 @@ export const Signup = () => {
             Sign up to story<span>Hub</span>
           </h1>
           <h5>
-            Already a member?{" "}
+            Already a member?
             <Link to="/login">
               <span>Log in</span>
             </Link>

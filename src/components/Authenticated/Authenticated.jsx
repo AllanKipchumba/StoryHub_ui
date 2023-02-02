@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Login, Home } from "../../pages";
 
 export const Authenticated = ({ children }) => {
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["auth"]);
 
   if (user) {
     return children;

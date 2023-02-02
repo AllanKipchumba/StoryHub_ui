@@ -28,6 +28,9 @@ export const SinglePost = () => {
     const headers = { Authorization: `Bearer ${token}` };
     return headers;
   }, [token]);
+  const { posts } = useSelector((store) => ["posts"]);
+  console.log(posts);
+
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");

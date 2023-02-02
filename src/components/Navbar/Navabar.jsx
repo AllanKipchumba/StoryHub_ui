@@ -5,7 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { NoAuth, ShowOnAuth } from "./ShowOnAuth";
-import { logout } from "../../Redux/slices/loginSlice";
+import { LOGOUT } from "../../Redux/slices/authSlice";
 
 //re-use jsx
 const logo = (
@@ -27,7 +27,7 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["auth"]);
   let userName;
   //get name of the logged in user
   if (user !== null) {
@@ -105,13 +105,13 @@ export const Navbar = () => {
                 <li
                   onClick={() => {
                     hideMenu();
-                    dispatch(logout());
+                    dispatch(LOGOUT());
                     navigate("/");
                   }}
                   style={{ cursor: "pointer" }}
                   className="bg-[#DDDDDD] rounded !px-[15px] !py-[3px]"
                 >
-                  Logout
+                  Loout
                 </li>
               </ShowOnAuth>
               <NoAuth>

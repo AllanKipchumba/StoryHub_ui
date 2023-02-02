@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./posts.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { loadingStart, loadingStop } from "../../Redux/slices/loginSlice";
+import { useDispatch } from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
 import { STORE_POSTS } from "../../Redux/slices/postSlice";
 import { LatestPosts } from "./latestPosts/LatestPosts";
@@ -15,26 +14,25 @@ const override = {
 };
 
 export const Posts = () => {
-  const { loading } = useSelector((store) => store["logIn"]);
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
-
   const getLatestPosts = [...posts].slice(-4);
   const latestPosts = [...getLatestPosts].reverse();
+  const [loading, setLoading] = useState(false);
 
   //FETCH POSTS FROM DB
   useEffect(() => {
-    dispatch(loadingStart());
+    setLoading(true);
     try {
       fetch("http://localhost:5000/api/posts/")
         .then((response) => response.json())
         .then((data) => {
           setPosts(data);
-          dispatch(loadingStop());
+          setLoading(false);
         });
     } catch (error) {
       console.log(error);
-      dispatch(loadingStop());
+      setLoading(false);
     }
   }, [dispatch]);
 
