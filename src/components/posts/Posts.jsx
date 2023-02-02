@@ -34,13 +34,26 @@ export const Posts = () => {
   //dispatch posts to store
   posts.length !== 0 && dispatch(STORE_POSTS(posts));
 
+  //shuffle posts
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  };
+
+  const shufflePosts = shuffleArray(posts.slice());
+
   return (
     <>
       <div className="posts md:mx-[3rem] lg:mx-[4rem]">
         {loading ? (
           Notiflix.Loading.circle("Fetching data. Please wait...", {
             svgColor: "#eb0202",
-            backgroundColor: "rgba(0,0,0,0.85)",
+            backgroundColor: "rgba(0,0,0,0.5)",
           })
         ) : (
           <>
@@ -48,7 +61,7 @@ export const Posts = () => {
             <Slider />
             <RandomPosts />
             <LatestPosts latestPosts={latestPosts} />
-            <AllPosts posts={posts} />
+            <AllPosts posts={shufflePosts} />
           </>
         )}
       </div>

@@ -7,11 +7,19 @@ import { Timestamp } from "../Timestamp";
 
 export const Slider = () => {
   const { posts } = useSelector((store) => store["posts"]);
-  //select 3 random posts
-  const randomPosts = posts
-    .slice()
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
+
+  //shuffle posts
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  };
+
+  const randomPosts = shuffleArray(posts.slice());
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideLength = randomPosts.length;

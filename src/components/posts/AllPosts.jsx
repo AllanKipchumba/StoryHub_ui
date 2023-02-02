@@ -5,7 +5,7 @@ import { Post } from "./post/Post";
 export const AllPosts = ({ posts }) => {
   //pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(6);
+  const [productsPerPage] = useState(8);
 
   //get current Products
   const indexOfLastProduct = currentPage * productsPerPage;

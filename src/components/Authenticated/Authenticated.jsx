@@ -12,7 +12,7 @@ export const Authenticated = ({ children }) => {
 };
 
 export const NotAuthenticated = ({ children }) => {
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["auth"]);
   if (!user) {
     return children;
   } else {

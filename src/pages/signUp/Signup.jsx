@@ -90,7 +90,7 @@ export const Signup = () => {
             Sign up to story<span>Hub</span>
           </h1>
           <h5>
-            Already a member?
+            Do you have an account? &nbsp;
             <Link to="/login">
               <span>Log in</span>
             </Link>

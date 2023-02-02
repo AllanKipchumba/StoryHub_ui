@@ -31,7 +31,7 @@ const detectForm = (id, publish, edit) => {
 };
 
 export const Publish = () => {
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["auth"]);
   const postDetails = useSelector((store) => store["post"]);
   const postEdit = postDetails.post;
   const token = user.token;

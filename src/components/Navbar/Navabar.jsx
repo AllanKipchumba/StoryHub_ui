@@ -111,7 +111,7 @@ export const Navbar = () => {
                   style={{ cursor: "pointer" }}
                   className="bg-[#DDDDDD] rounded !px-[15px] !py-[3px]"
                 >
-                  Loout
+                  Logout
                 </li>
               </ShowOnAuth>
               <NoAuth>

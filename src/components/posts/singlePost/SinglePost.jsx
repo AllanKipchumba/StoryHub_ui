@@ -5,17 +5,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
 import { RenderBody } from "./RenderBody";
 import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
 import { Timestamp } from "../Timestamp";
 import { SimilarPosts } from "./similarPosts/SimilarPosts";
-
-//custom css for cliploader animation
-const override = {
-  display: "block",
-  margin: "0 auto",
-};
+import Notiflix, { Loading } from "notiflix";
 
 export const SinglePost = () => {
   const dispatch = useDispatch();
@@ -52,16 +46,13 @@ export const SinglePost = () => {
   return (
     <>
       {loading ? (
-        <ClipLoader
-          className="loader"
-          loading={loading}
-          color="#ff0581"
-          margin={4}
-          size={50}
-          cssOverride={override}
-        />
+        Notiflix.Loading.circle("Fetching data. Please wait...", {
+          svgColor: "#eb0202",
+          backgroundColor: "rgba(0,0,0,0.85)",
+        })
       ) : (
         <>
+          {Loading.remove()}
           <div className="singlepost ">
             <div className="headline">
               <img src={post.imageURL} alt={post.title} className="img" />
