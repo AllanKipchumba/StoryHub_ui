@@ -1,35 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { Post } from "../../post/Post";
 import styles from "./SimilarPosts.module.scss";
 
-export const SimilarPosts = ({ category }) => {
+export const SimilarPosts = ({ category, id }) => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  const similarPosts = posts.filter((post) => post.category === category);
-  console.log(similarPosts);
+  //get posts with the same category name
+  const similarPosts = posts.filter(
+    (post) => post.category === category && post._id !== id
+  );
 
   //FETCH POSTS FROM DB
   useEffect(() => {
-    setLoading(true);
     try {
       fetch("http://localhost:5000/api/posts/")
         .then((response) => response.json())
         .then((data) => {
           setPosts(data);
-          setLoading(false);
         });
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   }, []);
 
-  return (
-    <div>
-      <div>
-        <h1>Similar Posts</h1>
+  if (similarPosts.length !== 0) {
+    return (
+      <div className={styles.similarPosts}>
+        <h3 className="hover:no-underline">Similar Posts</h3>
+        <div className="underLine"></div>
+        <div className={styles["show-similar-posts"]}>
+          {similarPosts.map((post) => {
+            return <Post key={post._id} post={post} />;
+          })}
+        </div>
       </div>
-      <div></div>
-    </div>
-  );
+    );
+  }
 };

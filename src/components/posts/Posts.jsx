@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./posts.scss";
 import { useDispatch } from "react-redux";
-import MoonLoader from "react-spinners/MoonLoader";
 import { STORE_POSTS } from "../../Redux/slices/postSlice";
 import { LatestPosts } from "./latestPosts/LatestPosts";
 import { AllPosts } from "./AllPosts";
 import { Slider } from "./slider/Slider";
 import { RandomPosts } from "./randomPosts/RandomPosts";
-
-const override = {
-  display: "block",
-  margin: "0 auto",
-};
+import Notiflix, { Loading } from "notiflix";
 
 export const Posts = () => {
   const dispatch = useDispatch();
@@ -43,15 +38,13 @@ export const Posts = () => {
     <>
       <div className="posts md:mx-[3rem] lg:mx-[4rem]">
         {loading ? (
-          <MoonLoader
-            loading={loading}
-            color="#ff0581"
-            margin={4}
-            size={40}
-            cssOverride={override}
-          />
+          Notiflix.Loading.circle("Fetching data. Please wait...", {
+            svgColor: "#eb0202",
+            backgroundColor: "rgba(0,0,0,0.85)",
+          })
         ) : (
           <>
+            {Loading.remove()}
             <Slider />
             <RandomPosts />
             <LatestPosts latestPosts={latestPosts} />

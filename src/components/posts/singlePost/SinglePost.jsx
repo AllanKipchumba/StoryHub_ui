@@ -92,7 +92,7 @@ export const SinglePost = () => {
             />
           </div>
 
-          <SimilarPosts category={post.category} />
+          <SimilarPosts category={post.category} id={id} />
         </>
       )}
     </>
