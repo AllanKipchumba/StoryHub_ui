@@ -34,7 +34,7 @@ export const Posts = () => {
       console.log(error);
       setLoading(false);
     }
-  }, [dispatch]);
+  }, []);
 
   //dispatch posts to store
   posts.length !== 0 && dispatch(STORE_POSTS(posts));

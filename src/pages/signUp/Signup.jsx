@@ -15,7 +15,6 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
 
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,12 +60,6 @@ export const Signup = () => {
     return errors;
   };
 
-  // useEffect(() => {
-  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
-  //     setLoading(true);
-  //   }
-  // }, [formErrors, isSubmit]);
-
   const formValues = {
     email,
     password,
@@ -75,7 +68,6 @@ export const Signup = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
 
     try {
       const res = await axios.post(

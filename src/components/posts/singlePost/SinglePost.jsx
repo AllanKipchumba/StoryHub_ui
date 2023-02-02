@@ -20,7 +20,7 @@ const override = {
 export const SinglePost = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { user } = useSelector((store) => store["logIn"]);
+  const { user } = useSelector((store) => store["auth"]);
   const email = user.user.email;
   const loggedinUser = email.substring(0, email.indexOf("@"));
   const token = user.token;
@@ -28,9 +28,6 @@ export const SinglePost = () => {
     const headers = { Authorization: `Bearer ${token}` };
     return headers;
   }, [token]);
-  const { posts } = useSelector((store) => ["posts"]);
-  console.log(posts);
-
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -90,13 +87,12 @@ export const SinglePost = () => {
               headers={headers}
               id={id}
               author={author}
-              description={post.description}
               post={post}
               loggedinUser={loggedinUser}
             />
           </div>
 
-          <SimilarPosts />
+          <SimilarPosts category={post.category} />
         </>
       )}
     </>

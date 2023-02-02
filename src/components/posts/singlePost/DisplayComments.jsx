@@ -10,7 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { REFETCH_COMMENTS } from "../../../Redux/slices/postSlice";
 import { Timestamp } from "../Timestamp";
 
-export const DisplayComments = ({ author, loggedinUser, headers, id }) => {
+export const DisplayComments = ({
+  author,
+  loggedinUser,
+  headers,
+  id,
+  getNumberOfComments,
+}) => {
   const dispatch = useDispatch();
   const { reFetchComments } = useSelector((store) => store["posts"]);
   const [commentsOnPost, setCommentsOnPost] = useState();
@@ -30,12 +36,13 @@ export const DisplayComments = ({ author, loggedinUser, headers, id }) => {
         res.data.length !== 0 ? setHasComments(true) : setHasComments(false);
         setCommentsOnPost(res.data);
         setNumberOfComments(res.data.length);
+        getNumberOfComments(res.data.length);
       } catch (error) {
         console.log(error);
       }
     };
     getCommentsOnPost();
-  }, [reFetchComments, id, headers]);
+  }, [reFetchComments, id, headers, getNumberOfComments]);
 
   //like a comment
   const likeComment = async (commentID) => {

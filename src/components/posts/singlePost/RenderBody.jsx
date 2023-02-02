@@ -12,18 +12,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Notiflix from "notiflix";
 
-export const RenderBody = ({
-  author,
-  post,
-  showAddcommentForm,
-  numberOfComments,
-  loggedinUser,
-  id,
-  headers,
-}) => {
+export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
   const navigate = useNavigate();
   const [likes, setLikes] = useState([]);
   const [addComment, setAddComment] = useState(false);
+  const [numberOfComments, setnumberOfComments] = useState("");
+  const howManyComments = (value) => {
+    setnumberOfComments(value);
+  };
 
   //GET THE NUMBER OF LIKES ON A POST
   useEffect(() => {
@@ -126,6 +122,7 @@ export const RenderBody = ({
           loggedinUser={loggedinUser}
           headers={headers}
           id={id}
+          getNumberOfComments={howManyComments}
         />
       </div>
     </div>

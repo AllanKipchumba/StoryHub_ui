@@ -17,19 +17,16 @@ export const RandomPosts = () => {
       {randomPosts.map((post) => {
         const { _id, category, title, createdAt } = post;
         return (
-          <>
-            <div key={_id} className={styles.content}>
-              <div className="line-subtitle">
-                <div className="line"></div>
-                <div className="subtitle">{category}</div>
-              </div>
-              <Link to={`/post/${post._id}`}>
-                <h3>{title}</h3>
-              </Link>
-              <Timestamp createdAt={createdAt} />
+          <div className={styles.content}>
+            <div className="line-subtitle">
+              <div className="line"></div>
+              <div className="subtitle">{category}</div>
             </div>
-            <hr />
-          </>
+            <Link to={`/post/${_id}`}>
+              <h3>{title}</h3>
+            </Link>
+            <Timestamp createdAt={createdAt} />
+          </div>
         );
       })}
     </div>
