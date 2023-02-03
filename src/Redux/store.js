@@ -16,3 +16,7 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+store.subscribe(() => {
+  localStorage.setItem("user", JSON.stringify(store.getState().auth.user));
+});
