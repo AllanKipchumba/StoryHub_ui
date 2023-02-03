@@ -1,29 +1,48 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
 import { REFETCH_COMMENTS } from "../../../Redux/slices/postSlice";
 import "./singlepost.scss";
 
-export const CreateComment = ({ headers, id, addComment }) => {
+export const CreateComment = ({
+  headers,
+  id,
+  addComment,
+  toggleAddComment,
+  isLoggedIn,
+  url,
+}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [comment, setComment] = useState("");
 
   //COMMENT POST
   const commentPost = async (e) => {
     e.preventDefault();
-    try {
-      await axios({
-        method: "post",
-        url: `http://localhost:5000/api/post/comment/${id}`,
-        data: { comment },
-        headers: headers,
-      });
-      dispatch(REFETCH_COMMENTS());
-      toast.success("Commented post");
-      setComment("");
-    } catch (error) {
-      console.log(error);
+    switch (isLoggedIn) {
+      case true:
+        try {
+          await axios({
+            method: "post",
+            url: `http://localhost:5000/api/post/comment/${id}`,
+            data: { comment },
+            headers: headers,
+          });
+          dispatch(REFETCH_COMMENTS());
+          toast.success("Commented post");
+          toggleAddComment(!addComment);
+          setComment("");
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      default:
+        dispatch(SAVE_URL(url));
+        navigate("/login");
+        break;
     }
   };
 

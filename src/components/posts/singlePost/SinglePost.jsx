@@ -1,12 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import "./singlepost.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { RenderBody } from "./RenderBody";
-import { STORE_POST } from "../../../Redux/slices/postDetailsSlice";
+import { SAVE_URL, STORE_POST } from "../../../Redux/slices/postDetailsSlice";
 import { Timestamp } from "../Timestamp";
 import { SimilarPosts } from "./similarPosts/SimilarPosts";
 import Notiflix, { Loading } from "notiflix";
@@ -15,13 +13,20 @@ export const SinglePost = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { user } = useSelector((store) => store["auth"]);
-  const email = user.user.email;
-  const loggedinUser = email.substring(0, email.indexOf("@"));
-  const token = user.token;
+  let email;
+  let loggedinUser;
+  let token;
+  if (user) {
+    email = user.user.email;
+    loggedinUser = email.substring(0, email.indexOf("@"));
+    token = user.token;
+  }
   const headers = useMemo(() => {
-    const headers = { Authorization: `Bearer ${token}` };
-    return headers;
-  }, [token]);
+    if (user) {
+      const headers = { Authorization: `Bearer ${token}` };
+      return headers;
+    }
+  }, [token, user]);
   const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
@@ -37,6 +42,7 @@ export const SinglePost = () => {
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
       setLoading(false);
+      dispatch(SAVE_URL(""));
     };
     fetchPost();
   }, [dispatch, id]);
@@ -79,6 +85,7 @@ export const SinglePost = () => {
               id={id}
               author={author}
               post={post}
+              b
               loggedinUser={loggedinUser}
             />
           </div>

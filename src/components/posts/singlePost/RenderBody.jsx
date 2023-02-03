@@ -11,15 +11,17 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Notiflix from "notiflix";
+import { useDispatch, useSelector } from "react-redux";
+import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
 
 export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [likes, setLikes] = useState([]);
   const [addComment, setAddComment] = useState(false);
-  const [numberOfComments, setnumberOfComments] = useState("");
-  const howManyComments = (value) => {
-    setnumberOfComments(value);
-  };
+  const toggleAddComment = (value) => setAddComment(value);
+  const { isLoggedIn } = useSelector((store) => store["auth"]);
+  const url = window.location.href;
 
   //GET THE NUMBER OF LIKES ON A POST
   useEffect(() => {
@@ -36,20 +38,28 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
       }
     };
     getLikesOnPost();
-  });
+  }, [likes, headers, id, dispatch]);
 
   //LIKE A POST
   const likePost = async () => {
-    try {
-      const res = await axios({
-        method: "put",
-        url: `http://localhost:5000/api/post/${id}/like`,
-        headers: headers,
-        data: {},
-      });
-      setLikes(res.data.likes.length);
-    } catch (error) {
-      toast.error(error.response.data);
+    switch (isLoggedIn) {
+      case true:
+        try {
+          const res = await axios({
+            method: "put",
+            url: `http://localhost:5000/api/post/${id}/like`,
+            headers: headers,
+            data: {},
+          });
+          setLikes(res.data.likes.length);
+        } catch (error) {
+          toast.error(error.response.data);
+        }
+        break;
+      default:
+        dispatch(SAVE_URL(url));
+        navigate("/login");
+        break;
     }
   };
 
@@ -97,32 +107,40 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
             {likes !== 0 && <p>{likes}</p>}
           </div>
 
-          <div className="flex gap-1">
-            <FaRegComment
-              className="icon icons-LC"
-              onClick={() => setAddComment(!addComment)}
-            />
-            {numberOfComments !== 0 && <p>{numberOfComments}</p>}
-          </div>
-
           <AuthorOnly author={author} loggedinUser={loggedinUser}>
             <div className="flex gap-3">
               <NavLink to={`/publish/${id}`}>
-                <FiEdit className="icon" />
+                <FiEdit className="icon mt-1" />
               </NavLink>
-              <MdDeleteOutline className="icon" onClick={confirmDelete} />
+              <MdDeleteOutline className="icon mt-1" onClick={confirmDelete} />
             </div>
           </AuthorOnly>
+
+          <div
+            className="flex gap-1 hover:cursor-pointer"
+            onClick={() => setAddComment(!addComment)}
+          >
+            <FaRegComment className="icon icons-LC" />
+            <p>Comment</p>
+          </div>
         </div>
 
-        <CreateComment headers={headers} id={id} addComment={addComment} />
+        <CreateComment
+          headers={headers}
+          id={id}
+          addComment={addComment}
+          toggleAddComment={toggleAddComment}
+          url={url}
+          isLoggedIn={isLoggedIn}
+        />
 
         <DisplayComments
           author={author}
           loggedinUser={loggedinUser}
           headers={headers}
           id={id}
-          getNumberOfComments={howManyComments}
+          url={url}
+          isLoggedIn={isLoggedIn}
         />
       </div>
     </div>

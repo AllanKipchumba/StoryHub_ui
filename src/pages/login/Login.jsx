@@ -7,7 +7,7 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,6 +23,11 @@ export const Login = () => {
   const [authFail, setAuthFail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showIndicator, setShowIndicator] = useState(false);
+  const { previousURL } = useSelector((store) => store["post"]);
+  const postURL = previousURL.substring(previousURL.indexOf("/post"));
+  const redirectUser = () => {
+    previousURL.includes("post") ? navigate(`${postURL}`) : navigate("/");
+  };
 
   //pasword strength states
   const [passLetter, setPassLetter] = useState(false);
@@ -79,7 +84,7 @@ export const Login = () => {
       );
       dispatch(AUTH_SUCCESS(res.data));
       setLoading(false);
-      navigate("/");
+      redirectUser();
     } catch (error) {
       setLoading(false);
       setAuthFail(true);
@@ -167,7 +172,7 @@ export const Login = () => {
             <h5>
               New to storyHub?{" "}
               <Link to="/signup">
-                <span>create account</span>
+                <span>Create account</span>
               </Link>
             </h5>
           </form>

@@ -9,13 +9,16 @@ import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
 import { REFETCH_COMMENTS } from "../../../Redux/slices/postSlice";
 import { Timestamp } from "../Timestamp";
+import { useNavigate } from "react-router-dom";
+import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
 
 export const DisplayComments = ({
   author,
   loggedinUser,
   headers,
   id,
-  getNumberOfComments,
+  isLoggedIn,
+  url,
 }) => {
   const dispatch = useDispatch();
   const { reFetchComments } = useSelector((store) => store["posts"]);
@@ -23,6 +26,7 @@ export const DisplayComments = ({
   const [hasComments, setHasComments] = useState();
   const [numberOfComments, setNumberOfComments] = useState();
   const [commentID, setCommentID] = useState("");
+  const navigate = useNavigate();
 
   //fetch comments on a post
   useEffect(() => {
@@ -31,30 +35,37 @@ export const DisplayComments = ({
         const res = await axios({
           method: "get",
           url: `http://localhost:5000/api/post/comment/${id}`,
-          headers: headers,
         });
         res.data.length !== 0 ? setHasComments(true) : setHasComments(false);
         setCommentsOnPost(res.data);
         setNumberOfComments(res.data.length);
-        getNumberOfComments(res.data.length);
       } catch (error) {
         console.log(error);
       }
     };
     getCommentsOnPost();
-  }, [reFetchComments, id, headers, getNumberOfComments]);
+  }, [reFetchComments, id]);
 
   //like a comment
-  const likeComment = async (commentID) => {
-    try {
-      await axios({
-        method: "put",
-        url: `http://localhost:5000/api/post/comment/${commentID}/like`,
-        data: {},
-        headers: headers,
-      });
-    } catch (error) {
-      toast.error(error.response.data);
+  const likeComment = async () => {
+    switch (isLoggedIn) {
+      case true:
+        try {
+          await axios({
+            method: "put",
+            url: `http://localhost:5000/api/post/comment/${commentID}/like`,
+            headers: headers,
+          });
+          dispatch(REFETCH_COMMENTS());
+        } catch (error) {
+          toast.error(error.response.data);
+          console.log(error);
+        }
+        break;
+      default:
+        dispatch(SAVE_URL(url));
+        navigate("/login");
+        break;
     }
   };
 
@@ -119,6 +130,7 @@ export const DisplayComments = ({
                   <AiOutlineLike
                     className="icon icons-LC"
                     onClick={likeComment}
+                    onMouseEnter={() => setCommentID(comment._id)}
                   />
 
                   {comment.likes.length !== 0 && <p>{comment.likes.length}</p>}

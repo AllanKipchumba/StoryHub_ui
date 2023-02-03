@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./navbar.module.scss";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,6 @@ export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setscrollPage] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { user } = useSelector((store) => store["auth"]);
   let userName;
@@ -106,7 +105,6 @@ export const Navbar = () => {
                   onClick={() => {
                     hideMenu();
                     dispatch(LOGOUT());
-                    navigate("/");
                   }}
                   style={{ cursor: "pointer" }}
                   className="bg-[#DDDDDD] rounded !px-[15px] !py-[3px]"
