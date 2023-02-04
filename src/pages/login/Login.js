@@ -12,6 +12,7 @@ import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
+import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ export const Login = () => {
   };
 
   return (
-    <>
+    <RevealOnScroll>
       <div className={styles.signup}>
         <div className={styles["form-wrapper"]}>
           <form onSubmit={submitForm}>
@@ -178,6 +179,6 @@ export const Login = () => {
           </form>
         </div>
       </div>
-    </>
+    </RevealOnScroll>
   );
 };
