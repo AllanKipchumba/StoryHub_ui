@@ -11,6 +11,7 @@ import { REFETCH_COMMENTS } from "../../../Redux/slices/postSlice";
 import { Timestamp } from "../Timestamp";
 import { useNavigate } from "react-router-dom";
 import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
+import { RevealOnScroll } from "../../RevealOnScroll/RevealOnScroll";
 
 export const DisplayComments = ({
   author,
@@ -105,49 +106,53 @@ export const DisplayComments = ({
 
   if (hasComments) {
     return (
-      <div className="comments-container">
-        <p className=" numberofcomments">
-          {numberOfComments === 1 ? (
-            <p>1 comment</p>
-          ) : (
-            <p>{numberOfComments} comments</p>
-          )}
-        </p>
+      <RevealOnScroll>
+        <div className="comments-container">
+          <p className=" numberofcomments">
+            {numberOfComments === 1 ? (
+              <p>1 comment</p>
+            ) : (
+              <p>{numberOfComments} comments</p>
+            )}
+          </p>
 
-        {commentsOnPost?.map((comment, index) => {
-          return (
-            <div key={index} className=" comments">
-              <div key={comment._id}>
-                <div className=" mb-2  flex gap-5">
-                  <p className="">{comment.authorName}</p>
-                  <p className="mt-[-10px]">
-                    <Timestamp createdAt={comment.createdAt} />
-                  </p>
-                </div>
-                <hr />
-                <p className="font-bold">{comment.comment}</p>
-                <div className="mt-2 flex gap-2">
-                  <AiOutlineLike
-                    className="icon icons-LC"
-                    onClick={likeComment}
-                    onMouseEnter={() => setCommentID(comment._id)}
-                  />
-
-                  {comment.likes.length !== 0 && <p>{comment.likes.length}</p>}
-
-                  <AuthorOnly author={author} loggedinUser={loggedinUser}>
-                    <MdOutlineDelete
+          {commentsOnPost?.map((comment, index) => {
+            return (
+              <div key={index} className=" comments">
+                <div key={comment._id}>
+                  <div className=" mb-2  flex gap-5">
+                    <p className="">{comment.authorName}</p>
+                    <p className="mt-[-10px]">
+                      <Timestamp createdAt={comment.createdAt} />
+                    </p>
+                  </div>
+                  <hr />
+                  <p className="font-bold">{comment.comment}</p>
+                  <div className="mt-2 flex gap-2">
+                    <AiOutlineLike
                       className="icon icons-LC"
-                      onClick={confirmDeleteComment}
+                      onClick={likeComment}
                       onMouseEnter={() => setCommentID(comment._id)}
                     />
-                  </AuthorOnly>
+
+                    {comment.likes.length !== 0 && (
+                      <p>{comment.likes.length}</p>
+                    )}
+
+                    <AuthorOnly author={author} loggedinUser={loggedinUser}>
+                      <MdOutlineDelete
+                        className="icon icons-LC"
+                        onClick={confirmDeleteComment}
+                        onMouseEnter={() => setCommentID(comment._id)}
+                      />
+                    </AuthorOnly>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </RevealOnScroll>
     );
   }
 };

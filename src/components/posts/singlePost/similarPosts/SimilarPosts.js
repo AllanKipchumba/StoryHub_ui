@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RevealOnScroll } from "../../../RevealOnScroll/RevealOnScroll";
 import { Post } from "../../post/Post";
 import styles from "./SimilarPosts.module.scss";
 
@@ -25,15 +26,17 @@ export const SimilarPosts = ({ category, id }) => {
 
   if (similarPosts.length !== 0) {
     return (
-      <div className={styles.similarPosts}>
-        <h3 className="hover:no-underline">Similar Posts</h3>
-        <div className="underLine"></div>
-        <div className={styles["show-similar-posts"]}>
-          {similarPosts.map((post) => {
-            return <Post key={post._id} post={post} />;
-          })}
+      <RevealOnScroll>
+        <div className={styles.similarPosts}>
+          <h3 className="hover:no-underline">Similar Posts</h3>
+          <div className="underLine"></div>
+          <div className={styles["show-similar-posts"]}>
+            {similarPosts.map((post) => {
+              return <Post key={post._id} post={post} />;
+            })}
+          </div>
         </div>
-      </div>
+      </RevealOnScroll>
     );
   }
 };

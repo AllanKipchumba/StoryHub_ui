@@ -5,10 +5,11 @@ import {
   AiOutlineTwitter,
   AiOutlineInstagram,
 } from "react-icons/ai";
+import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 export const About = () => {
   return (
-    <>
+    <RevealOnScroll>
       <div className={styles.about}>
         <div className={styles.wrapper}>
           <div className="col-span-2">
@@ -33,11 +34,13 @@ export const About = () => {
             About the<span>Developer</span>
           </h4>
           <div className=" mb-6">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/storyhub-ced7b.appspot.com/o/images%2F1673852772208devAllan.png?alt=media&token=9faa5577-b8fe-4cf0-8d6b-06237826ac97"
-              alt="/"
-              className="w-[30%] md:w-[50%] col-span-1 m-auto"
-            />
+            <div className={styles["shimmer-image"]}>
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/storyhub-ced7b.appspot.com/o/images%2F1673852772208devAllan.png?alt=media&token=9faa5577-b8fe-4cf0-8d6b-06237826ac97"
+                alt="/"
+                className="w-[30%] md:w-[50%] col-span-1 m-auto"
+              />
+            </div>
             <div className="col-span-3">
               <p className=" mt-3 text-[#292929] m-auto text-justify">
                 Meet Allan, an Electrical and Electronics Engineering Student at
@@ -62,6 +65,6 @@ export const About = () => {
           </div>
         </div>
       </div>
-    </>
+    </RevealOnScroll>
   );
 };

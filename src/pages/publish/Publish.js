@@ -7,6 +7,7 @@ import { storage } from "../../firebase/config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 const categories = [
   { id: 1, name: "Tech" },
@@ -145,106 +146,113 @@ export const Publish = () => {
   };
 
   return (
-    <div className={styles.write}>
-      <div className={styles.header}>
-        <h3>{detectForm(id, "Create New Post", "Edit Post")}</h3>
-      </div>
-      <form
-        onSubmit={detectForm(id, createPost, editPost)}
-        className="col-span-3"
-      >
-        <label>Post title</label>
-        <input
-          type="text"
-          placeholder="Post title"
-          className={styles.input}
-          name="title"
-          value={title}
-          onChange={(e) => handleInputChange(e)}
-          required
-        />
-
-        <label>Post category</label>
-        <select
-          required
-          name="category"
-          value={category}
-          onChange={(e) => handleInputChange(e)}
-          className={styles.input}
+    <RevealOnScroll>
+      <div className={styles.write}>
+        <div className={styles.header}>
+          <h3>{detectForm(id, "Create New Post", "Edit Post")}</h3>
+        </div>
+        <form
+          onSubmit={detectForm(id, createPost, editPost)}
+          className="col-span-3"
         >
-          <option value="" disabled>
-            -- choose category --
-          </option>
-          {categories.map((cat) => {
-            return (
-              <option key={cat.id} value={cat.name}>
-                {cat.name}
-              </option>
-            );
-          })}
-        </select>
-
-        <label>Upload image</label>
-        <input
-          type="file"
-          accept="image/*"
-          placeholder="product image"
-          name="image"
-          onChange={(e) => handleImageChange(e)}
-          className={styles.input}
-        />
-
-        {uploadProgress !== 0 && (
-          <div className={styles.progress}>
-            <div
-              className={styles["progress-bar"]}
-              style={{ width: `${uploadProgress}%` }}
-            >
-              {uploadProgress < 100
-                ? `Uploading ${uploadProgress}%`
-                : `Upload Complete ${uploadProgress}%`}
-            </div>
-          </div>
-        )}
-
-        {imageURL !== "" && (
+          <label>Post title</label>
           <input
             type="text"
-            required
-            placeholder="image URL"
-            name="imageURL"
-            value={imageURL}
+            placeholder="Post title"
             className={styles.input}
-            disabled
+            name="title"
+            value={title}
+            onChange={(e) => handleInputChange(e)}
+            required
           />
-        )}
 
-        <label>Content</label>
-        <textarea
-          placeholder="Write your content here"
-          rows="15"
-          cols="60"
-          className={styles.input}
-          name="description"
-          value={description}
-          onChange={(e) => handleInputChange(e)}
-          required
-        ></textarea>
+          <label>Post category</label>
+          <select
+            required
+            name="category"
+            value={category}
+            onChange={(e) => handleInputChange(e)}
+            className={styles.input}
+          >
+            <option value="" disabled>
+              -- choose category --
+            </option>
+            {categories.map((cat) => {
+              return (
+                <option key={cat.id} value={cat.name}>
+                  {cat.name}
+                </option>
+              );
+            })}
+          </select>
 
-        <div className="flex gap-5">
-          <button type="submit">
-            {loading ? (
-              <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
-            ) : (
-              detectForm(id, "Publish", "Edit")
-            )}
-          </button>
+          <label>Upload image</label>
+          <input
+            type="file"
+            accept="image/*"
+            placeholder="product image"
+            name="image"
+            onChange={(e) => handleImageChange(e)}
+            className={styles.input}
+          />
 
-          {id !== "write" && (
-            <button onClick={() => navigate(`/post/${id}`)}> Cancel</button>
+          {uploadProgress !== 0 && (
+            <div className={styles.progress}>
+              <div
+                className={styles["progress-bar"]}
+                style={{ width: `${uploadProgress}%` }}
+              >
+                {uploadProgress < 100
+                  ? `Uploading ${uploadProgress}%`
+                  : `Upload Complete ${uploadProgress}%`}
+              </div>
+            </div>
           )}
-        </div>
-      </form>
-    </div>
+
+          {imageURL !== "" && (
+            <input
+              type="text"
+              required
+              placeholder="image URL"
+              name="imageURL"
+              value={imageURL}
+              className={styles.input}
+              disabled
+            />
+          )}
+
+          <label>Content</label>
+          <textarea
+            placeholder="Write your content here"
+            rows="15"
+            cols="60"
+            className={styles.input}
+            name="description"
+            value={description}
+            onChange={(e) => handleInputChange(e)}
+            required
+          ></textarea>
+
+          <div className="flex gap-5">
+            <button type="submit">
+              {loading ? (
+                <BeatLoader
+                  loading={loading}
+                  color="#fff"
+                  margin={4}
+                  size={17}
+                />
+              ) : (
+                detectForm(id, "Publish", "Edit")
+              )}
+            </button>
+
+            {id !== "write" && (
+              <button onClick={() => navigate(`/post/${id}`)}> Cancel</button>
+            )}
+          </div>
+        </form>
+      </div>
+    </RevealOnScroll>
   );
 };

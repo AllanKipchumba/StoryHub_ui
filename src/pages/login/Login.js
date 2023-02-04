@@ -16,8 +16,8 @@ import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("testuser3@gmail.com");
-  const [password, setPassword] = useState("123456Aa");
+  const [email, setEmail] = useState("allankipchumba76@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
@@ -148,8 +148,8 @@ export const Login = () => {
 
             <button
               type="submit"
-              className={!passComplete && `${styles["btn-disabled"]}`}
-              disabled={!passComplete}
+              // className={!passComplete && `${styles["btn-disabled"]}`}
+              // disabled={!passComplete}
             >
               {loading ? (
                 <BeatLoader
@@ -163,12 +163,12 @@ export const Login = () => {
               )}
             </button>
 
-            <PasswordStrengthIndicator
+            {/* <PasswordStrengthIndicator
               passLength={passLength}
               passNumber={passNumber}
               passLetter={passLetter}
               showIndicator={showIndicator}
-            />
+            /> */}
 
             <h5>
               New to storyHub?{" "}

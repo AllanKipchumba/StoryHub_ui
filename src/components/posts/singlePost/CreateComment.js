@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
 import { REFETCH_COMMENTS } from "../../../Redux/slices/postSlice";
+import { RevealOnScroll } from "../../RevealOnScroll/RevealOnScroll";
 import "./singlepost.scss";
 
 export const CreateComment = ({
@@ -48,22 +49,24 @@ export const CreateComment = ({
 
   if (addComment) {
     return (
-      <div className="mt-14 w-[80%] ">
-        <form onSubmit={commentPost}>
-          <textarea
-            placeholder="Leave comment..."
-            rows="3"
-            cols="8"
-            className="input"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required
-          />
-          <button className="comment-btn" type="submit">
-            Comment
-          </button>
-        </form>
-      </div>
+      <RevealOnScroll>
+        <div className="mt-14 w-[80%] ">
+          <form onSubmit={commentPost}>
+            <textarea
+              placeholder="Leave comment..."
+              rows="3"
+              cols="8"
+              className="input"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+            />
+            <button className="comment-btn" type="submit">
+              Comment
+            </button>
+          </form>
+        </div>
+      </RevealOnScroll>
     );
   }
 };
