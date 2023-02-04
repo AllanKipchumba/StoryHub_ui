@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./post.module.scss";
 import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
+import { RevealOnScroll } from "../../RevealOnScroll/RevealOnScroll";
 
 export const Post = ({ post, latest }) => {
   // const { user } = useSelector((store) => store["logIn"]);
@@ -13,7 +14,7 @@ export const Post = ({ post, latest }) => {
     : (title = originalTitle.substring(0, 30).concat("..."));
 
   return (
-    <>
+    <RevealOnScroll>
       <div className={`${styles.post}`}>
         <div>
           <div>
@@ -33,6 +34,6 @@ export const Post = ({ post, latest }) => {
           </div>
         </div>
       </div>
-    </>
+    </RevealOnScroll>
   );
 };
