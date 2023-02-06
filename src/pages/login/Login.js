@@ -96,7 +96,7 @@ export const Login = () => {
 
   return (
     <RevealOnScroll>
-      <div className={styles.signup}>
+      <div className={`${styles.signup} min-h-[100vh]`}>
         <div className={styles["form-wrapper"]}>
           <form onSubmit={requestLogin}>
             <h1>
@@ -104,7 +104,7 @@ export const Login = () => {
               <span>Hub</span> account
             </h1>
 
-            <h5 className="pb-4">
+            <h5 className="!pb-4">
               New to storyHub? &nbsp;
               <Link to="/signup">
                 <span>Create account</span>
