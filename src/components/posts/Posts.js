@@ -19,7 +19,7 @@ export const Posts = () => {
   useEffect(() => {
     setLoading(true);
     try {
-      fetch("http://localhost:5000/api/posts/")
+      fetch("https://storyhub-api.onrender.com/api/posts/")
         .then((response) => response.json())
         .then((data) => {
           setPosts(data);
@@ -34,18 +34,23 @@ export const Posts = () => {
   //dispatch posts to store
   posts.length !== 0 && dispatch(STORE_POSTS(posts));
 
-  //shuffle posts
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      let temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    return array;
-  };
+  const randomPosts = posts
+    .slice()
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
 
-  const shufflePosts = shuffleArray(posts.slice());
+  //shuffle posts
+  // const shuffleArray = (array) => {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     let temp = array[i];
+  //     array[i] = array[j];
+  //     array[j] = temp;
+  //   }
+  //   return array;
+  // };
+
+  // const shufflePosts = shuffleArray(posts.slice());
 
   return (
     <>
@@ -59,9 +64,9 @@ export const Posts = () => {
           <>
             {Loading.remove()}
             <Slider />
-            <RandomPosts />
+            <RandomPosts randomPosts={randomPosts} />
             <LatestPosts latestPosts={latestPosts} />
-            <AllPosts posts={shufflePosts} />
+            <AllPosts posts={posts} />
           </>
         )}
       </div>

@@ -24,7 +24,6 @@ export const AllPosts = ({ posts }) => {
         ))}
       </div>
 
-      {/* PAGINATION */}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

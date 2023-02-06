@@ -73,7 +73,7 @@ export const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://storyhub-api.onrender.com/api/auth/register",
         formValues
       );
       dispatch(AUTH_SUCCESS(res.data));

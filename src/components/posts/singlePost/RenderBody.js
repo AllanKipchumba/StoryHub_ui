@@ -29,7 +29,7 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/${id}/likes`,
+          url: `https://storyhub-api.onrender.com/api/post/${id}/likes`,
           headers: headers,
         });
         setLikes(res.data);
@@ -47,7 +47,7 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
         try {
           const res = await axios({
             method: "put",
-            url: `http://localhost:5000/api/post/${id}/like`,
+            url: `https://storyhub-api.onrender.com/api/post/${id}/like`,
             headers: headers,
             data: {},
           });
@@ -68,7 +68,7 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:5000/api/posts/${id}`,
+        url: `https://storyhub-api.onrender.com/api/posts/${id}`,
         headers: headers,
       });
       navigate("/");
@@ -135,7 +135,6 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
         />
 
         <DisplayComments
-          author={author}
           loggedinUser={loggedinUser}
           headers={headers}
           id={id}

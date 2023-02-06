@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { Pagination } from "../../../pagination/Pagination";
 import { RevealOnScroll } from "../../../RevealOnScroll/RevealOnScroll";
 import { Post } from "../../post/Post";
 import styles from "./SimilarPosts.module.scss";
 
 export const SimilarPosts = ({ category, id }) => {
   const [posts, setPosts] = useState([]);
-
-  //get posts with the same category name
-  const similarPosts = posts.filter(
-    (post) => post.category === category && post._id !== id
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const similarPosts = posts
+    .filter((post) => post.category === category && post._id !== id)
+    .sort()
+    .reverse();
+  const currentPosts = similarPosts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
   );
 
   //FETCH POSTS FROM DB
   useEffect(() => {
     try {
-      fetch("http://localhost:5000/api/posts/")
+      fetch("https://storyhub-api.onrender.com/api/posts/")
         .then((response) => response.json())
         .then((data) => {
           setPosts(data);
@@ -31,11 +39,18 @@ export const SimilarPosts = ({ category, id }) => {
           <h3 className="hover:no-underline">Similar Posts</h3>
           <div className="underLine"></div>
           <div className={styles["show-similar-posts"]}>
-            {similarPosts.map((post) => {
+            {currentPosts.map((post) => {
               return <Post key={post._id} post={post} />;
             })}
           </div>
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPage}
+          totalProducts={similarPosts.length}
+        />
       </RevealOnScroll>
     );
   }

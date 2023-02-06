@@ -45,14 +45,13 @@ export const ResetPassword = () => {
     try {
       const res = await axios({
         method: `put`,
-        url: `http://localhost:5000/api/auth/reset/${token}`,
+        url: `https://storyhub-api.onrender.com/api/auth/reset/${token}`,
         data: {
           newPassword: password,
         },
       });
       setLoading(false);
       setPassword("");
-      console.log(res.data);
       dispatch(AUTH_SUCCESS(res.data));
       navigate("/");
     } catch (error) {

@@ -60,7 +60,7 @@ export const Publish = () => {
     //access the file being uploaded
     const file = e.target.files[0];
     //store the file in the images folder in firebase storage
-    const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+    const storageRef = ref(storage, `images_prod/${Date.now()}${file.name}`);
     //upload task to firebase
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -104,7 +104,7 @@ export const Publish = () => {
     try {
       const res = await axios({
         method: "post",
-        url: "http://localhost:5000/api/posts/",
+        url: "https://storyhub-api.onrender.com/api/posts/",
         data: newPost,
         headers: headers,
       });
@@ -132,15 +132,16 @@ export const Publish = () => {
     try {
       const res = await axios({
         method: "patch",
-        url: "http://localhost:5000/api/posts/" + id,
+        url: "https://storyhub-api.onrender.com/api/posts/" + id,
         data: updates,
         headers: headers,
       });
-      setLoading(false);
       toast.success("Post edited");
       navigate("/post/" + res.data._id);
+      setLoading(false);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
       setLoading(false);
     }
   };
@@ -203,7 +204,7 @@ export const Publish = () => {
                 style={{ width: `${uploadProgress}%` }}
               >
                 {uploadProgress < 100
-                  ? `Uploading ${uploadProgress}%`
+                  ? `Uploading... ${uploadProgress}%`
                   : `Upload Complete ${uploadProgress}%`}
               </div>
             </div>

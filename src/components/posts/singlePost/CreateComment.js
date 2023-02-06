@@ -28,7 +28,7 @@ export const CreateComment = ({
         try {
           await axios({
             method: "post",
-            url: `http://localhost:5000/api/post/comment/${id}`,
+            url: `https://storyhub-api.onrender.com/api/post/comment/${id}`,
             data: { comment },
             headers: headers,
           });

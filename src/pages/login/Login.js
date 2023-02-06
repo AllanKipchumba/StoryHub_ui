@@ -80,7 +80,7 @@ export const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://storyhub-api.onrender.com/api/auth/login",
         formValues
       );
       dispatch(AUTH_SUCCESS(res.data));

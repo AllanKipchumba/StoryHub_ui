@@ -14,7 +14,6 @@ import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
 import { RevealOnScroll } from "../../RevealOnScroll/RevealOnScroll";
 
 export const DisplayComments = ({
-  author,
   loggedinUser,
   headers,
   id,
@@ -35,7 +34,7 @@ export const DisplayComments = ({
       try {
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/api/post/comment/${id}`,
+          url: `https://storyhub-api.onrender.com/api/post/comment/${id}`,
         });
         res.data.length !== 0 ? setHasComments(true) : setHasComments(false);
         setCommentsOnPost(res.data);
@@ -54,7 +53,7 @@ export const DisplayComments = ({
         try {
           await axios({
             method: "put",
-            url: `http://localhost:5000/api/post/comment/${commentID}/like`,
+            url: `https://storyhub-api.onrender.com/api/post/comment/${commentID}/like`,
             headers: headers,
           });
           dispatch(REFETCH_COMMENTS());
@@ -75,7 +74,7 @@ export const DisplayComments = ({
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:5000/api/post/comment/${commentID}`,
+        url: `https://storyhub-api.onrender.com/api/post/comment/${commentID}`,
         headers: headers,
       });
       dispatch(REFETCH_COMMENTS());
@@ -139,7 +138,10 @@ export const DisplayComments = ({
                       <p>{comment.likes.length}</p>
                     )}
 
-                    <AuthorOnly author={author} loggedinUser={loggedinUser}>
+                    <AuthorOnly
+                      author={comment.authorName}
+                      loggedinUser={loggedinUser}
+                    >
                       <MdOutlineDelete
                         className="icon icons-LC"
                         onClick={confirmDeleteComment}

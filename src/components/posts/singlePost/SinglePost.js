@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react";
 import "./singlepost.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { RenderBody } from "./RenderBody";
 import { SAVE_URL, STORE_POST } from "../../../Redux/slices/postDetailsSlice";
@@ -37,7 +37,7 @@ export const SinglePost = () => {
     const fetchPost = async () => {
       const res = await axios({
         method: "get",
-        url: `http://localhost:5000/api/posts/${id}`,
+        url: `https://storyhub-api.onrender.com/api/posts/${id}`,
       });
       setPost(res.data.post);
       setAuthor(res.data.postOwner);
@@ -66,14 +66,12 @@ export const SinglePost = () => {
               <div className={`post-title `}>
                 <h1>{post.title}</h1>
                 <div>
-                  <Link to={`/?author=${author}`}>
-                    <p>
-                      By: &nbsp;
-                      <span className="font-bold capitalize text-[#eb0202]">
-                        {author}
-                      </span>
-                    </p>
-                  </Link>
+                  <p>
+                    By: &nbsp;
+                    <span className="font-bold capitalize text-[#eb0202]">
+                      {author}
+                    </span>
+                  </p>
 
                   <Timestamp createdAt={post.createdAt} />
                 </div>
