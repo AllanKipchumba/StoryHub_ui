@@ -4,7 +4,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 //import pages
-import { Publish, Signup, Home, About, Login, ReadPost } from "./pages";
+import {
+  Publish,
+  Signup,
+  Home,
+  About,
+  Login,
+  ReadPost,
+  ResetPassword,
+  ResetPasswordForm,
+} from "./pages";
 
 //import components
 import {
@@ -27,6 +36,14 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/post/:id" element={<ReadPost />} />
         <Route
+          path="/publish/:id"
+          element={
+            <Authenticated>
+              <Publish />
+            </Authenticated>
+          }
+        />
+        <Route
           path="/login"
           element={
             <NotAuthenticated>
@@ -43,11 +60,19 @@ const App = () => {
           }
         />
         <Route
-          path="/publish/:id"
+          path="/reset"
           element={
-            <Authenticated>
-              <Publish />
-            </Authenticated>
+            <NotAuthenticated>
+              <ResetPasswordForm />
+            </NotAuthenticated>
+          }
+        />
+        <Route
+          path="/reset/:token"
+          element={
+            <NotAuthenticated>
+              <ResetPassword />
+            </NotAuthenticated>
           }
         />
       </Routes>

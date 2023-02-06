@@ -1,83 +1,59 @@
 import React, { useEffect, useState } from "react";
-import styles from "./signup.module.scss";
+import styles from "../signUp/signup.module.scss";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
 import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
-export const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [formErrors, setFormErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+export const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showIndicator, setShowIndicator] = useState(false);
-
-  //pasword strength states
   const [passLetter, setPassLetter] = useState(false);
   const [passNumber, setPassNumber] = useState(false);
   const [passLength, setPassLength] = useState(false);
   const [passComplete, setPassComplete] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { token } = useParams();
 
-  //monitor if requirements for strong password are met
+  //monitor password strength
   useEffect(() => {
-    //check lowercase and uppercase
     password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)
       ? setPassLetter(true)
       : setPassLetter(false);
 
-    //check for numbers
     password.match(/([0-9])/) ? setPassNumber(true) : setPassNumber(false);
 
-    //check if password is greater than 8
     password.length > 5 ? setPassLength(true) : setPassLength(false);
 
-    //all criteria is met
     passLetter && passNumber && passLength
       ? setPassComplete(true)
       : setPassComplete(false);
   }, [password, passLength, passLetter, passNumber]);
 
-  // Regex email validation
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-    if (!values.email) {
-      errors.email = "Email is required!";
-    } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
-    }
-    return errors;
-  };
-
-  const formValues = {
-    email,
-    password,
-  };
-
-  const submitForm = async (e) => {
+  const resetPassword = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setFormErrors(validate(formValues));
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formValues
-      );
-      dispatch(AUTH_SUCCESS(res.data));
+      const res = await axios({
+        method: `put`,
+        url: `http://localhost:5000/api/auth/reset/${token}`,
+        data: {
+          newPassword: password,
+        },
+      });
       setLoading(false);
+      setPassword("");
+      console.log(res.data);
+      dispatch(AUTH_SUCCESS(res.data));
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -87,31 +63,10 @@ export const Signup = () => {
 
   return (
     <RevealOnScroll>
-      <div className={styles.signup}>
+      <div className={`${styles.signup}  mt-[5rem] !mb-[8rem]`}>
         <div className={styles["form-wrapper"]}>
-          <form onSubmit={submitForm}>
-            <h1>
-              Sign up to story<span>Hub</span>
-            </h1>
-            <h5>
-              Do you have an account? &nbsp;
-              <Link to="/login">
-                <span>Log in</span>
-              </Link>
-            </h5>
-
-            <label>Email</label>
-            <div className={styles.inputWrapper}>
-              <HiOutlineMail className={styles.icon} />
-              <input
-                type="email"
-                placeholder="Enter your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.input}
-              />
-            </div>
-            <p className={styles.error}>{formErrors.email}</p>
+          <form onSubmit={resetPassword}>
+            <h1> Enter your new Password here</h1>
 
             <label>Password</label>
             <div className={styles.inputWrapper}>
@@ -149,7 +104,7 @@ export const Signup = () => {
                   size={17}
                 />
               ) : (
-                `Register`
+                `Reset`
               )}
             </button>
 

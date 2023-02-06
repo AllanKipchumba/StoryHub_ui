@@ -27,7 +27,6 @@ export const Navbar = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store["auth"]);
-  console.log(user);
   let userName;
   //get name of the logged in user
   if (user !== null) {

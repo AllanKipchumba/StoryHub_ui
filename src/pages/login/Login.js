@@ -16,8 +16,8 @@ import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("allankipchumba76@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
@@ -73,7 +73,7 @@ export const Login = () => {
     password,
   };
 
-  const submitForm = async (e) => {
+  const requestLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setFormErrors(validate(formValues));
@@ -84,6 +84,7 @@ export const Login = () => {
         formValues
       );
       dispatch(AUTH_SUCCESS(res.data));
+      console.log(res.data);
       setLoading(false);
       redirectUser();
     } catch (error) {
@@ -97,11 +98,18 @@ export const Login = () => {
     <RevealOnScroll>
       <div className={styles.signup}>
         <div className={styles["form-wrapper"]}>
-          <form onSubmit={submitForm}>
+          <form onSubmit={requestLogin}>
             <h1>
               Login to your story
               <span>Hub</span> account
             </h1>
+
+            <h5 className="pb-4">
+              New to storyHub? &nbsp;
+              <Link to="/signup">
+                <span>Create account</span>
+              </Link>
+            </h5>
 
             {authFail && (
               <p className={styles.error}>
@@ -148,8 +156,8 @@ export const Login = () => {
 
             <button
               type="submit"
-              // className={!passComplete && `${styles["btn-disabled"]}`}
-              // disabled={!passComplete}
+              className={!passComplete && `${styles["btn-disabled"]}`}
+              disabled={!passComplete}
             >
               {loading ? (
                 <BeatLoader
@@ -163,17 +171,17 @@ export const Login = () => {
               )}
             </button>
 
-            {/* <PasswordStrengthIndicator
+            <PasswordStrengthIndicator
               passLength={passLength}
               passNumber={passNumber}
               passLetter={passLetter}
               showIndicator={showIndicator}
-            /> */}
+            />
 
-            <h5>
-              New to storyHub?{" "}
-              <Link to="/signup">
-                <span>Create account</span>
+            <h5 className="!mt-8">
+              Forgot password? &nbsp;
+              <Link to="/reset">
+                <span>Reset password</span>
               </Link>
             </h5>
           </form>
