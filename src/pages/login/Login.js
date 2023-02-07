@@ -84,7 +84,6 @@ export const Login = () => {
         formValues
       );
       dispatch(AUTH_SUCCESS(res.data));
-      console.log(res.data);
       setLoading(false);
       redirectUser();
     } catch (error) {
