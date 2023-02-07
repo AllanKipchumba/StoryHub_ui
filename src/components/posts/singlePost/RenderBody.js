@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
 import { SAVE_URL } from "../../../Redux/slices/postDetailsSlice";
+import { storage } from "../../../firebase/config";
+import { deleteObject, ref } from "firebase/storage";
 
 export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
   const navigate = useNavigate();
@@ -71,6 +73,9 @@ export const RenderBody = ({ author, post, loggedinUser, id, headers }) => {
         url: `https://storyhub-api.onrender.com/api/posts/${id}`,
         headers: headers,
       });
+      //delete post image from firebase storage
+      const storageRef = ref(storage, post.imageURL);
+      await deleteObject(storageRef);
       navigate("/");
     } catch (error) {
       toast.error(error);

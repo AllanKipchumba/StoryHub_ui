@@ -82,7 +82,6 @@ export const SinglePost = () => {
               id={id}
               author={author}
               post={post}
-              b
               loggedinUser={loggedinUser}
             />
           </div>
