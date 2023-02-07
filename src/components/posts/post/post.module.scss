@@ -1,25 +1,15 @@
 .post {
-    @apply mt-4 max-w-[1240px] shadow-2xl rounded-lg;
-    font-family: "Frank Ruhl Libre", sans-serif;
+  @apply mt-4 max-w-[1240px] shadow-2xl rounded-lg;
+  font-family: "Frank Ruhl Libre", sans-serif;
+  width: 100%;
+  position: relative;
+  color: #161c1c;
+  .img {
     width: 100%;
-    position: relative;
-    color: #161c1c;
-    .img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-    }
-    .post-title {
-        padding: 2rem;
-    }
-    // @media screen and (min-width: 1024px) {
-    //     .post-title {
-    //         position: absolute;
-    //         background-color: #fff;
-    //         top: 40%;
-    //         width: 85%;
-    //         height: 12rem;
-    //         padding: 1.5rem;
-    //     }
-    // }
+    height: 300px;
+    object-fit: cover;
+  }
+  .post-title {
+    padding: 10px;
+  }
 }

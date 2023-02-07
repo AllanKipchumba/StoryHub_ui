@@ -62,7 +62,7 @@ export const ResetPassword = () => {
 
   return (
     <RevealOnScroll>
-      <div className={`${styles.signup}  mt-[5rem] !mb-[8rem]`}>
+      <div className={`${styles.signup}  mt-[5rem]`}>
         <div className={styles["form-wrapper"]}>
           <form onSubmit={resetPassword}>
             <h1> Enter your new Password here</h1>

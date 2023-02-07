@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./post.module.scss";
 import { Link } from "react-router-dom";
 import { Timestamp } from "../Timestamp";
-import { RevealOnScroll } from "../../RevealOnScroll/RevealOnScroll";
 
 export const Post = ({ post, latest }) => {
   // const { user } = useSelector((store) => store["logIn"]);
@@ -11,29 +10,27 @@ export const Post = ({ post, latest }) => {
 
   originalTitle.length < 30
     ? (title = originalTitle)
-    : (title = originalTitle.substring(0, 30).concat("..."));
+    : (title = originalTitle.substring(0, 25).concat("..."));
 
   return (
-    <RevealOnScroll>
-      <div className={`${styles.post}`}>
+    <div className={`${styles.post}`}>
+      <div>
         <div>
-          <div>
-            <img src={post.imageURL} alt={post.title} className={styles.img} />
-          </div>
+          <img src={post.imageURL} alt={post.title} className={styles.img} />
+        </div>
 
-          <div className={`${styles["post-title"]} ${latest}`}>
-            <div className="line-subtitle">
-              <div className="line"></div>
-              <div className="subtitle">{post.category}</div>
-            </div>
-            <h3>
-              <Link to={`/post/${post._id}`}>{title}</Link>
-            </h3>
-
-            <Timestamp createdAt={post.createdAt} />
+        <div className={`${styles["post-title"]} ${latest}`}>
+          <div className="line-subtitle">
+            <div className="line"></div>
+            <div className="subtitle">{post.category}</div>
           </div>
+          <h3>
+            <Link to={`/post/${post._id}`}>{title}</Link>
+          </h3>
+
+          <Timestamp createdAt={post.createdAt} />
         </div>
       </div>
-    </RevealOnScroll>
+    </div>
   );
 };

@@ -23,7 +23,6 @@ const activeLink = ({ isActive }) => isActive && `${styles.active}`;
 
 export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [scrollPage, setscrollPage] = useState(false);
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store["auth"]);
@@ -33,20 +32,12 @@ export const Navbar = () => {
     const uEmail = user.user.email;
     userName = uEmail.substring(0, uEmail.indexOf("@"));
   }
-  //make Navbar sticky
-  const fixNavBar = () => {
-    window.scrollY > 50 ? setscrollPage(true) : setscrollPage(false);
-  };
-  //add scroll event listener on the window
-  window.addEventListener("scroll", fixNavBar);
-
-  //monitor currently signed in user
 
   const toggleMenu = () => setShowMenu(!showMenu);
   const hideMenu = () => setShowMenu(false);
 
   return (
-    <header className={scrollPage && `${styles.fixed}`}>
+    <header className={`${styles.fixed}`}>
       <div className={styles.header}>
         {logo}
 

@@ -51,7 +51,7 @@ export const ResetPasswordForm = () => {
 
   return (
     <RevealOnScroll>
-      <div className={`${styles.signup}  mt-[5rem] !mb-[7rem]`}>
+      <div className={`${styles.signup}  mt-[5rem] !mb-[8.2rem]`}>
         <div className={styles["form-wrapper"]}>
           <form onSubmit={submitEmail}>
             {emailSent && (

@@ -72,7 +72,6 @@ export const SinglePost = () => {
                       {author}
                     </span>
                   </p>
-
                   <Timestamp createdAt={post.createdAt} />
                 </div>
               </div>

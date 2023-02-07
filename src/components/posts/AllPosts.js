@@ -18,7 +18,7 @@ export const AllPosts = ({ posts }) => {
       <h3 className="hover:no-underline">All Posts</h3>
       <div className="underLine"></div>
 
-      <div className=" py-3 m-auto grid grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className=" py-3 m-auto grid grid-cols-2 lg:grid-cols-3 gap-6 md:10">
         {currentPosts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

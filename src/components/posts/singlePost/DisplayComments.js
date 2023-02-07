@@ -119,14 +119,14 @@ export const DisplayComments = ({
             return (
               <div key={index} className=" comments">
                 <div key={comment._id}>
-                  <div className=" mb-2  flex gap-5">
-                    <p className="">{comment.authorName}</p>
+                  <div className=" mb-2 block md:flex gap-5">
+                    <p className="capitalize">{comment.authorName}</p>
                     <p className="mt-[-10px]">
                       <Timestamp createdAt={comment.createdAt} />
                     </p>
                   </div>
                   <hr />
-                  <p className="font-bold">{comment.comment}</p>
+                  <p className="font-bold mt-2">{comment.comment}</p>
                   <div className="mt-2 flex gap-2">
                     <AiOutlineLike
                       className="icon icons-LC"

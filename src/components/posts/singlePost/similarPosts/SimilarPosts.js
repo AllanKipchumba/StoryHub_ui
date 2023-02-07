@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "../../../pagination/Pagination";
-import { RevealOnScroll } from "../../../RevealOnScroll/RevealOnScroll";
 import { Post } from "../../post/Post";
 import styles from "./SimilarPosts.module.scss";
 
@@ -34,7 +33,7 @@ export const SimilarPosts = ({ category, id }) => {
 
   if (similarPosts.length !== 0) {
     return (
-      <RevealOnScroll>
+      <>
         <div className={styles.similarPosts}>
           <h3 className="hover:no-underline">Similar Posts</h3>
           <div className="underLine"></div>
@@ -51,7 +50,7 @@ export const SimilarPosts = ({ category, id }) => {
           productsPerPage={productsPerPage}
           totalProducts={similarPosts.length}
         />
-      </RevealOnScroll>
+      </>
     );
   }
 };

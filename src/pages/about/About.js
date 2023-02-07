@@ -17,9 +17,10 @@ export const About = () => {
               about story<span>hub</span>
             </h4>
             <p className="text-[#292929] mb-4 text-justify">
-              StoryHub is an informational website that enables users to share
-              and access information. Create a personalized and stylish blog to
-              share your knowledge, experiences, or latest news.
+              Stay informed and connect with like-minded individuals through
+              StoryHub - a personalized platform for sharing and accessing
+              knowledge, experiences, and news updates. Create a stylish blog
+              and join the community today.
             </p>
           </div>
           <img
@@ -43,11 +44,11 @@ export const About = () => {
             </div>
             <div className="col-span-3">
               <p className=" mt-3 text-[#292929] m-auto text-justify">
-                Meet Allan, an Electrical and Electronics Engineering Student at
-                Moi University. Allan is passionate about technology and
-                computer software and enjoys staying updated on the latest
-                advancements. He is skilled in problem-solving and tackling
-                issues head-on by finding practical solutions.
+                Meet Allan, a senior Electrical and Electronics Engineering
+                Student at Moi University with a passion for technology and
+                software. With a strong problem-solving skillset and an
+                insatiable curiosity for the latest advancements, Allan
+                approaches challenges with creative and effective solutions.
               </p>
 
               <div className="flex mt-3">
