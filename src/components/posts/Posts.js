@@ -39,19 +39,6 @@ export const Posts = () => {
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
 
-  //shuffle posts
-  // const shuffleArray = (array) => {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     let temp = array[i];
-  //     array[i] = array[j];
-  //     array[j] = temp;
-  //   }
-  //   return array;
-  // };
-
-  // const shufflePosts = shuffleArray(posts.slice());
-
   return (
     <>
       <div className="posts md:mx-[3rem] lg:mx-[4rem]">
