@@ -6,10 +6,10 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
-import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
+import { AUTH_SUCCESS } from "../../../Redux/slices/authSlice";
+import { RevealOnScroll } from "../../../components/RevealOnScroll/RevealOnScroll";
+import { PasswordStrengthIndicator } from "../../../components";
 
 export const Signup = () => {
   const [email, setEmail] = useState("");

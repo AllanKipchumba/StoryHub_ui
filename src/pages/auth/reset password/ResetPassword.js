@@ -5,10 +5,10 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { AUTH_SUCCESS } from "../../../Redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { PasswordStrengthIndicator } from "../../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
+import { AUTH_SUCCESS } from "../../../Redux/slices/authSlice";
 import { RevealOnScroll } from "../../../components/RevealOnScroll/RevealOnScroll";
+import { PasswordStrengthIndicator } from "../../../components";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export const ResetPassword = () => {
 
   return (
     <RevealOnScroll>
-      <div className={`${styles.signup}  mt-[5rem]`}>
+      <div className={`${styles.signup}  mt-[5rem] !mb-[8.2rem]`}>
         <div className={styles["form-wrapper"]}>
           <form onSubmit={resetPassword}>
             <h1> Enter your new Password here</h1>

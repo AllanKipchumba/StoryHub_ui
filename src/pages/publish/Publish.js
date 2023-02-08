@@ -150,13 +150,13 @@ export const Publish = () => {
     <RevealOnScroll>
       <div className={styles.write}>
         <div className={styles.header}>
-          <h3>{detectForm(id, "Create New Post", "Edit Post")}</h3>
+          <h3>{detectForm(id, "Create a new post", "Edit Post")}</h3>
         </div>
         <form
           onSubmit={detectForm(id, createPost, editPost)}
           className="col-span-3"
         >
-          <label>Post title</label>
+          <label>Title</label>
           <input
             type="text"
             placeholder="Post title"
@@ -167,7 +167,7 @@ export const Publish = () => {
             required
           />
 
-          <label>Post category</label>
+          <label>Category</label>
           <select
             required
             name="category"

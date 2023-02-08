@@ -8,10 +8,10 @@ import {
 } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
+import { AUTH_SUCCESS } from "../../../Redux/slices/authSlice";
+import { RevealOnScroll } from "../../../components/RevealOnScroll/RevealOnScroll";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://storyhub-api.onrender.com/api/auth/login",
+        `https://storyhub-api.onrender.com/api/auth/login`,
         formValues
       );
       dispatch(AUTH_SUCCESS(res.data));
