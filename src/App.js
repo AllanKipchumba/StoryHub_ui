@@ -13,6 +13,7 @@ import {
   ReadPost,
   ResetPassword,
   ResetPasswordForm,
+  MyPosts,
 } from "./pages";
 
 //import components
@@ -40,6 +41,14 @@ const App = () => {
           element={
             <Authenticated>
               <Publish />
+            </Authenticated>
+          }
+        />
+        <Route
+          path="/myposts"
+          element={
+            <Authenticated>
+              <MyPosts />
             </Authenticated>
           }
         />

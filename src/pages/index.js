@@ -4,5 +4,6 @@ export { Home } from "./home/Home";
 export { ReadPost } from "./readPost/ReadPost";
 export { Signup } from "./signUp/Signup";
 export { Publish } from "./publish/Publish";
-export { ResetPassword } from "./reset password/ResetPassword";
-export { ResetPasswordForm } from "./resetPasswordForm/ResetPasswordForm";
+export { ResetPassword } from "./auth/reset password/ResetPassword";
+export { ResetPasswordForm } from "./auth/resetPasswordForm/ResetPasswordForm";
+export { MyPosts } from "./my posts/MyPosts";

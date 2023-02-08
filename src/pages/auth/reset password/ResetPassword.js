@@ -5,10 +5,10 @@ import { AiOutlineUnlock } from "react-icons/ai";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
+import { AUTH_SUCCESS } from "../../../Redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
-import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
+import { PasswordStrengthIndicator } from "../../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
+import { RevealOnScroll } from "../../../components/RevealOnScroll/RevealOnScroll";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -77,6 +77,7 @@ export const ResetPassword = () => {
                 onFocus={() => setShowIndicator(true)}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <span
                 className={`${styles.icon} ${styles["pass-icon"]}`}

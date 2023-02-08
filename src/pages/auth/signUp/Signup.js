@@ -109,6 +109,7 @@ export const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
+                required
               />
             </div>
             <p className={styles.error}>{formErrors.email}</p>
@@ -123,6 +124,7 @@ export const Signup = () => {
                 onFocus={() => setShowIndicator(true)}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <span
                 className={`${styles.icon} ${styles["pass-icon"]}`}
@@ -149,7 +151,7 @@ export const Signup = () => {
                   size={17}
                 />
               ) : (
-                `Register`
+                `Sign up`
               )}
             </button>
 

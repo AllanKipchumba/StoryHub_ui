@@ -3,7 +3,7 @@ import styles from "../signUp/signup.module.scss";
 import { HiOutlineMail } from "react-icons/hi";
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from "axios";
-import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
+import { RevealOnScroll } from "../../../components/RevealOnScroll/RevealOnScroll";
 import { toast } from "react-toastify";
 
 export const ResetPasswordForm = () => {

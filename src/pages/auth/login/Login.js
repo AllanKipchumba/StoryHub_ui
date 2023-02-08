@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../signUp/signup.module.scss";
 import { HiOutlineMail } from "react-icons/hi";
 import {
@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AUTH_SUCCESS } from "../../Redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { PasswordStrengthIndicator } from "../../components/passwordStrengthIndicator/PasswordStrengthIndicator";
 import { RevealOnScroll } from "../../components/RevealOnScroll/RevealOnScroll";
 
 export const Login = () => {
@@ -23,37 +22,11 @@ export const Login = () => {
   const [formErrors, setFormErrors] = useState({});
   const [authFail, setAuthFail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showIndicator, setShowIndicator] = useState(false);
   const { previousURL } = useSelector((store) => store["post"]);
   const postURL = previousURL.substring(previousURL.indexOf("/post"));
   const redirectUser = () => {
     previousURL.includes("post") ? navigate(`${postURL}`) : navigate("/");
   };
-
-  //pasword strength states
-  const [passLetter, setPassLetter] = useState(false);
-  const [passNumber, setPassNumber] = useState(false);
-  const [passLength, setPassLength] = useState(false);
-  const [passComplete, setPassComplete] = useState(false);
-
-  //monitor if requirements for strong password are met
-  useEffect(() => {
-    //check lowercase and uppercase
-    password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)
-      ? setPassLetter(true)
-      : setPassLetter(false);
-
-    //check for numbers
-    password.match(/([0-9])/) ? setPassNumber(true) : setPassNumber(false);
-
-    //check if password is greater than 8
-    password.length > 5 ? setPassLength(true) : setPassLength(false);
-
-    //all criteria is met
-    passLetter && passNumber && passLength
-      ? setPassComplete(true)
-      : setPassComplete(false);
-  }, [password, passLength, passLetter, passNumber]);
 
   // Regex email validation
   const validate = (values) => {
@@ -125,6 +98,7 @@ export const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
+                required
               />
             </div>
             <p className={styles.error}>{formErrors.email}</p>
@@ -136,9 +110,9 @@ export const Login = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Input password"
                 value={password}
-                onFocus={() => setShowIndicator(true)}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <span
                 className={`${styles.icon} ${styles["pass-icon"]}`}
@@ -153,11 +127,7 @@ export const Login = () => {
             </div>
             <p className="error">{formErrors.password}</p>
 
-            <button
-              type="submit"
-              className={!passComplete && `${styles["btn-disabled"]}`}
-              disabled={!passComplete}
-            >
+            <button type="submit">
               {loading ? (
                 <BeatLoader
                   loading={loading}
@@ -169,13 +139,6 @@ export const Login = () => {
                 `Login`
               )}
             </button>
-
-            <PasswordStrengthIndicator
-              passLength={passLength}
-              passNumber={passNumber}
-              passLetter={passLetter}
-              showIndicator={showIndicator}
-            />
 
             <h5 className="!mt-8">
               Forgot password? &nbsp;

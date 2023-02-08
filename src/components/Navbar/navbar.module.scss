@@ -22,7 +22,7 @@ header {
     position: relative;
   }
   .logo {
-    width: 45%;
+    width: 15%;
     h2 {
       color: #161c1c;
       cursor: pointer;
@@ -34,13 +34,13 @@ header {
     }
   }
   nav {
-    width: 75%;
+    width: 85%;
     display: flex;
     justify-content: space-between;
     ul {
       display: flex;
       justify-content: space-between;
-      gap: 1.25rem;
+      gap: 1rem;
       list-style: none;
       .logo-mobile {
         display: none;
@@ -102,7 +102,7 @@ header {
       width: 60%;
       height: 100vh;
       background-color: #f6f6f6;
-      padding: 4rem;
+      padding: 1rem;
       z-index: 999;
       transform: translateX(-200%);
       transition: all 0.3s;
@@ -134,7 +134,7 @@ header {
           }
           .close-icon {
             position: absolute;
-            left: 110%;
+            left: 90%;
           }
         }
         li {
@@ -153,9 +153,12 @@ header {
           li {
             color: #161c1c;
             display: block;
-            margin: 0;
-            padding: 10px 0;
+            padding: 2px 0;
+            &:last-child {
+              margin-top: 1rem;
+            }
           }
+
           .uname {
             &:hover {
               color: #161c1c !important;

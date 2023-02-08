@@ -53,9 +53,7 @@ export const Navbar = () => {
                 : `${styles["nav-wrapper"]}`
             }
             onClick={hideMenu}
-          >
-            {" "}
-          </div>
+          ></div>
 
           <ul onClick={hideMenu}>
             {/* only display on mobile */}
@@ -92,13 +90,20 @@ export const Navbar = () => {
                 <li className={styles.uname}>
                   Hi, <b>{userName}</b>
                 </li>
+
+                <li>
+                  <NavLink to="/myposts" className={activeLink}>
+                    My posts
+                  </NavLink>
+                </li>
+
                 <li
                   onClick={() => {
                     hideMenu();
                     dispatch(LOGOUT());
                   }}
                   style={{ cursor: "pointer" }}
-                  className="bg-[#DDDDDD] rounded !px-[15px] !py-[3px]"
+                  className="bg-[#DDDDDD] logout rounded !px-[15px] !py-[3px]"
                 >
                   Logout
                 </li>

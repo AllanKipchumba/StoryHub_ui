@@ -244,7 +244,7 @@ export const Publish = () => {
                   size={17}
                 />
               ) : (
-                detectForm(id, "Publish", "Edit")
+                detectForm(id, "Publish", "Submit")
               )}
             </button>
 

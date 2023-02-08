@@ -2,98 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-    --dark-blue: #0a1930;
-    --warm-red: #eb0202;
-    --hover-warm-red: #fd2323;
-    --footerBG: #161c1c;
+  --dark-blue: #0a1930;
+  --warm-red: #eb0202;
+  --hover-warm-red: #fd2323;
+  --footerBG: #161c1c;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Mulish, sans-serif;
-    background-color: #fafafa;
-    font-size: 16px;
-    line-height: 24px;
+  font-family: Mulish, sans-serif;
+  background-color: #fafafa;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 h1 {
-    text-transform: capitalize;
-    font-family: "Frank Ruhl Libre", sans-serif;
-    color: #161c1c;
-    font-weight: 700;
-    /* font-size: 40px;
-    line-height: 48px;
-    font-weight: 700; */
+  text-transform: capitalize;
+  font-family: "Frank Ruhl Libre", sans-serif;
+  color: #161c1c;
+  font-weight: 700;
 }
 
 h1:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 h3 {
-    font-family: "Frank Ruhl Libre", sans-serif;
-    color: var(--dark-blue);
-    font-size: 30px;
-    font-weight: 500;
-    text-transform: capitalize;
+  font-family: "Frank Ruhl Libre", sans-serif;
+  color: var(--dark-blue);
+  font-size: 30px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 h3:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 991px) {
-    h3 {
-        line-height: 1.4em;
-    }
+  h3 {
+    line-height: 1.4em;
+  }
 }
 
 @media screen and (max-width: 767px) {
-    h3 {
-        font-size: 24px;
-    }
+  h3 {
+    font-size: 24px;
+  }
 }
 
 .line-subtitle {
-    display: flex;
-    margin-bottom: 10px;
-    -webkit-box-align: center;
-    align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
 .line {
-    width: 20px;
-    height: 2px;
-    margin-right: 6px;
-    background-color: var(--warm-red);
+  width: 20px;
+  height: 2px;
+  margin-right: 6px;
+  background-color: var(--warm-red);
 }
 
 .underLine {
-    margin-top: 2px;
-    width: 100%;
-    height: 1px;
-    margin-right: 6px;
-    background-color: var(--dark-blue);
+  margin-top: 2px;
+  width: 100%;
+  height: 1px;
+  margin-right: 6px;
+  background-color: var(--dark-blue);
 }
 
 .subtitle {
-    color: var(--warm-red);
-    text-transform: capitalize;
+  color: var(--warm-red);
+  text-transform: capitalize;
 }
 
 .timestamp {
-    margin-top: 15px;
-    line-height: 16px;
-    font-family: Mulish, sans-serif;
+  margin-top: 15px;
+  line-height: 16px;
+  font-family: Mulish, sans-serif;
 }
 
-
 /* sm */
-
 
 /* @media screen and (max-width: 640px) {
     body {
@@ -101,12 +96,12 @@ h3:hover {
     }
 } */
 
-
 /* md */
 
-@media screen and (min-width: 768px) {}
-
+@media screen and (min-width: 768px) {
+}
 
 /* lg */
 
-@media screen and (min-width: 1024px) {}
+@media screen and (min-width: 1024px) {
+}
