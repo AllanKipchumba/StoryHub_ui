@@ -7,3 +7,4 @@ export { Home } from "./home/Home";
 export { ReadPost } from "./readPost/ReadPost";
 export { Publish } from "./publish/Publish";
 export { MyPosts } from "./my posts/MyPosts";
+export { PageNotfound } from "./404 page/PageNotfound";

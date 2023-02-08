@@ -14,6 +14,7 @@ import {
   ResetPassword,
   ResetPasswordForm,
   MyPosts,
+  PageNotfound,
 } from "./pages";
 
 //import components
@@ -84,6 +85,7 @@ const App = () => {
             </NotAuthenticated>
           }
         />
+        <Route path="*" element={<PageNotfound />} />
       </Routes>
 
       <Content />
